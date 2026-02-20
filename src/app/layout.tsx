@@ -15,6 +15,10 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "PlainSight Digital | Modern Web, Mobile & Desktop Development",
   description: "A boutique development studio crafting modern web, mobile, and desktop applications with clean code and intentional design.",
+  icons: {
+    icon: "/logo.png",
+    apple: "/apple-touch-icon.png",
+  },
 };
 
 export default function RootLayout({
