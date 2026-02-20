@@ -3,24 +3,41 @@ import { Lead } from "@/lib/store";
 export async function sendLeadFollowupEmail(lead: Lead) {
   const apiKey = (process.env.RESEND_API_KEY || "").trim();
   const from = (process.env.FOLLOWUP_FROM_EMAIL || "").trim();
-  const bookingLink = (process.env.BOOKING_LINK || "https://cal.com/plainsight").trim();
   const replyTo = (process.env.REPLY_TO_EMAIL || "").trim();
-  const whatsappLink = "https://wa.me/254750192512?text=Hi%20PlainSight%20Digital%2C%20I%20just%20submitted%20a%20request%20and%20want%20to%20book%20a%20call.";
 
   if (!apiKey || !from) {
     return { sent: false as const, reason: "missing_env:RESEND_API_KEY_or_FOLLOWUP_FROM_EMAIL" };
   }
 
-  const subject = `We got your request, ${lead.name} — next steps`;
+  const subject = `Thanks ${lead.name} — we received your request`;
+  const text = [
+    `Hi ${lead.name},`,
+    "",
+    "Thanks for reaching out to Plainsight Digital.",
+    "",
+    "We received your request and we’re reviewing your business context now.",
+    "",
+    "If you want to speed things up, just reply with:",
+    "- your current website (if any)",
+    "- your main goal for the next 30 days",
+    "- and your preferred time for a quick call",
+    "",
+    "If WhatsApp is easier, reply and we’ll continue there.",
+    "",
+    "Best,",
+    "Dylan",
+    "Plainsight Digital",
+  ].join("\n");
+
   const html = `
     <div style="font-family:Arial,sans-serif;line-height:1.5;color:#111">
       <p>Hi ${lead.name},</p>
-      <p>Thanks for reaching out to <strong>PlainSight Digital</strong>. We received your request and we'll review your site/business context immediately.</p>
-      <p>Want to move faster? Pick a time here:</p>
-      <p><a href="${bookingLink}" style="display:inline-block;padding:10px 14px;background:#06b6d4;color:#fff;text-decoration:none;border-radius:8px;">Book a quick strategy call</a></p>
-      <p>If booking is inconvenient, just reply to this email or message us on WhatsApp:</p>
-      <p><a href="${whatsappLink}">${whatsappLink}</a></p>
-      <p>— PlainSight Digital</p>
+      <p>Thanks for reaching out to <strong>Plainsight Digital</strong>.</p>
+      <p>We received your request and we’re reviewing your business context now.</p>
+      <p>If you want to speed things up, just reply with:</p>
+      <p>- your current website (if any)<br/>- your main goal for the next 30 days<br/>- and your preferred time for a quick call</p>
+      <p>If WhatsApp is easier, reply and we’ll continue there.</p>
+      <p>Best,<br/>Dylan<br/>Plainsight Digital</p>
     </div>
   `;
 
@@ -35,6 +52,7 @@ export async function sendLeadFollowupEmail(lead: Lead) {
       to: [lead.email],
       ...(replyTo ? { reply_to: [replyTo] } : {}),
       subject,
+      text,
       html,
     }),
   });

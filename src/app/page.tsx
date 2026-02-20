@@ -8,68 +8,39 @@ type LeadForm = {
   email: string;
   phone: string;
   website: string;
-  niche: "dental" | "law" | "real-estate" | "other";
-  budget: "<50k" | "50k-100k" | "100k-250k" | "250k+";
+  niche: "clinic" | "law" | "school" | "hotel" | "logistics";
+  budget: "100k-250k" | "250k-500k" | "500k-1m" | "1m+";
   painPoint: string;
 };
 
-const services = [
+const sectors = [
+  "Private Clinics & Medical Centers",
+  "Law Firms",
+  "Private Schools",
+  "Hotels & Resorts",
+  "Logistics Companies",
+];
+
+const pillars = [
   {
-    title: "Software Development",
-    desc: "Custom web apps, internal systems, and APIs built to run fast and stay maintainable.",
-    bullets: ["Next.js + React", "FastAPI + Node", "Automation-ready architecture"],
+    title: "Authority-first design",
+    text: "Your digital presence should feel like a market leader before anyone books a call.",
   },
   {
-    title: "Lead Generation Websites",
-    desc: "Conversion-first websites that turn traffic into real inquiries using clear messaging, strong CTAs, and trust cues.",
-    bullets: ["Conversion UX", "WhatsApp + form funnels", "SEO + analytics"],
+    title: "Revenue path engineering",
+    text: "We design every page around inquiry, booking, and payment conversion paths.",
   },
   {
-    title: "Growth & Optimization",
-    desc: "From launch to optimization, we track behavior and improve conversion with actual data.",
-    bullets: ["Event tracking", "Landing page optimization", "Lead scoring workflows"],
+    title: "Operational follow-through",
+    text: "Lead routing, follow-up sequences, and dashboard visibility so opportunities don’t leak.",
   },
 ];
 
-const proof = [
-  { label: "Delivery speed", value: "7-day" },
-  { label: "Primary focus", value: "Leads" },
-  { label: "Build approach", value: "Custom" },
-  { label: "Communication", value: "Direct" },
-];
-
-const signatureProjects = [
-  {
-    name: "Resonance Platform",
-    type: "AI-powered personal operating system",
-    impact: "From concept to a production-ready full-stack product",
-    stack: ["Flutter", "FastAPI", "AI tooling", "Cloud deployment"],
-  },
-  {
-    name: "Aestra",
-    type: "Next-generation digital audio workstation",
-    impact: "Built as a high-performance creative tool with a distinct brand identity",
-    stack: ["C++", "Audio engine", "Product design", "aestra.studio"],
-    href: "https://aestra.studio",
-  },
-];
-
-const caseStudies = [
-  {
-    title: "Service Business Funnel",
-    result: "+2.3x inquiry rate",
-    detail: "Rebuilt the site with clearer offers, WhatsApp CTA, and trust-focused layout.",
-  },
-  {
-    title: "Founder Landing System",
-    result: "37% lower drop-off",
-    detail: "Simplified copy hierarchy and tightened mobile-first conversion flow.",
-  },
-  {
-    title: "Lead Ops Dashboard",
-    result: "Faster follow-up",
-    detail: "Implemented lead scoring, priority tiers, and one-click outreach actions.",
-  },
+const outcomes = [
+  { value: "High-ticket", label: "Client positioning" },
+  { value: "Kenya-first", label: "Market strategy" },
+  { value: "Global-ready", label: "Payment expansion path" },
+  { value: "Fast execution", label: "Delivery rhythm" },
 ];
 
 export default function Home() {
@@ -79,17 +50,17 @@ export default function Home() {
     email: "",
     phone: "",
     website: "",
-    niche: "dental",
-    budget: "50k-100k",
+    niche: "clinic",
+    budget: "250k-500k",
     painPoint: "",
   });
+
   const [status, setStatus] = useState<"idle" | "submitting" | "sent" | "error">("idle");
+  const ctaHref = useMemo(() => "#audit", []);
 
   useEffect(() => {
     void track("page_view", window.location.pathname);
   }, []);
-
-  const ctaHref = useMemo(() => "#audit", []);
 
   async function track(type: "page_view" | "cta_click" | "form_start" | "form_submit", page: string, meta?: Record<string, string>) {
     try {
@@ -124,8 +95,8 @@ export default function Home() {
         email: "",
         phone: "",
         website: "",
-        niche: "dental",
-        budget: "50k-100k",
+        niche: "clinic",
+        budget: "250k-500k",
         painPoint: "",
       });
     } catch {
@@ -134,125 +105,75 @@ export default function Home() {
   }
 
   return (
-    <main className="min-h-screen bg-[#070b14] text-white">
-      <div className="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_15%_20%,rgba(34,211,238,0.12),transparent_30%),radial-gradient(circle_at_85%_0%,rgba(251,191,36,0.10),transparent_30%)]" />
-      <section className="max-w-6xl mx-auto px-4 sm:px-6 py-14 sm:py-20 md:py-24">
-        <p className="text-cyan-400 font-medium mb-4 reveal">PlainSight Digital</p>
-        <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold tracking-tight leading-tight mb-5 sm:mb-6 max-w-5xl reveal reveal-delay-1">
-          We build websites and software that
-          <span className="text-cyan-300"> bring in serious clients.</span>
+    <main className="min-h-screen bg-[#09090b] text-[#f5f3ef]">
+      <div className="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_15%_20%,rgba(245,158,11,0.14),transparent_30%),radial-gradient(circle_at_85%_0%,rgba(251,191,36,0.08),transparent_28%),linear-gradient(to_bottom,rgba(10,10,10,0.96),rgba(10,10,10,1))]" />
+
+      <section className="mx-auto max-w-6xl px-5 pt-16 pb-12 sm:px-7 md:pt-24 md:pb-16">
+        <p className="reveal text-sm uppercase tracking-[0.24em] text-amber-300">Plainsight Digital</p>
+        <h1 className="reveal reveal-delay-1 mt-4 max-w-5xl font-display text-4xl leading-[1.05] sm:text-5xl md:text-7xl">
+          Luxury-grade websites for businesses that can’t afford to look average.
         </h1>
-        <p className="text-slate-300 max-w-3xl text-base sm:text-lg mb-7 sm:mb-8 reveal reveal-delay-2">
-          For founders and service businesses tired of pretty sites that do nothing. We build digital systems that earn trust quickly and turn visits into real conversations.
+        <p className="reveal reveal-delay-2 mt-6 max-w-3xl text-base text-zinc-300 sm:text-lg">
+          We build high-conversion digital systems for clinics, law firms, schools, hotels, and logistics brands — engineered as a lifetime investment fee, not a disposable design expense.
         </p>
 
-        <div className="flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:gap-4 reveal reveal-delay-3">
+        <div className="reveal reveal-delay-3 mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
           <a
             href={ctaHref}
-            className="w-full sm:w-auto text-center px-6 py-3 rounded-lg bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-semibold"
-            onClick={() => {
-              void track("cta_click", window.location.pathname, { cta: "hero_free_audit" });
-            }}
+            onClick={() => void track("cta_click", window.location.pathname, { cta: "hero_audit" })}
+            className="rounded-md bg-amber-300 px-7 py-3 text-center text-sm font-semibold tracking-wide text-zinc-950 transition hover:bg-amber-200"
           >
-            Get Free 2-Minute Audit
+            Request Premium Audit
           </a>
-          <a href="#services" className="w-full sm:w-auto text-center px-6 py-3 rounded-lg border border-slate-700 hover:bg-slate-900">
-            Explore Services
+          <a href="#work" className="rounded-md border border-zinc-700 px-7 py-3 text-center text-sm text-zinc-200 transition hover:border-zinc-500 hover:bg-zinc-900">
+            See Market Fit
           </a>
         </div>
       </section>
 
-      <section className="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
-          {proof.map((item) => (
-            <div key={item.label} className="rounded-xl border border-slate-800 bg-slate-900/60 p-4">
-              <div className="text-lg sm:text-2xl font-semibold text-cyan-300">{item.value}</div>
-              <div className="text-xs sm:text-sm text-slate-400">{item.label}</div>
+      <section className="mx-auto max-w-6xl px-5 pb-10 sm:px-7">
+        <div className="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-4">
+          {outcomes.map((item) => (
+            <div key={item.label} className="rounded-xl border border-zinc-800 bg-zinc-900/70 p-4">
+              <p className="font-display text-xl text-amber-200 sm:text-2xl">{item.value}</p>
+              <p className="text-xs uppercase tracking-wide text-zinc-400">{item.label}</p>
             </div>
           ))}
         </div>
       </section>
 
-      <section id="services" className="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
-        <h2 className="text-2xl md:text-3xl font-bold mb-3">What we do</h2>
-        <p className="text-slate-300 mb-8 max-w-2xl">Three things we care about: sharp execution, measurable growth, and technical depth.</p>
-
-        <div className="grid md:grid-cols-3 gap-4">
-          {services.map((service) => (
-            <article key={service.title} className="rounded-xl border border-slate-800 bg-slate-900/60 p-5">
-              <h3 className="text-lg font-semibold mb-2">{service.title}</h3>
-              <p className="text-slate-300 text-sm mb-4">{service.desc}</p>
-              <ul className="space-y-2 text-sm text-slate-400">
-                {service.bullets.map((b) => (
-                  <li key={b}>• {b}</li>
-                ))}
-              </ul>
+      <section id="work" className="mx-auto max-w-6xl px-5 py-12 sm:px-7 md:py-16">
+        <div className="grid gap-5 md:grid-cols-3">
+          {pillars.map((item) => (
+            <article key={item.title} className="rounded-2xl border border-zinc-800 bg-zinc-900/60 p-6">
+              <h2 className="font-display text-2xl text-zinc-100">{item.title}</h2>
+              <p className="mt-3 text-sm leading-6 text-zinc-300">{item.text}</p>
             </article>
           ))}
         </div>
       </section>
 
-
-      <section className="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
-        <h2 className="text-2xl md:text-3xl font-bold mb-3">Recent outcomes</h2>
-        <p className="text-slate-300 mb-8 max-w-2xl">Clear positioning, stronger conversion paths, and systems that help you close faster.</p>
-        <div className="grid md:grid-cols-3 gap-4">
-          {caseStudies.map((item) => (
-            <article key={item.title} className="rounded-xl border border-slate-800 bg-gradient-to-b from-slate-900 to-slate-950 p-5">
-              <p className="text-xs uppercase tracking-wider text-cyan-300 mb-2">{item.result}</p>
-              <h3 className="text-lg font-semibold mb-2">{item.title}</h3>
-              <p className="text-sm text-slate-300">{item.detail}</p>
-            </article>
-          ))}
-        </div>
-      </section>
-
-
-      <section className="max-w-6xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
-        <p className="text-xs uppercase tracking-[0.2em] text-amber-300 mb-3">Signature Projects</p>
-        <div className="grid md:grid-cols-2 gap-4">
-          {signatureProjects.map((project) => (
-            <div key={project.name} className="rounded-2xl border border-amber-300/20 bg-gradient-to-br from-slate-900/90 to-slate-950 p-5 sm:p-8">
-              <h2 className="text-2xl font-bold mb-2">{project.name}</h2>
-              <p className="text-slate-300 mb-4">{project.type} — {project.impact}</p>
-              <div className="flex flex-wrap gap-2 mb-4">
-                {project.stack.map((item) => (
-                  <span key={item} className="px-3 py-1 text-xs rounded-full bg-amber-300/10 text-amber-200 border border-amber-300/20">
-                    {item}
-                  </span>
-                ))}
+      <section className="mx-auto max-w-6xl px-5 py-8 sm:px-7 md:py-12">
+        <div className="rounded-2xl border border-amber-300/20 bg-gradient-to-br from-zinc-900/90 to-zinc-950 p-6 md:p-8">
+          <p className="text-xs uppercase tracking-[0.18em] text-amber-300">Target sectors</p>
+          <div className="mt-5 grid gap-3 sm:grid-cols-2 md:grid-cols-3">
+            {sectors.map((sector) => (
+              <div key={sector} className="rounded-lg border border-zinc-800 bg-zinc-900/60 px-4 py-3 text-sm text-zinc-200">
+                {sector}
               </div>
-              {project.href && (
-                <a href={project.href} target="_blank" rel="noopener noreferrer" className="text-sm text-cyan-300 hover:text-cyan-200">
-                  Visit aestra.studio →
-                </a>
-              )}
-            </div>
-          ))}
-        </div>
-      </section>
-      <section className="max-w-6xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
-        <div className="rounded-2xl border border-slate-800 bg-slate-900/70 p-5 sm:p-8">
-          <h2 className="text-2xl md:text-3xl font-bold mb-3">About PlainSight</h2>
-          <p className="text-slate-300 mb-4">
-            We are a boutique studio that ships practical work. No bloat, no endless scope creep, just clean builds focused on performance and conversion.
-          </p>
-          <p className="text-slate-400">
-            If your site is not converting, your sales process is too manual, or your digital presence feels behind, we can fix it.
-          </p>
+            ))}
+          </div>
         </div>
       </section>
 
-      <section id="audit" className="max-w-4xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
-        <div className="rounded-2xl border border-slate-800 bg-slate-900/70 p-4 sm:p-6 md:p-8">
-          <h2 className="text-2xl font-bold mb-2">Request your free website performance review</h2>
-          <p className="text-slate-300 mb-6">We&apos;ll send you a short teardown with conversion leaks, trust gaps, and quick wins.</p>
+      <section id="audit" className="mx-auto max-w-4xl px-5 py-12 sm:px-7 md:py-16">
+        <div className="rounded-2xl border border-zinc-800 bg-zinc-900/70 p-5 sm:p-7 md:p-8">
+          <h2 className="font-display text-3xl text-zinc-100">Get your high-ticket website audit</h2>
+          <p className="mt-3 text-zinc-300">You’ll get conversion leaks, trust gaps, and practical fixes your team can execute immediately.</p>
 
           <form
-            className="grid md:grid-cols-2 gap-4"
-            onFocus={() => {
-              void track("form_start", window.location.pathname, { form: "free_audit" });
-            }}
+            className="mt-7 grid gap-4 md:grid-cols-2"
+            onFocus={() => void track("form_start", window.location.pathname, { form: "premium_audit" })}
             onSubmit={onSubmit}
           >
             <Field label="Your Name">
@@ -275,46 +196,47 @@ export default function Home() {
               <input value={form.website} onChange={(e) => setForm((f) => ({ ...f, website: e.target.value }))} className="input" placeholder="https://" />
             </Field>
 
-            <Field label="Niche">
+            <Field label="Industry">
               <select value={form.niche} onChange={(e) => setForm((f) => ({ ...f, niche: e.target.value as LeadForm["niche"] }))} className="input">
-                <option value="dental">Dental / Aesthetic</option>
+                <option value="clinic">Clinic / Medical Center</option>
                 <option value="law">Law Firm</option>
-                <option value="real-estate">Real Estate</option>
-                <option value="other">Other</option>
+                <option value="school">School</option>
+                <option value="hotel">Hotel / Resort</option>
+                <option value="logistics">Logistics</option>
               </select>
             </Field>
 
-            <Field label="Budget" className="md:col-span-2">
+            <Field label="Budget Range" className="md:col-span-2">
               <select value={form.budget} onChange={(e) => setForm((f) => ({ ...f, budget: e.target.value as LeadForm["budget"] }))} className="input">
-                <option value="<50k">Under KES 50k</option>
-                <option value="50k-100k">KES 50k - 100k</option>
                 <option value="100k-250k">KES 100k - 250k</option>
-                <option value="250k+">KES 250k+</option>
+                <option value="250k-500k">KES 250k - 500k</option>
+                <option value="500k-1m">KES 500k - 1M</option>
+                <option value="1m+">KES 1M+</option>
               </select>
             </Field>
 
-            <Field label="What is the biggest issue with your current website?" className="md:col-span-2">
+            <Field label="Biggest conversion problem right now" className="md:col-span-2">
               <textarea required rows={4} value={form.painPoint} onChange={(e) => setForm((f) => ({ ...f, painPoint: e.target.value }))} className="input" />
             </Field>
 
             <div className="md:col-span-2">
-              <button disabled={status === "submitting"} className="w-full py-3 rounded-lg bg-cyan-500 hover:bg-cyan-400 disabled:opacity-60 text-slate-950 font-semibold">
-                {status === "submitting" ? "Submitting..." : "Send My Free Audit"}
+              <button disabled={status === "submitting"} className="w-full rounded-md bg-amber-300 py-3 text-sm font-semibold tracking-wide text-zinc-950 transition hover:bg-amber-200 disabled:opacity-60">
+                {status === "submitting" ? "Submitting..." : "Send My Premium Audit"}
               </button>
             </div>
 
-            {status === "sent" && <p className="md:col-span-2 text-emerald-400">Submitted — we&apos;ll reach out shortly.</p>}
+            {status === "sent" && <p className="md:col-span-2 text-emerald-400">Submitted — we’ll contact you shortly.</p>}
             {status === "error" && <p className="md:col-span-2 text-rose-400">Something went wrong. Please try again.</p>}
           </form>
         </div>
       </section>
 
       <a
-        href="https://wa.me/254750192512?text=Hi%20PlainSight%20Digital%2C%20I%20want%20a%20website%20that%20brings%20more%20clients."
+        href="https://wa.me/254750192512?text=Hi%20Plainsight%20Digital%2C%20I%20want%20a%20premium%20website%20audit."
         target="_blank"
         rel="noopener noreferrer"
-        aria-label="Chat with PlainSight Digital on WhatsApp"
-        className="fixed bottom-5 right-5 z-50 h-14 w-14 rounded-full bg-emerald-500 hover:bg-emerald-400 text-white flex items-center justify-center shadow-lg shadow-emerald-500/30"
+        aria-label="Chat with Plainsight Digital on WhatsApp"
+        className="fixed bottom-5 right-5 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-emerald-500 text-white shadow-lg shadow-emerald-500/30 transition hover:bg-emerald-400"
       >
         <svg viewBox="0 0 24 24" aria-hidden="true" className="block h-7 w-7 fill-current">
           <path d="M20.52 3.48A11.86 11.86 0 0 0 12.07 0C5.54 0 .23 5.3.23 11.83c0 2.08.54 4.1 1.57 5.88L0 24l6.45-1.7a11.8 11.8 0 0 0 5.62 1.43h.01c6.52 0 11.83-5.31 11.84-11.84a11.8 11.8 0 0 0-3.4-8.41ZM12.08 21.73h-.01a9.8 9.8 0 0 1-4.99-1.37l-.36-.21-3.83 1.01 1.02-3.74-.23-.38a9.81 9.81 0 0 1-1.5-5.21c0-5.42 4.41-9.83 9.84-9.83 2.63 0 5.1 1.02 6.95 2.88a9.78 9.78 0 0 1 2.88 6.95c0 5.42-4.42 9.83-9.77 9.9Zm5.39-7.36c-.3-.15-1.77-.87-2.04-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.23-.64.08-.3-.15-1.24-.45-2.36-1.44-.88-.78-1.47-1.74-1.64-2.03-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.53.15-.18.2-.3.3-.5.1-.2.05-.38-.02-.53-.08-.15-.67-1.62-.91-2.22-.24-.58-.49-.5-.67-.51-.17-.01-.38-.01-.58-.01-.2 0-.53.08-.81.38-.28.3-1.06 1.03-1.06 2.51 0 1.48 1.08 2.91 1.23 3.11.15.2 2.11 3.22 5.12 4.52.72.31 1.28.49 1.72.62.72.23 1.37.2 1.89.12.58-.09 1.77-.72 2.02-1.41.25-.69.25-1.28.17-1.41-.08-.13-.27-.2-.57-.35Z" />
@@ -327,7 +249,7 @@ export default function Home() {
 function Field({ label, children, className = "" }: { label: string; children: React.ReactNode; className?: string }) {
   return (
     <label className={`flex flex-col gap-2 ${className}`}>
-      <span className="text-sm text-slate-300">{label}</span>
+      <span className="text-sm text-zinc-300">{label}</span>
       {children}
     </label>
   );

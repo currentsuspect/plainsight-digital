@@ -1,30 +1,26 @@
 @import "tailwindcss";
 
 :root {
-  --background: #070b14;
-  --foreground: #eef2ff;
-  --brand-accent: #67e8f9;
+  --background: #09090b;
+  --foreground: #f5f3ef;
+  --brand-accent: #f59e0b;
   --brand-lux: #fcd34d;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #070b14;
-    --foreground: #eef2ff;
-  }
+  --font-sans: var(--font-jakarta);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  font-family: var(--font-jakarta), sans-serif;
+}
+
+.font-display {
+  font-family: var(--font-playfair), serif;
 }
 
 .reveal {
@@ -47,16 +43,16 @@ body {
 .input {
   width: 100%;
   min-height: 44px;
-  border: 1px solid rgb(51 65 85);
+  border: 1px solid rgb(63 63 70);
   border-radius: 0.5rem;
-  background: rgb(15 23 42 / 0.6);
-  color: white;
-  padding: 0.7rem 0.8rem;
+  background: rgb(24 24 27 / 0.75);
+  color: rgb(245 243 239);
+  padding: 0.72rem 0.85rem;
   font-size: 16px;
 }
 
 .input:focus {
   outline: none;
-  border-color: rgb(34 211 238);
-  box-shadow: 0 0 0 2px rgb(34 211 238 / 0.2);
+  border-color: rgb(252 211 77);
+  box-shadow: 0 0 0 2px rgb(252 211 77 / 0.22);
 }

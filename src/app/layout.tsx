@@ -1,20 +1,20 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Playfair_Display, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const jakarta = Plus_Jakarta_Sans({
+  variable: "--font-jakarta",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const playfair = Playfair_Display({
+  variable: "--font-playfair",
   subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
-  title: "PlainSight Digital | Modern Web, Mobile & Desktop Development",
-  description: "A boutique development studio crafting modern web, mobile, and desktop applications with clean code and intentional design.",
+  title: "Plainsight Digital | High-Ticket Websites & Conversion Systems",
+  description: "Luxury-grade, conversion-focused websites for clinics, law firms, schools, hotels, and logistics companies.",
   icons: {
     icon: "/logo.png",
     apple: "/apple-touch-icon.png",
@@ -29,7 +29,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${jakarta.variable} ${playfair.variable} antialiased`}
       >
         {children}
       </body>

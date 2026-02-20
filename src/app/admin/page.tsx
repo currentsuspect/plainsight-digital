@@ -9,13 +9,14 @@ function scoreLead(lead: Lead) {
 
   if (lead.website) score += 10;
   if (lead.phone) score += 10;
-  if (lead.painPoint && lead.painPoint.length > 30) score += 10;
+  if (lead.painPoint && lead.painPoint.length > 40) score += 15;
 
-  if (lead.niche === "dental" || lead.niche === "law" || lead.niche === "real-estate") score += 20;
+  if (["clinic", "law", "school", "hotel", "logistics", "dental", "real-estate"].includes(lead.niche)) score += 20;
 
-  if (lead.budget === "50k-100k") score += 20;
-  if (lead.budget === "100k-250k") score += 30;
-  if (lead.budget === "250k+") score += 40;
+  if (["50k-100k", "100k-250k"].includes(lead.budget)) score += 15;
+  if (["250k+", "250k-500k"].includes(lead.budget)) score += 25;
+  if (["500k-1m"].includes(lead.budget)) score += 35;
+  if (["1m+"].includes(lead.budget)) score += 45;
 
   const priority = score >= 70 ? "Hot" : score >= 45 ? "Warm" : "Cold";
   const rank = priority === "Hot" ? 0 : priority === "Warm" ? 1 : 2;
@@ -25,15 +26,15 @@ function scoreLead(lead: Lead) {
 
 function buildWhatsAppLink(lead: Lead) {
   const text = encodeURIComponent(
-    `Hi ${lead.name}, thanks for reaching out to PlainSight Digital. We reviewed your request for ${lead.businessName} and can share quick wins + a plan. Are you available for a short call today?`
+    `Hi ${lead.name}, thanks for reaching out to Plainsight Digital. We reviewed your request for ${lead.businessName} and can share quick wins + a plan. Are you available for a short call today?`
   );
   return `https://wa.me/${(lead.phone || "").replace(/\D/g, "")}?text=${text}`;
 }
 
 function buildMailtoLink(lead: Lead) {
-  const subject = encodeURIComponent(`PlainSight audit for ${lead.businessName}`);
+  const subject = encodeURIComponent(`Plainsight audit for ${lead.businessName}`);
   const body = encodeURIComponent(
-    `Hi ${lead.name},\n\nThanks for reaching out to PlainSight Digital. We reviewed your details and can share practical improvements for ${lead.businessName}.\n\nWould you be open to a 15-minute call this week?\n\nBest,\nPlainSight Digital`
+    `Hi ${lead.name},\n\nThanks for reaching out to Plainsight Digital. We reviewed your details and can share practical improvements for ${lead.businessName}.\n\nWould you be open to a 15-minute call this week?\n\nBest,\nDylan\nPlainsight Digital`
   );
   return `mailto:${lead.email}?subject=${subject}&body=${body}`;
 }
@@ -66,36 +67,43 @@ export default async function AdminPage() {
   };
 
   return (
-    <main className="min-h-screen bg-slate-950 text-white p-4 sm:p-8">
-      <div className="max-w-6xl mx-auto space-y-8">
-        <div className="flex items-center justify-between"><h1 className="text-3xl font-bold">PlainSight Lead Dashboard</h1><a href="/admin/ops" className="text-cyan-300 hover:text-cyan-200">Ops Engine →</a></div>
+    <main className="min-h-screen bg-zinc-950 text-zinc-100 p-4 sm:p-8">
+      <div className="max-w-7xl mx-auto space-y-8">
+        <header className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <p className="text-xs uppercase tracking-[0.2em] text-amber-300">Plainsight Control</p>
+            <h1 className="font-display text-3xl sm:text-4xl">Lead Engine Dashboard</h1>
+          </div>
+          <a href="/admin/ops" className="text-amber-300 hover:text-amber-200 text-sm">Ops Engine →</a>
+        </header>
 
-        <section className="grid md:grid-cols-5 gap-4">
+        <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
           <Stat label="Page Views" value={String(pageViews)} />
           <Stat label="CTA Clicks" value={String(ctaClicks)} />
           <Stat label="Leads Submitted" value={String(submits)} />
           <Stat label="CTA Rate" value={pct(ctaRate)} />
-          <Stat label="Visit→Lead" value={pct(submitRate)} />
+          <Stat label="Visit → Lead" value={pct(submitRate)} />
         </section>
 
-        <section className="grid sm:grid-cols-3 gap-4">
+        <section className="grid gap-4 sm:grid-cols-3">
           <Stat label="🔥 Hot Leads" value={String(hot)} />
           <Stat label="🟠 Warm Leads" value={String(warm)} />
           <Stat label="🔵 Cold Leads" value={String(cold)} />
         </section>
 
-
-        <section className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
+        <section className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
           {Object.entries(pipeline).map(([k, v]) => (
-            <Stat key={k} label={k} value={String(v)} />
+            <Stat key={k} label={k} value={String(v)} compact />
           ))}
         </section>
 
-        <section className="rounded-xl border border-slate-800 overflow-hidden">
-          <div className="px-4 py-3 bg-slate-900 border-b border-slate-800 font-medium">Latest Leads ({leads.length})</div>
+        <section className="overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-900/70">
+          <div className="border-b border-zinc-800 bg-zinc-900/90 px-4 py-3 text-sm font-medium text-zinc-200">
+            Latest Leads ({leads.length})
+          </div>
           <div className="overflow-auto">
-            <table className="w-full text-left text-sm">
-              <thead className="bg-slate-900/70 text-slate-300">
+            <table className="w-full min-w-[1100px] text-left text-sm">
+              <thead className="bg-zinc-900/70 text-zinc-300">
                 <tr>
                   <th className="p-3">Date</th>
                   <th className="p-3">Name</th>
@@ -111,8 +119,8 @@ export default async function AdminPage() {
               </thead>
               <tbody>
                 {scoredLeads.map(({ lead, score, priority }) => (
-                  <tr key={lead.id} className="border-t border-slate-800">
-                    <td className="p-3 text-slate-400">{new Date(lead.createdAt).toLocaleString()}</td>
+                  <tr key={lead.id} className="border-t border-zinc-800 align-top">
+                    <td className="p-3 text-zinc-400">{new Date(lead.createdAt).toLocaleString()}</td>
                     <td className="p-3">{lead.name}</td>
                     <td className="p-3">{lead.businessName}</td>
                     <td className="p-3">{lead.email}</td>
@@ -143,14 +151,14 @@ export default async function AdminPage() {
                           <option>Won</option>
                           <option>Lost</option>
                         </select>
-                        <button className="px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-xs" type="submit">Save</button>
+                        <button className="rounded border border-zinc-700 px-2 py-1 text-xs hover:bg-zinc-800" type="submit">Save</button>
                       </form>
                     </td>
                     <td className="p-3">
                       <div className="flex gap-2">
-                        <a href={buildMailtoLink(lead)} className="px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-xs">Email</a>
+                        <a href={buildMailtoLink(lead)} className="rounded border border-zinc-700 px-2 py-1 text-xs hover:bg-zinc-800">Email</a>
                         {lead.phone && (
-                          <a href={buildWhatsAppLink(lead)} target="_blank" rel="noopener noreferrer" className="px-2 py-1 rounded bg-emerald-700/70 hover:bg-emerald-600 text-xs">
+                          <a href={buildWhatsAppLink(lead)} target="_blank" rel="noopener noreferrer" className="rounded bg-emerald-700/70 px-2 py-1 text-xs hover:bg-emerald-600">
                             WhatsApp
                           </a>
                         )}
@@ -160,7 +168,7 @@ export default async function AdminPage() {
                 ))}
                 {leads.length === 0 && (
                   <tr>
-                    <td className="p-4 text-slate-400" colSpan={10}>No leads yet. Send traffic to your audit form.</td>
+                    <td className="p-4 text-zinc-400" colSpan={10}>No leads yet. Send traffic to your audit form.</td>
                   </tr>
                 )}
               </tbody>
@@ -172,11 +180,11 @@ export default async function AdminPage() {
   );
 }
 
-function Stat({ label, value }: { label: string; value: string }) {
+function Stat({ label, value, compact = false }: { label: string; value: string; compact?: boolean }) {
   return (
-    <div className="rounded-xl border border-slate-800 bg-slate-900/60 p-4">
-      <div className="text-sm text-slate-400">{label}</div>
-      <div className="text-2xl font-semibold mt-1">{value}</div>
+    <div className="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4">
+      <div className={`text-zinc-400 ${compact ? "text-xs" : "text-sm"}`}>{label}</div>
+      <div className={`mt-1 font-semibold ${compact ? "text-xl" : "text-2xl"}`}>{value}</div>
     </div>
   );
 }
