@@ -27,11 +27,13 @@ body {
 
 .input {
   width: 100%;
+  min-height: 44px;
   border: 1px solid rgb(51 65 85);
   border-radius: 0.5rem;
   background: rgb(15 23 42 / 0.6);
   color: white;
-  padding: 0.65rem 0.75rem;
+  padding: 0.7rem 0.8rem;
+  font-size: 16px;
 }
 
 .input:focus {

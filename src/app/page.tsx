@@ -91,33 +91,33 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-slate-950 text-white">
-      <section className="max-w-6xl mx-auto px-6 py-20 md:py-28">
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 py-14 sm:py-20 md:py-28">
         <p className="text-cyan-400 font-medium mb-4">PlainSight Digital</p>
-        <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-6">
+        <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold leading-tight mb-5 sm:mb-6">
           We build websites that bring
           <span className="text-cyan-400"> qualified clients.</span>
         </h1>
-        <p className="text-slate-300 max-w-2xl text-lg mb-8">
+        <p className="text-slate-300 max-w-2xl text-base sm:text-lg mb-7 sm:mb-8">
           7-Day Lead Engine Setup for service businesses in Kenya — conversion-focused pages, WhatsApp funnels, analytics, and a clear path from visitor to inquiry.
         </p>
 
-        <div className="flex flex-wrap gap-4">
+        <div className="flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:gap-4">
           <a
             href={ctaHref}
-            className="px-6 py-3 rounded-lg bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-semibold"
+            className="w-full sm:w-auto text-center px-6 py-3 rounded-lg bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-semibold"
             onClick={() => {
               void track("cta_click", window.location.pathname, { cta: "hero_free_audit" });
             }}
           >
             Get Free 2-Minute Audit
           </a>
-          <a href="/admin" className="px-6 py-3 rounded-lg border border-slate-700 hover:bg-slate-900">
+          <a href="/admin" className="w-full sm:w-auto text-center px-6 py-3 rounded-lg border border-slate-700 hover:bg-slate-900">
             View Lead Dashboard
           </a>
         </div>
       </section>
 
-      <section className="max-w-6xl mx-auto px-6 py-12">
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 py-10 sm:py-12">
         <h2 className="text-2xl md:text-3xl font-bold mb-6">Who we help first</h2>
         <div className="grid md:grid-cols-3 gap-4">
           {nicheCards.map((card) => (
@@ -129,8 +129,8 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="audit" className="max-w-4xl mx-auto px-6 py-14">
-        <div className="rounded-2xl border border-slate-800 bg-slate-900/70 p-6 md:p-8">
+      <section id="audit" className="max-w-4xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
+        <div className="rounded-2xl border border-slate-800 bg-slate-900/70 p-4 sm:p-6 md:p-8">
           <h2 className="text-2xl font-bold mb-2">Request your free website performance review</h2>
           <p className="text-slate-300 mb-6">We&apos;ll send you a short teardown with conversion leaks, trust gaps, and quick wins.</p>
 
