@@ -43,6 +43,23 @@ const outcomes = [
   { value: "Fast execution", label: "Delivery rhythm" },
 ];
 
+const proofOfWork = [
+  {
+    title: "Service Business Funnel Rebuild",
+    result: "+2.3x inquiry rate",
+    note: "Reworked structure, copy, and CTA placement so qualified leads had a clear next step.",
+  },
+  {
+    title: "Founder Landing System",
+    result: "37% lower drop-off",
+    note: "Tightened mobile flow and simplified messaging to keep users moving to contact.",
+  },
+  {
+    title: "Lead Ops Dashboard",
+    result: "Faster follow-up",
+    note: "Added priority scoring and cleaner handoff from lead capture to outreach.",
+  },
+];
 export default function Home() {
   const [form, setForm] = useState<LeadForm>({
     name: "",
@@ -148,6 +165,29 @@ export default function Home() {
             <article key={item.title} className="rounded-2xl border border-zinc-800 bg-zinc-900/60 p-6">
               <h2 className="font-display text-2xl text-zinc-100">{item.title}</h2>
               <p className="mt-3 text-sm leading-6 text-zinc-300">{item.text}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-5 py-8 sm:px-7 md:py-12">
+        <div className="rounded-2xl border border-zinc-800 bg-zinc-900/60 p-6 md:p-8">
+          <p className="text-xs uppercase tracking-[0.18em] text-amber-300">About Plainsight</p>
+          <h2 className="mt-3 font-display text-3xl text-zinc-100">We build for operators, not vanity metrics.</h2>
+          <p className="mt-4 max-w-3xl text-zinc-300">
+            We’re a small team that cares about business outcomes. If your site looks decent but doesn’t close, we fix the conversion path, tighten your offer, and make follow-up easier for your team.
+          </p>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-5 py-4 sm:px-7 md:py-8">
+        <p className="text-xs uppercase tracking-[0.18em] text-amber-300">Proof of work</p>
+        <div className="mt-4 grid gap-4 md:grid-cols-3">
+          {proofOfWork.map((item) => (
+            <article key={item.title} className="rounded-xl border border-zinc-800 bg-zinc-900/60 p-5">
+              <p className="text-xs uppercase tracking-wide text-amber-200">{item.result}</p>
+              <h3 className="mt-2 text-lg font-semibold text-zinc-100">{item.title}</h3>
+              <p className="mt-2 text-sm text-zinc-300">{item.note}</p>
             </article>
           ))}
         </div>
