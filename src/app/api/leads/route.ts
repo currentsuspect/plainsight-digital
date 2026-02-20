@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { addLead, listLeads } from "@/lib/store";
-import { notifyTelegramLead } from "@/lib/notify";
+import { notifyTelegramFollowupStatus, notifyTelegramLead } from "@/lib/notify";
+import { sendLeadFollowupEmail } from "@/lib/followup";
 
 export async function GET(request: Request) {
   const apiKey = request.headers.get("x-admin-key");
@@ -34,6 +35,8 @@ export async function POST(request: Request) {
   });
 
   const notification = await notifyTelegramLead(lead);
+  const followup = await sendLeadFollowupEmail(lead);
+  const followupNotification = await notifyTelegramFollowupStatus(lead, followup);
 
-  return NextResponse.json({ ok: true, lead, notification });
+  return NextResponse.json({ ok: true, lead, notification, followup, followupNotification });
 }
