@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 
 export function middleware(req: NextRequest) {
-  if (!req.nextUrl.pathname.startsWith("/admin")) return NextResponse.next();
+  const guarded = req.nextUrl.pathname.startsWith("/admin") || req.nextUrl.pathname.startsWith("/api/admin");
+  if (!guarded) return NextResponse.next();
 
   const token = (req.cookies.get("admin_session")?.value || "").trim();
   const expected = (process.env.ADMIN_SESSION_TOKEN || "plainsight-admin-session-v1").trim();
@@ -15,5 +16,5 @@ export function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/admin/:path*"],
+  matcher: ["/admin/:path*", "/api/admin/:path*"],
 };

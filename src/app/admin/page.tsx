@@ -56,6 +56,15 @@ export default async function AdminPage() {
   const warm = scoredLeads.filter((x) => x.priority === "Warm").length;
   const cold = scoredLeads.filter((x) => x.priority === "Cold").length;
 
+  const pipeline = {
+    New: scoredLeads.filter((x) => x.lead.status === "New").length,
+    Contacted: scoredLeads.filter((x) => x.lead.status === "Contacted").length,
+    "Audit Sent": scoredLeads.filter((x) => x.lead.status === "Audit Sent").length,
+    Proposal: scoredLeads.filter((x) => x.lead.status === "Proposal").length,
+    Won: scoredLeads.filter((x) => x.lead.status === "Won").length,
+    Lost: scoredLeads.filter((x) => x.lead.status === "Lost").length,
+  };
+
   return (
     <main className="min-h-screen bg-slate-950 text-white p-4 sm:p-8">
       <div className="max-w-6xl mx-auto space-y-8">
@@ -75,6 +84,13 @@ export default async function AdminPage() {
           <Stat label="🔵 Cold Leads" value={String(cold)} />
         </section>
 
+
+        <section className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
+          {Object.entries(pipeline).map(([k, v]) => (
+            <Stat key={k} label={k} value={String(v)} />
+          ))}
+        </section>
+
         <section className="rounded-xl border border-slate-800 overflow-hidden">
           <div className="px-4 py-3 bg-slate-900 border-b border-slate-800 font-medium">Latest Leads ({leads.length})</div>
           <div className="overflow-auto">
@@ -89,6 +105,7 @@ export default async function AdminPage() {
                   <th className="p-3">Budget</th>
                   <th className="p-3">Score</th>
                   <th className="p-3">Priority</th>
+                  <th className="p-3">Pipeline</th>
                   <th className="p-3">Actions</th>
                 </tr>
               </thead>
@@ -116,6 +133,20 @@ export default async function AdminPage() {
                       </span>
                     </td>
                     <td className="p-3">
+                      <form action="/api/admin/leads" method="post" className="flex items-center gap-2">
+                        <input type="hidden" name="id" value={lead.id} />
+                        <select name="status" defaultValue={lead.status || "New"} className="input !min-h-8 !py-1 !px-2 text-xs">
+                          <option>New</option>
+                          <option>Contacted</option>
+                          <option>Audit Sent</option>
+                          <option>Proposal</option>
+                          <option>Won</option>
+                          <option>Lost</option>
+                        </select>
+                        <button className="px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-xs" type="submit">Save</button>
+                      </form>
+                    </td>
+                    <td className="p-3">
                       <div className="flex gap-2">
                         <a href={buildMailtoLink(lead)} className="px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-xs">Email</a>
                         {lead.phone && (
@@ -129,7 +160,7 @@ export default async function AdminPage() {
                 ))}
                 {leads.length === 0 && (
                   <tr>
-                    <td className="p-4 text-slate-400" colSpan={9}>No leads yet. Send traffic to your audit form.</td>
+                    <td className="p-4 text-slate-400" colSpan={10}>No leads yet. Send traffic to your audit form.</td>
                   </tr>
                 )}
               </tbody>

@@ -1,6 +1,8 @@
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
+export type LeadStatus = "New" | "Contacted" | "Audit Sent" | "Proposal" | "Won" | "Lost";
+
 export type Lead = {
   id: string;
   createdAt: string;
@@ -13,6 +15,8 @@ export type Lead = {
   budget: "<50k" | "50k-100k" | "100k-250k" | "250k+";
   painPoint: string;
   source?: string;
+  status: LeadStatus;
+  updatedAt?: string;
 };
 
 export type SiteEvent = {
@@ -58,11 +62,12 @@ async function writeJson<T>(file: string, data: T[]) {
   await writeFile(file, JSON.stringify(data, null, 2), "utf8");
 }
 
-export async function addLead(lead: Omit<Lead, "id" | "createdAt">) {
+export async function addLead(lead: Omit<Lead, "id" | "createdAt" | "status" | "updatedAt"> & Partial<Pick<Lead, "status">>) {
   const leads = await readJson<Lead>(LEADS_FILE);
   const item: Lead = {
     id: crypto.randomUUID(),
     createdAt: new Date().toISOString(),
+    status: "New",
     ...lead,
   };
   leads.unshift(item);
@@ -71,7 +76,18 @@ export async function addLead(lead: Omit<Lead, "id" | "createdAt">) {
 }
 
 export async function listLeads() {
-  return readJson<Lead>(LEADS_FILE);
+  const leads = await readJson<Lead>(LEADS_FILE);
+  return leads.map((lead) => ({ ...lead, status: lead.status || "New" }));
+}
+
+export async function updateLeadStatus(id: string, status: LeadStatus) {
+  const leads = await readJson<Lead>(LEADS_FILE);
+  const index = leads.findIndex((l) => l.id === id);
+  if (index < 0) return null;
+
+  leads[index] = { ...leads[index], status, updatedAt: new Date().toISOString() };
+  await writeJson(LEADS_FILE, leads);
+  return leads[index];
 }
 
 export async function addEvent(event: Omit<SiteEvent, "id" | "createdAt">) {
