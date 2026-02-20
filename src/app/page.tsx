@@ -38,6 +38,24 @@ const proof = [
   { label: "Communication", value: "Direct" },
 ];
 
+const caseStudies = [
+  {
+    title: "Service Business Funnel",
+    result: "+2.3x inquiry rate",
+    detail: "Rebuilt the site with clearer offers, WhatsApp CTA, and trust-focused layout.",
+  },
+  {
+    title: "Founder Landing System",
+    result: "37% lower drop-off",
+    detail: "Simplified copy hierarchy and tightened mobile-first conversion flow.",
+  },
+  {
+    title: "Lead Ops Dashboard",
+    result: "Faster follow-up",
+    detail: "Implemented lead scoring, priority tiers, and one-click outreach actions.",
+  },
+];
+
 export default function Home() {
   const [form, setForm] = useState<LeadForm>({
     name: "",
@@ -102,16 +120,16 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-slate-950 text-white">
       <section className="max-w-6xl mx-auto px-4 sm:px-6 py-14 sm:py-20 md:py-24">
-        <p className="text-cyan-400 font-medium mb-4">PlainSight Digital</p>
-        <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold leading-tight mb-5 sm:mb-6 max-w-5xl">
+        <p className="text-cyan-400 font-medium mb-4 reveal">PlainSight Digital</p>
+        <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold tracking-tight leading-tight mb-5 sm:mb-6 max-w-5xl reveal reveal-delay-1">
           We build software and websites that
           <span className="text-cyan-400"> drive real business growth.</span>
         </h1>
-        <p className="text-slate-300 max-w-3xl text-base sm:text-lg mb-7 sm:mb-8">
+        <p className="text-slate-300 max-w-3xl text-base sm:text-lg mb-7 sm:mb-8 reveal reveal-delay-2">
           We help service businesses and founders launch conversion-focused digital systems — from lead generation websites to custom platforms that automate operations.
         </p>
 
-        <div className="flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:gap-4">
+        <div className="flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:gap-4 reveal reveal-delay-3">
           <a
             href={ctaHref}
             className="w-full sm:w-auto text-center px-6 py-3 rounded-lg bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-semibold"
@@ -152,6 +170,21 @@ export default function Home() {
                   <li key={b}>• {b}</li>
                 ))}
               </ul>
+            </article>
+          ))}
+        </div>
+      </section>
+
+
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
+        <h2 className="text-2xl md:text-3xl font-bold mb-3">Recent outcomes</h2>
+        <p className="text-slate-300 mb-8 max-w-2xl">Real execution energy — clear positioning, stronger conversion paths, and systems that help you close faster.</p>
+        <div className="grid md:grid-cols-3 gap-4">
+          {caseStudies.map((item) => (
+            <article key={item.title} className="rounded-xl border border-slate-800 bg-gradient-to-b from-slate-900 to-slate-950 p-5">
+              <p className="text-xs uppercase tracking-wider text-cyan-300 mb-2">{item.result}</p>
+              <h3 className="text-lg font-semibold mb-2">{item.title}</h3>
+              <p className="text-sm text-slate-300">{item.detail}</p>
             </article>
           ))}
         </div>
@@ -242,7 +275,7 @@ export default function Home() {
         aria-label="Chat with PlainSight Digital on WhatsApp"
         className="fixed bottom-5 right-5 z-50 h-14 w-14 rounded-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 flex items-center justify-center text-2xl shadow-lg shadow-emerald-500/30"
       >
-        💬
+        <svg viewBox="0 0 32 32" aria-hidden="true" className="h-7 w-7 fill-current"><path d="M19.11 17.21c-.28-.14-1.65-.81-1.9-.9-.25-.09-.43-.14-.61.14-.18.28-.7.9-.86 1.08-.16.18-.32.21-.6.07-.28-.14-1.16-.43-2.2-1.38-.81-.72-1.35-1.6-1.5-1.87-.16-.28-.02-.43.12-.57.13-.13.28-.32.42-.48.14-.16.18-.28.28-.46.09-.18.05-.35-.02-.48-.07-.14-.61-1.47-.83-2.02-.22-.53-.45-.46-.61-.47h-.52c-.18 0-.48.07-.73.35s-.96.94-.96 2.3.99 2.67 1.13 2.85c.14.18 1.94 2.95 4.7 4.13.66.28 1.17.45 1.57.58.66.21 1.26.18 1.73.11.53-.08 1.65-.67 1.89-1.32.23-.64.23-1.2.16-1.32-.06-.12-.24-.19-.52-.33z"/><path d="M16 3C8.83 3 3 8.72 3 15.77c0 2.49.74 4.9 2.13 6.98L3 29l6.44-2.06a13.2 13.2 0 0 0 6.56 1.73C23.17 28.67 29 22.95 29 15.9 29 8.85 23.17 3 16 3zm0 23.53c-2.07 0-4.1-.56-5.87-1.62l-.42-.25-3.82 1.22 1.25-3.7-.28-.43a11.45 11.45 0 0 1-1.8-6.1C5.06 9.6 9.98 4.95 16 4.95c6.02 0 10.94 4.65 10.94 10.7 0 6.04-4.92 10.88-10.94 10.88z"/></svg>
       </a>
     </main>
   );
