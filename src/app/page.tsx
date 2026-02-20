@@ -53,6 +53,8 @@ const proofOfWork = [
     title: "Aestra",
     result: "Creative tech build",
     note: "Developed a distinct product experience around advanced audio tooling and brand identity.",
+    href: "https://aestra.studio",
+    hrefLabel: "Visit Aestra.studio",
   },
   {
     title: "Plainsight Lead Engine",
@@ -188,6 +190,16 @@ export default function Home() {
               <p className="text-xs uppercase tracking-wide text-amber-200">{item.result}</p>
               <h3 className="mt-2 text-lg font-semibold text-zinc-100">{item.title}</h3>
               <p className="mt-2 text-sm text-zinc-300">{item.note}</p>
+              {item.href && (
+                <a
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-3 inline-block text-sm text-amber-300 hover:text-amber-200"
+                >
+                  {item.hrefLabel || "View project"} →
+                </a>
+              )}
             </article>
           ))}
         </div>
