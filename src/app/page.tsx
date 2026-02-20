@@ -45,19 +45,19 @@ const outcomes = [
 
 const proofOfWork = [
   {
-    title: "Service Business Funnel Rebuild",
-    result: "+2.3x inquiry rate",
-    note: "Reworked structure, copy, and CTA placement so qualified leads had a clear next step.",
+    title: "Resonance Platform",
+    result: "AI product shipped",
+    note: "Built a full-stack companion platform with chat, notes, music, and workflow integrations.",
   },
   {
-    title: "Founder Landing System",
-    result: "37% lower drop-off",
-    note: "Tightened mobile flow and simplified messaging to keep users moving to contact.",
+    title: "Aestra",
+    result: "Creative tech build",
+    note: "Developed a distinct product experience around advanced audio tooling and brand identity.",
   },
   {
-    title: "Lead Ops Dashboard",
-    result: "Faster follow-up",
-    note: "Added priority scoring and cleaner handoff from lead capture to outreach.",
+    title: "Plainsight Lead Engine",
+    result: "End-to-end pipeline",
+    note: "Shipped capture, scoring, outreach workflows, and ops dashboard to support client growth.",
   },
 ];
 export default function Home() {
