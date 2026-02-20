@@ -1,5 +1,6 @@
 import { getInvoice } from "@/lib/opsStore";
 import { notFound } from "next/navigation";
+import InvoicePrintButton from "./InvoicePrintButton";
 
 export default async function InvoicePage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -11,7 +12,7 @@ export default async function InvoicePage({ params }: { params: Promise<{ id: st
       <style>{`@media print { .no-print { display: none !important; } main { padding: 0 !important; } .invoice-wrap { border: none !important; box-shadow: none !important; } }`}</style>
       <div className="max-w-3xl mx-auto border border-slate-200 rounded-xl p-6 invoice-wrap">
         <div className="no-print flex justify-end mb-4">
-          <a href="javascript:window.print()" className="px-3 py-2 rounded bg-slate-900 text-white text-sm">Print / Save PDF</a>
+          <InvoicePrintButton />
         </div>
         <div className="flex items-start justify-between gap-4 mb-8">
           <div>
