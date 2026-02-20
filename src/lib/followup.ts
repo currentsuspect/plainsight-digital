@@ -4,6 +4,7 @@ export async function sendLeadFollowupEmail(lead: Lead) {
   const apiKey = (process.env.RESEND_API_KEY || "").trim();
   const from = (process.env.FOLLOWUP_FROM_EMAIL || "").trim();
   const bookingLink = (process.env.BOOKING_LINK || "https://cal.com/plainsight").trim();
+  const replyTo = (process.env.REPLY_TO_EMAIL || "").trim();
   const whatsappLink = "https://wa.me/254750192512?text=Hi%20PlainSight%20Digital%2C%20I%20just%20submitted%20a%20request%20and%20want%20to%20book%20a%20call.";
 
   if (!apiKey || !from) {
@@ -32,6 +33,7 @@ export async function sendLeadFollowupEmail(lead: Lead) {
     body: JSON.stringify({
       from,
       to: [lead.email],
+      ...(replyTo ? { reply_to: [replyTo] } : {}),
       subject,
       html,
     }),
