@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { addLead, listLeads } from "@/lib/store";
+import { notifyTelegramLead } from "@/lib/notify";
 
 export async function GET(request: Request) {
   const apiKey = request.headers.get("x-admin-key");
@@ -32,5 +33,7 @@ export async function POST(request: Request) {
     source: body.source ? String(body.source) : "website",
   });
 
-  return NextResponse.json({ ok: true, lead });
+  const notification = await notifyTelegramLead(lead);
+
+  return NextResponse.json({ ok: true, lead, notification });
 }
