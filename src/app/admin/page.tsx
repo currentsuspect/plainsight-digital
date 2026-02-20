@@ -68,7 +68,7 @@ export default async function AdminPage() {
   return (
     <main className="min-h-screen bg-slate-950 text-white p-4 sm:p-8">
       <div className="max-w-6xl mx-auto space-y-8">
-        <h1 className="text-3xl font-bold">PlainSight Lead Dashboard</h1>
+        <div className="flex items-center justify-between"><h1 className="text-3xl font-bold">PlainSight Lead Dashboard</h1><a href="/admin/ops" className="text-cyan-300 hover:text-cyan-200">Ops Engine →</a></div>
 
         <section className="grid md:grid-cols-5 gap-4">
           <Stat label="Page Views" value={String(pageViews)} />
