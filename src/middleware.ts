@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 
 export function middleware(req: NextRequest) {
+  if (req.nextUrl.pathname.startsWith("/api/admin/login")) return NextResponse.next();
+
   const guarded = req.nextUrl.pathname.startsWith("/admin") || req.nextUrl.pathname.startsWith("/api/admin");
   if (!guarded) return NextResponse.next();
 
