@@ -1,5 +1,6 @@
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
+import { hasRemoteStore, readRemoteJson, writeRemoteJson } from "@/lib/remoteStore";
 
 export type LeadStatus = "New" | "Contacted" | "Audit Sent" | "Proposal" | "Won" | "Lost";
 
@@ -48,6 +49,11 @@ async function ensureDataFiles() {
 }
 
 async function readJson<T>(file: string): Promise<T[]> {
+  const key = path.basename(file);
+  if (hasRemoteStore()) {
+    return readRemoteJson<T>(key);
+  }
+
   await ensureDataFiles();
   const raw = await readFile(file, "utf8");
   try {
@@ -59,6 +65,12 @@ async function readJson<T>(file: string): Promise<T[]> {
 }
 
 async function writeJson<T>(file: string, data: T[]) {
+  const key = path.basename(file);
+  if (hasRemoteStore()) {
+    await writeRemoteJson(key, data);
+    return;
+  }
+
   await writeFile(file, JSON.stringify(data, null, 2), "utf8");
 }
 
