@@ -38,12 +38,21 @@ const proof = [
   { label: "Communication", value: "Direct" },
 ];
 
-const signatureProject = {
-  name: "Resonance Platform",
-  type: "AI-powered personal operating system",
-  impact: "From concept to a production-ready full-stack product",
-  stack: ["Flutter", "FastAPI", "AI tooling", "Cloud deployment"],
-};
+const signatureProjects = [
+  {
+    name: "Resonance Platform",
+    type: "AI-powered personal operating system",
+    impact: "From concept to a production-ready full-stack product",
+    stack: ["Flutter", "FastAPI", "AI tooling", "Cloud deployment"],
+  },
+  {
+    name: "Aestra",
+    type: "Next-generation digital audio workstation",
+    impact: "Built as a high-performance creative tool with a distinct brand identity",
+    stack: ["C++", "Audio engine", "Product design", "aestra.studio"],
+    href: "https://aestra.studio",
+  },
+];
 
 const caseStudies = [
   {
@@ -200,17 +209,26 @@ export default function Home() {
 
 
       <section className="max-w-6xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
-        <div className="rounded-2xl border border-amber-300/20 bg-gradient-to-br from-slate-900/90 to-slate-950 p-5 sm:p-8">
-          <p className="text-xs uppercase tracking-[0.2em] text-amber-300 mb-3">Signature Project</p>
-          <h2 className="text-2xl md:text-3xl font-bold mb-2">{signatureProject.name}</h2>
-          <p className="text-slate-300 mb-4">{signatureProject.type} — {signatureProject.impact}</p>
-          <div className="flex flex-wrap gap-2">
-            {signatureProject.stack.map((item) => (
-              <span key={item} className="px-3 py-1 text-xs rounded-full bg-amber-300/10 text-amber-200 border border-amber-300/20">
-                {item}
-              </span>
-            ))}
-          </div>
+        <p className="text-xs uppercase tracking-[0.2em] text-amber-300 mb-3">Signature Projects</p>
+        <div className="grid md:grid-cols-2 gap-4">
+          {signatureProjects.map((project) => (
+            <div key={project.name} className="rounded-2xl border border-amber-300/20 bg-gradient-to-br from-slate-900/90 to-slate-950 p-5 sm:p-8">
+              <h2 className="text-2xl font-bold mb-2">{project.name}</h2>
+              <p className="text-slate-300 mb-4">{project.type} — {project.impact}</p>
+              <div className="flex flex-wrap gap-2 mb-4">
+                {project.stack.map((item) => (
+                  <span key={item} className="px-3 py-1 text-xs rounded-full bg-amber-300/10 text-amber-200 border border-amber-300/20">
+                    {item}
+                  </span>
+                ))}
+              </div>
+              {project.href && (
+                <a href={project.href} target="_blank" rel="noopener noreferrer" className="text-sm text-cyan-300 hover:text-cyan-200">
+                  Visit aestra.studio →
+                </a>
+              )}
+            </div>
+          ))}
         </div>
       </section>
       <section className="max-w-6xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
