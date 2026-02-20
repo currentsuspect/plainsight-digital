@@ -22,11 +22,14 @@ export type MeetingEntry = {
 export type InvoiceEntry = {
   id: string;
   createdAt: string;
+  invoiceNumber: string;
   client: string;
   item: string;
   amount: number;
   status: "draft" | "sent" | "paid";
   dueDate?: string;
+  paymentInstruction?: string;
+  note?: string;
 };
 
 const DATA_DIR = process.env.DATA_DIR
@@ -88,12 +91,32 @@ export async function addMeeting(entry: Omit<MeetingEntry, "id" | "createdAt">) 
 }
 
 export async function listInvoices() {
-  return readJson<InvoiceEntry>(INVOICES_FILE);
+  const rows = await readJson<InvoiceEntry>(INVOICES_FILE);
+  return rows.map((r) => ({ ...r, invoiceNumber: r.invoiceNumber || `PSD-${new Date(r.createdAt).toISOString().slice(0, 10).replace(/-/g, "")}-001` }));
 }
-export async function addInvoice(entry: Omit<InvoiceEntry, "id" | "createdAt">) {
+
+export function generateInvoiceNumber(date = new Date(), seq = 1) {
+  const y = date.getUTCFullYear();
+  const m = String(date.getUTCMonth() + 1).padStart(2, "0");
+  const d = String(date.getUTCDate()).padStart(2, "0");
+  return `PSD-${y}${m}${d}-${String(seq).padStart(3, "0")}`;
+}
+
+export async function addInvoice(entry: Omit<InvoiceEntry, "id" | "createdAt" | "invoiceNumber"> & Partial<Pick<InvoiceEntry, "invoiceNumber">>) {
   const rows = await listInvoices();
-  const row = { id: crypto.randomUUID(), createdAt: new Date().toISOString(), ...entry };
+  const seq = rows.length + 1;
+  const row: InvoiceEntry = {
+    id: crypto.randomUUID(),
+    createdAt: new Date().toISOString(),
+    invoiceNumber: entry.invoiceNumber || generateInvoiceNumber(new Date(), seq),
+    ...entry,
+  };
   rows.unshift(row);
   await writeJson(INVOICES_FILE, rows);
   return row;
+}
+
+export async function getInvoice(id: string) {
+  const rows = await listInvoices();
+  return rows.find((r) => r.id === id) || rows.find((r) => r.invoiceNumber === id) || null;
 }

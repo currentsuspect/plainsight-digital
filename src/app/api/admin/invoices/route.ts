@@ -13,6 +13,8 @@ export async function POST(request: Request) {
     amount: Number(form.get("amount") || 0),
     status: String(form.get("status") || "draft") as "draft" | "sent" | "paid",
     dueDate: String(form.get("dueDate") || ""),
+    paymentInstruction: String(form.get("paymentInstruction") || ""),
+    note: String(form.get("note") || ""),
   });
   return NextResponse.redirect(new URL("/admin/ops", request.url), 303);
 }

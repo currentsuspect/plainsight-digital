@@ -48,6 +48,8 @@ export default async function OpsPage() {
               <input name="amount" type="number" placeholder="Amount" className="input" required />
               <select name="status" className="input"><option value="draft">draft</option><option value="sent">sent</option><option value="paid">paid</option></select>
               <input name="dueDate" type="date" className="input" />
+              <input name="paymentInstruction" defaultValue="Pochi la biashara: 0716177897" className="input" />
+              <input name="note" placeholder="Optional note" className="input" />
               <button className="w-full py-2 rounded bg-cyan-500 text-slate-950 font-semibold">Save</button>
             </form>
           </Panel>
@@ -56,7 +58,19 @@ export default async function OpsPage() {
         <section className="grid lg:grid-cols-3 gap-4">
           <Table title="Finance Log" headers={["Type", "Amount", "Category"]} rows={finance.map((x) => [x.type, `KES ${x.amount}`, x.category])} />
           <Table title="Meetings" headers={["When", "Title", "Owner"]} rows={meetings.map((x) => [new Date(x.when).toLocaleString(), x.title, x.owner])} />
-          <Table title="Invoices" headers={["Client", "Amount", "Status"]} rows={invoices.map((x) => [x.client, `KES ${x.amount}`, x.status])} />
+          <div className="rounded-xl border border-slate-800 bg-slate-900/60 p-4">
+            <h2 className="font-semibold mb-3">Invoices</h2>
+            <div className="space-y-2 text-sm">
+              <div className="grid grid-cols-4 gap-2 text-slate-400"><div>Client</div><div>Amount</div><div>Status</div><div>PDF</div></div>
+              {invoices.slice(0, 8).map((x) => (
+                <div key={x.id} className="grid grid-cols-4 gap-2">
+                  <div>{x.client}</div><div>KES {x.amount}</div><div>{x.status}</div>
+                  <a className="text-cyan-300 hover:text-cyan-200" href={`/admin/invoice/${x.id}`} target="_blank" rel="noopener noreferrer">Open</a>
+                </div>
+              ))}
+              {invoices.length === 0 && <div className="text-slate-500">No invoices yet.</div>}
+            </div>
+          </div>
         </section>
       </div>
     </main>
