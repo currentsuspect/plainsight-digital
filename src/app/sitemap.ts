@@ -1,19 +1,22 @@
 import type { MetadataRoute } from "next";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const base = "https://www.plainsightdigital.dev";
+  const baseUrl = "https://plainsight.digital";
+  const currentDate = new Date();
 
-  return [
-    "",
-    "/clinics",
-    "/law-firms",
-    "/schools",
-    "/hotels",
-    "/logistics",
-  ].map((path) => ({
-    url: `${base}${path}`,
-    lastModified: new Date(),
-    changeFrequency: "weekly",
-    priority: path === "" ? 1 : 0.8,
+  const routes = [
+    { path: "", priority: 1, changeFreq: "weekly" as const },
+    { path: "/clinics", priority: 0.9, changeFreq: "weekly" as const },
+    { path: "/law-firms", priority: 0.9, changeFreq: "weekly" as const },
+    { path: "/schools", priority: 0.9, changeFreq: "weekly" as const },
+    { path: "/hotels", priority: 0.9, changeFreq: "weekly" as const },
+    { path: "/logistics", priority: 0.9, changeFreq: "weekly" as const },
+  ];
+
+  return routes.map((route) => ({
+    url: `${baseUrl}${route.path}`,
+    lastModified: currentDate,
+    changeFrequency: route.changeFreq,
+    priority: route.priority,
   }));
 }

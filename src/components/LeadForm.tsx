@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useState, useCallback, memo } from "react";
 
 type LeadFormState = {
   name: string;
@@ -13,20 +13,27 @@ type LeadFormState = {
   painPoint: string;
 };
 
-export default function LeadForm() {
-  const [form, setForm] = useState<LeadFormState>({
-    name: "",
-    businessName: "",
-    email: "",
-    phone: "",
-    website: "",
-    niche: "clinic",
-    budget: "250k-500k",
-    painPoint: "",
-  });
-  const [status, setStatus] = useState<"idle" | "submitting" | "sent" | "error">("idle");
+type LeadFormProps = {
+  defaultSector?: "clinic" | "law" | "school" | "hotel" | "logistics";
+};
 
-  async function track(type: "form_start" | "form_submit", meta?: Record<string, string>) {
+const initialFormState = (sector: LeadFormState["niche"]): LeadFormState => ({
+  name: "",
+  businessName: "",
+  email: "",
+  phone: "",
+  website: "",
+  niche: sector,
+  budget: "250k-500k",
+  painPoint: "",
+});
+
+function LeadForm({ defaultSector = "clinic" }: LeadFormProps) {
+  const [form, setForm] = useState<LeadFormState>(() => initialFormState(defaultSector));
+  const [status, setStatus] = useState<"idle" | "submitting" | "sent" | "error">("idle");
+  const [hasTrackedStart, setHasTrackedStart] = useState(false);
+
+  const track = useCallback(async (type: "form_start" | "form_submit", meta?: Record<string, string>) => {
     try {
       await fetch("/api/events", {
         method: "POST",
@@ -34,11 +41,22 @@ export default function LeadForm() {
         body: JSON.stringify({ type, page: "/", meta }),
       });
     } catch {
-      // no-op
+      // Silent fail for analytics
     }
-  }
+  }, []);
 
-  async function onSubmit(e: FormEvent<HTMLFormElement>) {
+  const handleFocus = useCallback(() => {
+    if (!hasTrackedStart) {
+      setHasTrackedStart(true);
+      void track("form_start", { form: "premium_audit" });
+    }
+  }, [hasTrackedStart, track]);
+
+  const updateForm = useCallback((key: keyof LeadFormState, value: string) => {
+    setForm((prev) => ({ ...prev, [key]: value }));
+  }, []);
+
+  const onSubmit = useCallback(async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setStatus("submitting");
 
@@ -52,45 +70,72 @@ export default function LeadForm() {
       if (!res.ok) throw new Error("Failed to submit");
       await track("form_submit", { niche: form.niche, budget: form.budget });
       setStatus("sent");
-      setForm({
-        name: "",
-        businessName: "",
-        email: "",
-        phone: "",
-        website: "",
-        niche: "clinic",
-        budget: "250k-500k",
-        painPoint: "",
-      });
+      setForm(initialFormState(defaultSector));
     } catch {
       setStatus("error");
     }
-  }
+  }, [form, track, defaultSector]);
 
   return (
-    <form className="mt-7 grid gap-4 md:grid-cols-2" onFocus={() => void track("form_start", { form: "premium_audit" })} onSubmit={onSubmit}>
-      <Field label="Your Name">
-        <input required value={form.name} onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))} className="input" />
+    <form className="mt-7 grid gap-4 md:grid-cols-2" onFocus={handleFocus} onSubmit={onSubmit}>
+      <Field label="Your Name" required>
+        <input
+          required
+          value={form.name}
+          onChange={(e) => updateForm("name", e.target.value)}
+          className="input"
+          autoComplete="name"
+        />
       </Field>
 
-      <Field label="Business Name">
-        <input required value={form.businessName} onChange={(e) => setForm((f) => ({ ...f, businessName: e.target.value }))} className="input" />
+      <Field label="Business Name" required>
+        <input
+          required
+          value={form.businessName}
+          onChange={(e) => updateForm("businessName", e.target.value)}
+          className="input"
+          autoComplete="organization"
+        />
       </Field>
 
-      <Field label="Email">
-        <input type="email" required value={form.email} onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))} className="input" />
+      <Field label="Email" required>
+        <input
+          type="email"
+          required
+          value={form.email}
+          onChange={(e) => updateForm("email", e.target.value)}
+          className="input"
+          autoComplete="email"
+        />
       </Field>
 
       <Field label="Phone / WhatsApp">
-        <input value={form.phone} onChange={(e) => setForm((f) => ({ ...f, phone: e.target.value }))} className="input" />
+        <input
+          value={form.phone}
+          onChange={(e) => updateForm("phone", e.target.value)}
+          className="input"
+          type="tel"
+          autoComplete="tel"
+        />
       </Field>
 
       <Field label="Website URL">
-        <input value={form.website} onChange={(e) => setForm((f) => ({ ...f, website: e.target.value }))} className="input" placeholder="https://" />
+        <input
+          value={form.website}
+          onChange={(e) => updateForm("website", e.target.value)}
+          className="input"
+          placeholder="https://"
+          type="url"
+          autoComplete="url"
+        />
       </Field>
 
       <Field label="Industry">
-        <select value={form.niche} onChange={(e) => setForm((f) => ({ ...f, niche: e.target.value as LeadFormState["niche"] }))} className="input">
+        <select
+          value={form.niche}
+          onChange={(e) => updateForm("niche", e.target.value)}
+          className="input"
+        >
           <option value="clinic">Clinic / Medical Center</option>
           <option value="law">Law Firm</option>
           <option value="school">School</option>
@@ -100,7 +145,11 @@ export default function LeadForm() {
       </Field>
 
       <Field label="Budget Range" className="md:col-span-2">
-        <select value={form.budget} onChange={(e) => setForm((f) => ({ ...f, budget: e.target.value as LeadFormState["budget"] }))} className="input">
+        <select
+          value={form.budget}
+          onChange={(e) => updateForm("budget", e.target.value)}
+          className="input"
+        >
           <option value="100k-250k">KES 100k - 250k</option>
           <option value="250k-500k">KES 250k - 500k</option>
           <option value="500k-1m">KES 500k - 1M</option>
@@ -108,27 +157,57 @@ export default function LeadForm() {
         </select>
       </Field>
 
-      <Field label="Biggest conversion problem right now" className="md:col-span-2">
-        <textarea required rows={4} value={form.painPoint} onChange={(e) => setForm((f) => ({ ...f, painPoint: e.target.value }))} className="input" />
+      <Field label="Biggest conversion problem right now" className="md:col-span-2" required>
+        <textarea
+          required
+          rows={4}
+          value={form.painPoint}
+          onChange={(e) => updateForm("painPoint", e.target.value)}
+          className="input resize-none"
+        />
       </Field>
 
       <div className="md:col-span-2">
-        <button disabled={status === "submitting"} className="w-full rounded-md bg-amber-300 py-3 text-sm font-semibold tracking-wide text-zinc-950 transition hover:bg-amber-200 disabled:opacity-60">
+        <button
+          disabled={status === "submitting"}
+          className="w-full rounded-md bg-amber-300 py-3.5 text-sm font-semibold tracking-wide text-zinc-950 transition hover:bg-amber-200 disabled:opacity-60 disabled:cursor-not-allowed"
+        >
           {status === "submitting" ? "Submitting..." : "Send My Premium Audit"}
         </button>
       </div>
 
-      {status === "sent" && <p className="md:col-span-2 text-emerald-400">Submitted — we’ll contact you shortly.</p>}
-      {status === "error" && <p className="md:col-span-2 text-rose-400">Something went wrong. Please try again.</p>}
+      {status === "sent" && (
+        <p className="md:col-span-2 text-emerald-400 font-medium">
+          ✓ Submitted — we&apos;ll contact you within 24 hours.
+        </p>
+      )}
+      {status === "error" && (
+        <p className="md:col-span-2 text-rose-400">Something went wrong. Please try again or WhatsApp us directly.</p>
+      )}
     </form>
   );
 }
 
-function Field({ label, children, className = "" }: { label: string; children: React.ReactNode; className?: string }) {
+const Field = memo(function Field({
+  label,
+  children,
+  className = "",
+  required = false,
+}: {
+  label: string;
+  children: React.ReactNode;
+  className?: string;
+  required?: boolean;
+}) {
   return (
     <label className={`flex flex-col gap-2 ${className}`}>
-      <span className="text-sm text-zinc-300">{label}</span>
+      <span className="text-sm text-zinc-300">
+        {label}
+        {required && <span className="text-amber-400 ml-1">*</span>}
+      </span>
       {children}
     </label>
   );
-}
+});
+
+export default memo(LeadForm);
