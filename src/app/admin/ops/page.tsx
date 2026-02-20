@@ -67,17 +67,33 @@ export default async function OpsPage() {
                   <div>{x.client}</div>
                   <div>KES {x.amount}</div>
                   <div>{x.status}</div>
-                  <form action="/api/admin/invoices" method="post" className="space-y-1">
-                    <input type="hidden" name="action" value="update" />
-                    <input type="hidden" name="id" value={x.id} />
-                    <select name="status" defaultValue={x.status} className="input !min-h-8 !py-1 !px-2 text-xs">
-                      <option value="draft">draft</option>
-                      <option value="sent">sent</option>
-                      <option value="paid">paid</option>
-                    </select>
-                    <input name="dueDate" defaultValue={x.dueDate || ""} placeholder="Due date" className="input !min-h-8 !py-1 !px-2 text-xs" />
-                    <button className="px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-xs" type="submit">Update</button>
-                  </form>
+                  <div className="space-y-1">
+                    <form action="/api/admin/invoices" method="post" className="space-y-1">
+                      <input type="hidden" name="action" value="update" />
+                      <input type="hidden" name="id" value={x.id} />
+                      <select name="status" defaultValue={x.status} className="input !min-h-8 !py-1 !px-2 text-xs">
+                        <option value="draft">draft</option>
+                        <option value="sent">sent</option>
+                        <option value="paid">paid</option>
+                      </select>
+                      <input name="dueDate" defaultValue={x.dueDate || ""} placeholder="Due date" className="input !min-h-8 !py-1 !px-2 text-xs" />
+                      <button className="px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-xs" type="submit">Update</button>
+                    </form>
+                    <div className="flex gap-1">
+                      <form action="/api/admin/invoices" method="post">
+                        <input type="hidden" name="action" value="update" />
+                        <input type="hidden" name="id" value={x.id} />
+                        <input type="hidden" name="status" value="sent" />
+                        <button className="px-2 py-1 rounded bg-amber-600/80 hover:bg-amber-500 text-xs" type="submit">Mark Sent</button>
+                      </form>
+                      <form action="/api/admin/invoices" method="post">
+                        <input type="hidden" name="action" value="update" />
+                        <input type="hidden" name="id" value={x.id} />
+                        <input type="hidden" name="status" value="paid" />
+                        <button className="px-2 py-1 rounded bg-emerald-600/80 hover:bg-emerald-500 text-xs" type="submit">Mark Paid</button>
+                      </form>
+                    </div>
+                  </div>
                   <a className="text-cyan-300 hover:text-cyan-200" href={`/admin/invoice/${x.id}`} target="_blank" rel="noopener noreferrer">Open</a>
                 </div>
               ))}

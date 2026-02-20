@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { addFinance, addInvoice, listInvoices, updateInvoice } from "@/lib/opsStore";
+import { notifyTelegramInvoiceStatus } from "@/lib/notify";
 
 export async function GET() {
   return NextResponse.json({ rows: await listInvoices() });
@@ -18,6 +19,16 @@ export async function POST(request: Request) {
       ...(status ? { status } : {}),
       ...(dueDate ? { dueDate } : {}),
     });
+
+    if (result?.next) {
+      await notifyTelegramInvoiceStatus({
+        invoiceNumber: result.next.invoiceNumber,
+        client: result.next.client,
+        status: result.next.status,
+        dueDate: result.next.dueDate,
+        amount: result.next.amount,
+      });
+    }
 
     if (result?.prev && result?.next && result.prev.status !== "paid" && result.next.status === "paid") {
       await addFinance({

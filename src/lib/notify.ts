@@ -48,3 +48,22 @@ export async function notifyTelegramFollowupStatus(lead: Lead, followup: { sent:
 
   return sendTelegramMessage(text);
 }
+
+export async function notifyTelegramInvoiceStatus(payload: {
+  invoiceNumber: string;
+  client: string;
+  status: "draft" | "sent" | "paid";
+  dueDate?: string;
+  amount: number;
+}) {
+  const text = [
+    "🧾 Invoice updated",
+    `• Invoice: ${payload.invoiceNumber}`,
+    `• Client: ${payload.client}`,
+    `• Status: ${payload.status}`,
+    `• Amount: KES ${payload.amount.toLocaleString()}`,
+    `• Due: ${payload.dueDate || "—"}`,
+  ].join("\n");
+
+  return sendTelegramMessage(text);
+}
