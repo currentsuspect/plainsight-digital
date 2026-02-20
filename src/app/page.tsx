@@ -13,19 +13,29 @@ type LeadForm = {
   painPoint: string;
 };
 
-const nicheCards = [
+const services = [
   {
-    title: "Dental & Aesthetic Clinics",
-    pitch: "Get more booked appointments with a trust-first website and WhatsApp follow-up.",
+    title: "Software Development",
+    desc: "Custom web apps, internal systems, and backend APIs built for speed, scale, and clean operations.",
+    bullets: ["Next.js + React", "FastAPI + Node", "Automation-ready architecture"],
   },
   {
-    title: "Law Firms",
-    pitch: "Turn legal searches into consultations with credibility-driven service pages.",
+    title: "Lead Generation Websites",
+    desc: "Conversion-first sites that turn traffic into inquiries through messaging funnels, CTAs, and trust signals.",
+    bullets: ["Conversion UX", "WhatsApp + form funnels", "SEO + analytics"],
   },
   {
-    title: "Real Estate Agencies",
-    pitch: "Capture more buyer and seller inquiries with fast, mobile-first property funnels.",
+    title: "Growth & Optimization",
+    desc: "From first launch to ongoing iteration, we track behavior and improve conversion rates with real data.",
+    bullets: ["Event tracking", "Landing page optimization", "Lead scoring workflows"],
   },
+];
+
+const proof = [
+  { label: "Delivery speed", value: "7-day" },
+  { label: "Primary focus", value: "Leads" },
+  { label: "Build approach", value: "Custom" },
+  { label: "Communication", value: "Direct" },
 ];
 
 export default function Home() {
@@ -91,14 +101,14 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-slate-950 text-white">
-      <section className="max-w-6xl mx-auto px-4 sm:px-6 py-14 sm:py-20 md:py-28">
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 py-14 sm:py-20 md:py-24">
         <p className="text-cyan-400 font-medium mb-4">PlainSight Digital</p>
-        <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold leading-tight mb-5 sm:mb-6">
-          We build websites that bring
-          <span className="text-cyan-400"> qualified clients.</span>
+        <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold leading-tight mb-5 sm:mb-6 max-w-5xl">
+          We build software and websites that
+          <span className="text-cyan-400"> drive real business growth.</span>
         </h1>
-        <p className="text-slate-300 max-w-2xl text-base sm:text-lg mb-7 sm:mb-8">
-          7-Day Lead Engine Setup for service businesses in Kenya — conversion-focused pages, WhatsApp funnels, analytics, and a clear path from visitor to inquiry.
+        <p className="text-slate-300 max-w-3xl text-base sm:text-lg mb-7 sm:mb-8">
+          We help service businesses and founders launch conversion-focused digital systems — from lead generation websites to custom platforms that automate operations.
         </p>
 
         <div className="flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:gap-4">
@@ -111,18 +121,51 @@ export default function Home() {
           >
             Get Free 2-Minute Audit
           </a>
+          <a href="#services" className="w-full sm:w-auto text-center px-6 py-3 rounded-lg border border-slate-700 hover:bg-slate-900">
+            Explore Services
+          </a>
         </div>
       </section>
 
-      <section className="max-w-6xl mx-auto px-4 sm:px-6 py-10 sm:py-12">
-        <h2 className="text-2xl md:text-3xl font-bold mb-6">Who we help first</h2>
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
+          {proof.map((item) => (
+            <div key={item.label} className="rounded-xl border border-slate-800 bg-slate-900/60 p-4">
+              <div className="text-lg sm:text-2xl font-semibold text-cyan-300">{item.value}</div>
+              <div className="text-xs sm:text-sm text-slate-400">{item.label}</div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section id="services" className="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
+        <h2 className="text-2xl md:text-3xl font-bold mb-3">What we do</h2>
+        <p className="text-slate-300 mb-8 max-w-2xl">Built for one thing: helping your business win more clients, close faster, and operate smoother.</p>
+
         <div className="grid md:grid-cols-3 gap-4">
-          {nicheCards.map((card) => (
-            <article key={card.title} className="rounded-xl border border-slate-800 bg-slate-900/60 p-5">
-              <h3 className="font-semibold mb-2">{card.title}</h3>
-              <p className="text-slate-300 text-sm">{card.pitch}</p>
+          {services.map((service) => (
+            <article key={service.title} className="rounded-xl border border-slate-800 bg-slate-900/60 p-5">
+              <h3 className="text-lg font-semibold mb-2">{service.title}</h3>
+              <p className="text-slate-300 text-sm mb-4">{service.desc}</p>
+              <ul className="space-y-2 text-sm text-slate-400">
+                {service.bullets.map((b) => (
+                  <li key={b}>• {b}</li>
+                ))}
+              </ul>
             </article>
           ))}
+        </div>
+      </section>
+
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
+        <div className="rounded-2xl border border-slate-800 bg-slate-900/70 p-5 sm:p-8">
+          <h2 className="text-2xl md:text-3xl font-bold mb-3">About PlainSight</h2>
+          <p className="text-slate-300 mb-4">
+            We are a boutique digital studio focused on practical outcomes — not bloated projects. Every build is designed around performance, conversion, and clarity.
+          </p>
+          <p className="text-slate-400">
+            If your current site is not converting, your process is manual, or your digital presence doesn&apos;t match your ambition, we can fix that.
+          </p>
         </div>
       </section>
 
