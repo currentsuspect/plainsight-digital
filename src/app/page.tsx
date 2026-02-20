@@ -14,11 +14,11 @@ type LeadForm = {
 };
 
 const sectors = [
-  "Private Clinics & Medical Centers",
-  "Law Firms",
-  "Private Schools",
-  "Hotels & Resorts",
-  "Logistics Companies",
+  { label: "Private Clinics & Medical Centers", href: "/clinics" },
+  { label: "Law Firms", href: "/law-firms" },
+  { label: "Private Schools", href: "/schools" },
+  { label: "Hotels & Resorts", href: "/hotels" },
+  { label: "Logistics Companies", href: "/logistics" },
 ];
 
 const pillars = [
@@ -127,9 +127,9 @@ export default function Home() {
     <main className="min-h-screen bg-[#09090b] text-[#f5f3ef]">
       <div className="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_15%_20%,rgba(245,158,11,0.14),transparent_30%),radial-gradient(circle_at_85%_0%,rgba(251,191,36,0.08),transparent_28%),linear-gradient(to_bottom,rgba(10,10,10,0.96),rgba(10,10,10,1))]" />
 
-      <section className="mx-auto max-w-6xl px-5 pt-16 pb-12 sm:px-7 md:pt-24 md:pb-16">
+      <section className="mx-auto max-w-6xl px-5 pt-14 pb-10 sm:px-7 md:pt-24 md:pb-16">
         <p className="reveal text-sm uppercase tracking-[0.24em] text-amber-300">Plainsight Digital</p>
-        <h1 className="reveal reveal-delay-1 mt-4 max-w-5xl font-display text-4xl leading-[1.05] sm:text-5xl md:text-7xl">
+        <h1 className="reveal reveal-delay-1 mt-4 max-w-5xl font-display text-3xl leading-[1.08] sm:text-5xl md:text-7xl">
           Luxury-grade websites for businesses that can’t afford to look average.
         </h1>
         <p className="reveal reveal-delay-2 mt-6 max-w-3xl text-base text-zinc-300 sm:text-lg">
@@ -210,9 +210,9 @@ export default function Home() {
           <p className="text-xs uppercase tracking-[0.18em] text-amber-300">Target sectors</p>
           <div className="mt-5 grid gap-3 sm:grid-cols-2 md:grid-cols-3">
             {sectors.map((sector) => (
-              <div key={sector} className="rounded-lg border border-zinc-800 bg-zinc-900/60 px-4 py-3 text-sm text-zinc-200">
-                {sector}
-              </div>
+              <a key={sector.label} href={sector.href} className="rounded-lg border border-zinc-800 bg-zinc-900/60 px-4 py-3 text-sm text-zinc-200 transition hover:border-amber-300/40 hover:text-amber-200">
+                {sector.label}
+              </a>
             ))}
           </div>
         </div>
@@ -283,12 +283,21 @@ export default function Home() {
         </div>
       </section>
 
+      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-zinc-800 bg-zinc-950/95 p-3 backdrop-blur md:hidden">
+        <a
+          href="#audit"
+          className="block w-full rounded-md bg-amber-300 py-3 text-center text-sm font-semibold text-zinc-950"
+        >
+          Request Premium Audit
+        </a>
+      </div>
+
       <a
         href="https://wa.me/254750192512?text=Hi%20Plainsight%20Digital%2C%20I%20want%20a%20premium%20website%20audit."
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Chat with Plainsight Digital on WhatsApp"
-        className="fixed bottom-5 right-5 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-emerald-500 text-white shadow-lg shadow-emerald-500/30 transition hover:bg-emerald-400"
+        className="fixed bottom-20 right-5 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-emerald-500 text-white shadow-lg shadow-emerald-500/30 transition hover:bg-emerald-400 md:bottom-5"
       >
         <svg viewBox="0 0 24 24" aria-hidden="true" className="block h-7 w-7 fill-current">
           <path d="M20.52 3.48A11.86 11.86 0 0 0 12.07 0C5.54 0 .23 5.3.23 11.83c0 2.08.54 4.1 1.57 5.88L0 24l6.45-1.7a11.8 11.8 0 0 0 5.62 1.43h.01c6.52 0 11.83-5.31 11.84-11.84a11.8 11.8 0 0 0-3.4-8.41ZM12.08 21.73h-.01a9.8 9.8 0 0 1-4.99-1.37l-.36-.21-3.83 1.01 1.02-3.74-.23-.38a9.81 9.81 0 0 1-1.5-5.21c0-5.42 4.41-9.83 9.84-9.83 2.63 0 5.1 1.02 6.95 2.88a9.78 9.78 0 0 1 2.88 6.95c0 5.42-4.42 9.83-9.77 9.9Zm5.39-7.36c-.3-.15-1.77-.87-2.04-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.23-.64.08-.3-.15-1.24-.45-2.36-1.44-.88-.78-1.47-1.74-1.64-2.03-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.53.15-.18.2-.3.3-.5.1-.2.05-.38-.02-.53-.08-.15-.67-1.62-.91-2.22-.24-.58-.49-.5-.67-.51-.17-.01-.38-.01-.58-.01-.2 0-.53.08-.81.38-.28.3-1.06 1.03-1.06 2.51 0 1.48 1.08 2.91 1.23 3.11.15.2 2.11 3.22 5.12 4.52.72.31 1.28.49 1.72.62.72.23 1.37.2 1.89.12.58-.09 1.77-.72 2.02-1.41.25-.69.25-1.28.17-1.41-.08-.13-.27-.2-.57-.35Z" />
