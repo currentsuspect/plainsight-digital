@@ -1,7 +1,14 @@
 import { NextResponse } from "next/server";
 import { addEvent, listEvents } from "@/lib/store";
 
-export async function GET() {
+export async function GET(request: Request) {
+  const apiKey = request.headers.get("x-admin-key");
+  const expected = process.env.ADMIN_API_KEY;
+
+  if (!expected || apiKey !== expected) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
   const events = await listEvents();
   return NextResponse.json({ events });
 }
