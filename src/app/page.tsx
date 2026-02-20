@@ -38,6 +38,13 @@ const proof = [
   { label: "Communication", value: "Direct" },
 ];
 
+const signatureProject = {
+  name: "Resonance Platform",
+  type: "AI-powered personal operating system",
+  impact: "From concept to production-ready full-stack system",
+  stack: ["Flutter", "FastAPI", "AI tooling", "Cloud deployment"],
+};
+
 const caseStudies = [
   {
     title: "Service Business Funnel",
@@ -118,21 +125,22 @@ export default function Home() {
   }
 
   return (
-    <main className="min-h-screen bg-slate-950 text-white">
+    <main className="min-h-screen bg-[#070b14] text-white">
+      <div className="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_15%_20%,rgba(34,211,238,0.12),transparent_30%),radial-gradient(circle_at_85%_0%,rgba(251,191,36,0.10),transparent_30%)]" />
       <section className="max-w-6xl mx-auto px-4 sm:px-6 py-14 sm:py-20 md:py-24">
         <p className="text-cyan-400 font-medium mb-4 reveal">PlainSight Digital</p>
         <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold tracking-tight leading-tight mb-5 sm:mb-6 max-w-5xl reveal reveal-delay-1">
-          We build software and websites that
-          <span className="text-cyan-400"> drive real business growth.</span>
+          We engineer digital systems that
+          <span className="text-cyan-300"> make premium brands look inevitable.</span>
         </h1>
         <p className="text-slate-300 max-w-3xl text-base sm:text-lg mb-7 sm:mb-8 reveal reveal-delay-2">
-          We help service businesses and founders launch conversion-focused digital systems — from lead generation websites to custom platforms that automate operations.
+          For founders and growth-stage teams who are done with generic websites. We design, build, and optimize digital assets that win trust fast and convert attention into revenue.
         </p>
 
         <div className="flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:gap-4 reveal reveal-delay-3">
           <a
             href={ctaHref}
-            className="w-full sm:w-auto text-center px-6 py-3 rounded-lg bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-semibold"
+            className="w-full sm:w-auto text-center px-6 py-3 rounded-lg bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-semibold"
             onClick={() => {
               void track("cta_click", window.location.pathname, { cta: "hero_free_audit" });
             }}
@@ -158,7 +166,7 @@ export default function Home() {
 
       <section id="services" className="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
         <h2 className="text-2xl md:text-3xl font-bold mb-3">What we do</h2>
-        <p className="text-slate-300 mb-8 max-w-2xl">Built for one thing: helping your business win more clients, close faster, and operate smoother.</p>
+        <p className="text-slate-300 mb-8 max-w-2xl">Three clear capabilities — premium execution, measurable growth, and technical depth that scales.</p>
 
         <div className="grid md:grid-cols-3 gap-4">
           {services.map((service) => (
@@ -190,6 +198,21 @@ export default function Home() {
         </div>
       </section>
 
+
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
+        <div className="rounded-2xl border border-amber-300/20 bg-gradient-to-br from-slate-900/90 to-slate-950 p-5 sm:p-8">
+          <p className="text-xs uppercase tracking-[0.2em] text-amber-300 mb-3">Signature Project</p>
+          <h2 className="text-2xl md:text-3xl font-bold mb-2">{signatureProject.name}</h2>
+          <p className="text-slate-300 mb-4">{signatureProject.type} — {signatureProject.impact}</p>
+          <div className="flex flex-wrap gap-2">
+            {signatureProject.stack.map((item) => (
+              <span key={item} className="px-3 py-1 text-xs rounded-full bg-amber-300/10 text-amber-200 border border-amber-300/20">
+                {item}
+              </span>
+            ))}
+          </div>
+        </div>
+      </section>
       <section className="max-w-6xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
         <div className="rounded-2xl border border-slate-800 bg-slate-900/70 p-5 sm:p-8">
           <h2 className="text-2xl md:text-3xl font-bold mb-3">About PlainSight</h2>
