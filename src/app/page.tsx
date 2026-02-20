@@ -191,6 +191,16 @@ export default function Home() {
           </form>
         </div>
       </section>
+
+      <a
+        href="https://wa.me/254750192512?text=Hi%20PlainSight%20Digital%2C%20I%20want%20a%20website%20that%20brings%20more%20clients."
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Chat with PlainSight Digital on WhatsApp"
+        className="fixed bottom-5 right-5 z-50 h-14 w-14 rounded-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 flex items-center justify-center text-2xl shadow-lg shadow-emerald-500/30"
+      >
+        💬
+      </a>
     </main>
   );
 }

@@ -18,7 +18,24 @@ function scoreLead(lead: Lead) {
   if (lead.budget === "250k+") score += 40;
 
   const priority = score >= 70 ? "Hot" : score >= 45 ? "Warm" : "Cold";
-  return { score, priority };
+  const rank = priority === "Hot" ? 0 : priority === "Warm" ? 1 : 2;
+
+  return { score, priority, rank };
+}
+
+function buildWhatsAppLink(lead: Lead) {
+  const text = encodeURIComponent(
+    `Hi ${lead.name}, thanks for reaching out to PlainSight Digital. We reviewed your request for ${lead.businessName} and can share quick wins + a plan. Are you available for a short call today?`
+  );
+  return `https://wa.me/${(lead.phone || "").replace(/\D/g, "")}?text=${text}`;
+}
+
+function buildMailtoLink(lead: Lead) {
+  const subject = encodeURIComponent(`PlainSight audit for ${lead.businessName}`);
+  const body = encodeURIComponent(
+    `Hi ${lead.name},\n\nThanks for reaching out to PlainSight Digital. We reviewed your details and can share practical improvements for ${lead.businessName}.\n\nWould you be open to a 15-minute call this week?\n\nBest,\nPlainSight Digital`
+  );
+  return `mailto:${lead.email}?subject=${subject}&body=${body}`;
 }
 
 export default async function AdminPage() {
@@ -31,7 +48,10 @@ export default async function AdminPage() {
   const ctaRate = pageViews > 0 ? ctaClicks / pageViews : 0;
   const submitRate = pageViews > 0 ? submits / pageViews : 0;
 
-  const scoredLeads = leads.map((lead) => ({ lead, ...scoreLead(lead) }));
+  const scoredLeads = leads
+    .map((lead) => ({ lead, ...scoreLead(lead) }))
+    .sort((a, b) => a.rank - b.rank || b.score - a.score || +new Date(b.lead.createdAt) - +new Date(a.lead.createdAt));
+
   const hot = scoredLeads.filter((x) => x.priority === "Hot").length;
   const warm = scoredLeads.filter((x) => x.priority === "Warm").length;
   const cold = scoredLeads.filter((x) => x.priority === "Cold").length;
@@ -69,6 +89,7 @@ export default async function AdminPage() {
                   <th className="p-3">Budget</th>
                   <th className="p-3">Score</th>
                   <th className="p-3">Priority</th>
+                  <th className="p-3">Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -94,11 +115,21 @@ export default async function AdminPage() {
                         {priority}
                       </span>
                     </td>
+                    <td className="p-3">
+                      <div className="flex gap-2">
+                        <a href={buildMailtoLink(lead)} className="px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-xs">Email</a>
+                        {lead.phone && (
+                          <a href={buildWhatsAppLink(lead)} target="_blank" rel="noopener noreferrer" className="px-2 py-1 rounded bg-emerald-700/70 hover:bg-emerald-600 text-xs">
+                            WhatsApp
+                          </a>
+                        )}
+                      </div>
+                    </td>
                   </tr>
                 ))}
                 {leads.length === 0 && (
                   <tr>
-                    <td className="p-4 text-slate-400" colSpan={8}>No leads yet. Send traffic to your audit form.</td>
+                    <td className="p-4 text-slate-400" colSpan={9}>No leads yet. Send traffic to your audit form.</td>
                   </tr>
                 )}
               </tbody>
