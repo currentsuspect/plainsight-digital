@@ -111,9 +111,6 @@ export default function Home() {
           >
             Get Free 2-Minute Audit
           </a>
-          <a href="/admin" className="w-full sm:w-auto text-center px-6 py-3 rounded-lg border border-slate-700 hover:bg-slate-900">
-            View Lead Dashboard
-          </a>
         </div>
       </section>
 
