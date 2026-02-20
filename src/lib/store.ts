@@ -23,7 +23,11 @@ export type SiteEvent = {
   meta?: Record<string, string>;
 };
 
-const DATA_DIR = path.join(process.cwd(), "data");
+const DATA_DIR = process.env.DATA_DIR
+  ? path.resolve(process.env.DATA_DIR)
+  : process.env.VERCEL
+    ? "/tmp/plainsight-data"
+    : path.join(process.cwd(), "data");
 const LEADS_FILE = path.join(DATA_DIR, "leads.json");
 const EVENTS_FILE = path.join(DATA_DIR, "events.json");
 
