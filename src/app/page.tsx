@@ -1,17 +1,4 @@
-"use client";
-
-import { FormEvent, useEffect, useMemo, useState } from "react";
-
-type LeadForm = {
-  name: string;
-  businessName: string;
-  email: string;
-  phone: string;
-  website: string;
-  niche: "clinic" | "law" | "school" | "hotel" | "logistics";
-  budget: "100k-250k" | "250k-500k" | "500k-1m" | "1m+";
-  painPoint: string;
-};
+import LeadForm from "@/components/LeadForm";
 
 const sectors = [
   { label: "Private Clinics & Medical Centers", href: "/clinics" },
@@ -63,66 +50,6 @@ const proofOfWork = [
   },
 ];
 export default function Home() {
-  const [form, setForm] = useState<LeadForm>({
-    name: "",
-    businessName: "",
-    email: "",
-    phone: "",
-    website: "",
-    niche: "clinic",
-    budget: "250k-500k",
-    painPoint: "",
-  });
-
-  const [status, setStatus] = useState<"idle" | "submitting" | "sent" | "error">("idle");
-  const ctaHref = useMemo(() => "#audit", []);
-
-  useEffect(() => {
-    void track("page_view", window.location.pathname);
-  }, []);
-
-  async function track(type: "page_view" | "cta_click" | "form_start" | "form_submit", page: string, meta?: Record<string, string>) {
-    try {
-      await fetch("/api/events", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ type, page, meta }),
-      });
-    } catch {
-      // no-op
-    }
-  }
-
-  async function onSubmit(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    setStatus("submitting");
-
-    try {
-      const res = await fetch("/api/leads", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...form, source: "plainsight-site" }),
-      });
-
-      if (!res.ok) throw new Error("Failed to submit");
-
-      await track("form_submit", window.location.pathname, { niche: form.niche, budget: form.budget });
-      setStatus("sent");
-      setForm({
-        name: "",
-        businessName: "",
-        email: "",
-        phone: "",
-        website: "",
-        niche: "clinic",
-        budget: "250k-500k",
-        painPoint: "",
-      });
-    } catch {
-      setStatus("error");
-    }
-  }
-
   return (
     <main className="min-h-screen bg-[#09090b] text-[#f5f3ef]">
       <div className="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_15%_20%,rgba(245,158,11,0.14),transparent_30%),radial-gradient(circle_at_85%_0%,rgba(251,191,36,0.08),transparent_28%),linear-gradient(to_bottom,rgba(10,10,10,0.96),rgba(10,10,10,1))]" />
@@ -138,8 +65,7 @@ export default function Home() {
 
         <div className="reveal reveal-delay-3 mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
           <a
-            href={ctaHref}
-            onClick={() => void track("cta_click", window.location.pathname, { cta: "hero_audit" })}
+            href="#audit"
             className="rounded-md bg-amber-300 px-7 py-3 text-center text-sm font-semibold tracking-wide text-zinc-950 transition hover:bg-amber-200"
           >
             Request Premium Audit
@@ -223,63 +149,7 @@ export default function Home() {
           <h2 className="font-display text-3xl text-zinc-100">Get your high-ticket website audit</h2>
           <p className="mt-3 text-zinc-300">You’ll get conversion leaks, trust gaps, and practical fixes your team can execute immediately.</p>
 
-          <form
-            className="mt-7 grid gap-4 md:grid-cols-2"
-            onFocus={() => void track("form_start", window.location.pathname, { form: "premium_audit" })}
-            onSubmit={onSubmit}
-          >
-            <Field label="Your Name">
-              <input required value={form.name} onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))} className="input" />
-            </Field>
-
-            <Field label="Business Name">
-              <input required value={form.businessName} onChange={(e) => setForm((f) => ({ ...f, businessName: e.target.value }))} className="input" />
-            </Field>
-
-            <Field label="Email">
-              <input type="email" required value={form.email} onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))} className="input" />
-            </Field>
-
-            <Field label="Phone / WhatsApp">
-              <input value={form.phone} onChange={(e) => setForm((f) => ({ ...f, phone: e.target.value }))} className="input" />
-            </Field>
-
-            <Field label="Website URL">
-              <input value={form.website} onChange={(e) => setForm((f) => ({ ...f, website: e.target.value }))} className="input" placeholder="https://" />
-            </Field>
-
-            <Field label="Industry">
-              <select value={form.niche} onChange={(e) => setForm((f) => ({ ...f, niche: e.target.value as LeadForm["niche"] }))} className="input">
-                <option value="clinic">Clinic / Medical Center</option>
-                <option value="law">Law Firm</option>
-                <option value="school">School</option>
-                <option value="hotel">Hotel / Resort</option>
-                <option value="logistics">Logistics</option>
-              </select>
-            </Field>
-
-            <Field label="Budget Range" className="md:col-span-2">
-              <select value={form.budget} onChange={(e) => setForm((f) => ({ ...f, budget: e.target.value as LeadForm["budget"] }))} className="input">
-                <option value="100k-250k">KES 100k - 250k</option>
-                <option value="250k-500k">KES 250k - 500k</option>
-                <option value="500k-1m">KES 500k - 1M</option>
-                <option value="1m+">KES 1M+</option>
-              </select>
-            </Field>
-
-            <Field label="Biggest conversion problem right now" className="md:col-span-2">
-              <textarea required rows={4} value={form.painPoint} onChange={(e) => setForm((f) => ({ ...f, painPoint: e.target.value }))} className="input" />
-            </Field>
-
-            <div className="md:col-span-2">
-              <button disabled={status === "submitting"} className="w-full rounded-md bg-amber-300 py-3 text-sm font-semibold tracking-wide text-zinc-950 transition hover:bg-amber-200 disabled:opacity-60">
-                {status === "submitting" ? "Submitting..." : "Send My Premium Audit"}
-              </button>
-            </div>
-
-            {status === "sent" && <p className="md:col-span-2 text-emerald-400">Submitted — we’ll contact you shortly.</p>}
-            {status === "error" && <p className="md:col-span-2 text-rose-400">Something went wrong. Please try again.</p>}
-          </form>
+          <LeadForm />
         </div>
       </section>
 
@@ -304,14 +174,5 @@ export default function Home() {
         </svg>
       </a>
     </main>
-  );
-}
-
-function Field({ label, children, className = "" }: { label: string; children: React.ReactNode; className?: string }) {
-  return (
-    <label className={`flex flex-col gap-2 ${className}`}>
-      <span className="text-sm text-zinc-300">{label}</span>
-      {children}
-    </label>
   );
 }
