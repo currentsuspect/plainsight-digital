@@ -23,6 +23,8 @@ export type MeetingEntry = {
 export type InvoiceEntry = {
   id: string;
   createdAt: string;
+  updatedAt?: string;
+  paidAt?: string;
   invoiceNumber: string;
   client: string;
   item: string;
@@ -131,4 +133,25 @@ export async function addInvoice(entry: Omit<InvoiceEntry, "id" | "createdAt" | 
 export async function getInvoice(id: string) {
   const rows = await listInvoices();
   return rows.find((r) => r.id === id) || rows.find((r) => r.invoiceNumber === id) || null;
+}
+
+export async function updateInvoice(id: string, patch: Partial<Pick<InvoiceEntry, "status" | "dueDate" | "note" | "paymentInstruction">>) {
+  const rows = await listInvoices();
+  const index = rows.findIndex((r) => r.id === id || r.invoiceNumber === id);
+  if (index < 0) return null;
+
+  const prev = rows[index];
+  const next: InvoiceEntry = {
+    ...prev,
+    ...patch,
+    updatedAt: new Date().toISOString(),
+  };
+
+  if (patch.status === "paid" && !prev.paidAt) {
+    next.paidAt = new Date().toISOString();
+  }
+
+  rows[index] = next;
+  await writeJson(INVOICES_FILE, rows);
+  return { prev, next };
 }

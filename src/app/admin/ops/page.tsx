@@ -61,10 +61,23 @@ export default async function OpsPage() {
           <div className="rounded-xl border border-slate-800 bg-slate-900/60 p-4">
             <h2 className="font-semibold mb-3">Invoices</h2>
             <div className="space-y-2 text-sm">
-              <div className="grid grid-cols-4 gap-2 text-slate-400"><div>Client</div><div>Amount</div><div>Status</div><div>PDF</div></div>
+              <div className="grid grid-cols-5 gap-2 text-slate-400"><div>Client</div><div>Amount</div><div>Status</div><div>Actions</div><div>PDF</div></div>
               {invoices.slice(0, 8).map((x) => (
-                <div key={x.id} className="grid grid-cols-4 gap-2">
-                  <div>{x.client}</div><div>KES {x.amount}</div><div>{x.status}</div>
+                <div key={x.id} className="grid grid-cols-5 gap-2 items-start border-t border-slate-800 pt-2">
+                  <div>{x.client}</div>
+                  <div>KES {x.amount}</div>
+                  <div>{x.status}</div>
+                  <form action="/api/admin/invoices" method="post" className="space-y-1">
+                    <input type="hidden" name="action" value="update" />
+                    <input type="hidden" name="id" value={x.id} />
+                    <select name="status" defaultValue={x.status} className="input !min-h-8 !py-1 !px-2 text-xs">
+                      <option value="draft">draft</option>
+                      <option value="sent">sent</option>
+                      <option value="paid">paid</option>
+                    </select>
+                    <input name="dueDate" defaultValue={x.dueDate || ""} placeholder="Due date" className="input !min-h-8 !py-1 !px-2 text-xs" />
+                    <button className="px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-xs" type="submit">Update</button>
+                  </form>
                   <a className="text-cyan-300 hover:text-cyan-200" href={`/admin/invoice/${x.id}`} target="_blank" rel="noopener noreferrer">Open</a>
                 </div>
               ))}
