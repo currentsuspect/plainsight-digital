@@ -16,17 +16,17 @@ type LeadForm = {
 const services = [
   {
     title: "Software Development",
-    desc: "Custom web apps, internal systems, and backend APIs built for speed, scale, and clean operations.",
+    desc: "Custom web apps, internal systems, and APIs built to run fast and stay maintainable.",
     bullets: ["Next.js + React", "FastAPI + Node", "Automation-ready architecture"],
   },
   {
     title: "Lead Generation Websites",
-    desc: "Conversion-first sites that turn traffic into inquiries through messaging funnels, CTAs, and trust signals.",
+    desc: "Conversion-first websites that turn traffic into real inquiries using clear messaging, strong CTAs, and trust cues.",
     bullets: ["Conversion UX", "WhatsApp + form funnels", "SEO + analytics"],
   },
   {
     title: "Growth & Optimization",
-    desc: "From first launch to ongoing iteration, we track behavior and improve conversion rates with real data.",
+    desc: "From launch to optimization, we track behavior and improve conversion with actual data.",
     bullets: ["Event tracking", "Landing page optimization", "Lead scoring workflows"],
   },
 ];
@@ -41,7 +41,7 @@ const proof = [
 const signatureProject = {
   name: "Resonance Platform",
   type: "AI-powered personal operating system",
-  impact: "From concept to production-ready full-stack system",
+  impact: "From concept to a production-ready full-stack product",
   stack: ["Flutter", "FastAPI", "AI tooling", "Cloud deployment"],
 };
 
@@ -130,11 +130,11 @@ export default function Home() {
       <section className="max-w-6xl mx-auto px-4 sm:px-6 py-14 sm:py-20 md:py-24">
         <p className="text-cyan-400 font-medium mb-4 reveal">PlainSight Digital</p>
         <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold tracking-tight leading-tight mb-5 sm:mb-6 max-w-5xl reveal reveal-delay-1">
-          We engineer digital systems that
-          <span className="text-cyan-300"> make premium brands look inevitable.</span>
+          We build websites and software that
+          <span className="text-cyan-300"> bring in serious clients.</span>
         </h1>
         <p className="text-slate-300 max-w-3xl text-base sm:text-lg mb-7 sm:mb-8 reveal reveal-delay-2">
-          For founders and growth-stage teams who are done with generic websites. We design, build, and optimize digital assets that win trust fast and convert attention into revenue.
+          For founders and service businesses tired of pretty sites that do nothing. We build digital systems that earn trust quickly and turn visits into real conversations.
         </p>
 
         <div className="flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:gap-4 reveal reveal-delay-3">
@@ -166,7 +166,7 @@ export default function Home() {
 
       <section id="services" className="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
         <h2 className="text-2xl md:text-3xl font-bold mb-3">What we do</h2>
-        <p className="text-slate-300 mb-8 max-w-2xl">Three clear capabilities — premium execution, measurable growth, and technical depth that scales.</p>
+        <p className="text-slate-300 mb-8 max-w-2xl">Three things we care about: sharp execution, measurable growth, and technical depth.</p>
 
         <div className="grid md:grid-cols-3 gap-4">
           {services.map((service) => (
@@ -186,7 +186,7 @@ export default function Home() {
 
       <section className="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
         <h2 className="text-2xl md:text-3xl font-bold mb-3">Recent outcomes</h2>
-        <p className="text-slate-300 mb-8 max-w-2xl">Real execution energy — clear positioning, stronger conversion paths, and systems that help you close faster.</p>
+        <p className="text-slate-300 mb-8 max-w-2xl">Clear positioning, stronger conversion paths, and systems that help you close faster.</p>
         <div className="grid md:grid-cols-3 gap-4">
           {caseStudies.map((item) => (
             <article key={item.title} className="rounded-xl border border-slate-800 bg-gradient-to-b from-slate-900 to-slate-950 p-5">
@@ -217,10 +217,10 @@ export default function Home() {
         <div className="rounded-2xl border border-slate-800 bg-slate-900/70 p-5 sm:p-8">
           <h2 className="text-2xl md:text-3xl font-bold mb-3">About PlainSight</h2>
           <p className="text-slate-300 mb-4">
-            We are a boutique digital studio focused on practical outcomes — not bloated projects. Every build is designed around performance, conversion, and clarity.
+            We are a boutique studio that ships practical work. No bloat, no endless scope creep, just clean builds focused on performance and conversion.
           </p>
           <p className="text-slate-400">
-            If your current site is not converting, your process is manual, or your digital presence doesn&apos;t match your ambition, we can fix that.
+            If your site is not converting, your sales process is too manual, or your digital presence feels behind, we can fix it.
           </p>
         </div>
       </section>
