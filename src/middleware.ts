@@ -1,7 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 
 export function middleware(req: NextRequest) {
+  // Public admin endpoints protected by their own shared-secret verification
   if (req.nextUrl.pathname.startsWith("/api/admin/login")) return NextResponse.next();
+  if (req.nextUrl.pathname.startsWith("/api/admin/cal-webhook")) return NextResponse.next();
 
   const guarded = req.nextUrl.pathname.startsWith("/admin") || req.nextUrl.pathname.startsWith("/api/admin");
   if (!guarded) return NextResponse.next();

@@ -1,1 +1,15 @@
-[]
+[
+  {
+    "id": "kch-website-2026",
+    "createdAt": "2026-02-27T08:00:00.000Z",
+    "updatedAt": "2026-02-27T08:00:00.000Z",
+    "invoiceNumber": "PSD-20260227-001",
+    "client": "Kenya Children's Home",
+    "item": "Website Design & Development - Kenya Children's Home (kch-website.vercel.app)",
+    "amount": 5000,
+    "status": "draft",
+    "dueDate": "2026-03-06",
+    "paymentInstruction": "Payment via M-Pesa Paybill or Bank Transfer. Details to be provided upon invoice confirmation.",
+    "note": "50% deposit upon approval, 50% upon launch. Includes responsive design, SEO optimization, contact form, Google Maps integration, and image optimization."
+  }
+]

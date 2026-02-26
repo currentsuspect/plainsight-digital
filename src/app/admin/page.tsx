@@ -30,6 +30,19 @@ function buildMailtoLink(lead: Lead) {
   return `mailto:${lead.email}?subject=${subject}&body=${body}`;
 }
 
+function buildCalBookingLink(lead: Lead) {
+  // Pre-fill Cal.com booking form with lead details
+  const params = new URLSearchParams({
+    name: lead.name,
+    email: lead.email,
+  });
+  if (lead.phone) {
+    // Cal.com expects phone in specific format
+    params.set("phone", lead.phone.replace(/\D/g, ""));
+  }
+  return `https://cal.com/plainsightdigital/30min?${params.toString()}`;
+}
+
 function formatNextAction(lead: Lead): string {
   if (!lead.next_action_at) return "—";
   const date = new Date(lead.next_action_at);
@@ -102,6 +115,25 @@ export default async function AdminPage() {
     if (!l.next_action_at) return false;
     const nextAction = new Date(l.next_action_at);
     return nextAction <= now && l.next_action_type !== "none";
+  });
+
+  // Lost leads ready for re-engagement
+  const reengagementQueue = leads.filter(l => {
+    if (l.status !== "Lost") return false;
+    if (!l.reengage_at) return false;
+    if (l.nurture_email_sent) return false;
+    const reengageDate = new Date(l.reengage_at);
+    return reengageDate <= now;
+  });
+
+  // Upcoming re-engagements (next 30 days)
+  const upcomingReengagements = leads.filter(l => {
+    if (l.status !== "Lost") return false;
+    if (!l.reengage_at) return false;
+    if (l.nurture_email_sent) return false;
+    const reengageDate = new Date(l.reengage_at);
+    const in30Days = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000);
+    return reengageDate > now && reengageDate <= in30Days;
   });
 
   return (
@@ -202,6 +234,46 @@ export default async function AdminPage() {
           </section>
         )}
 
+        {/* Re-engagement Queue (Lost Leads) */}
+        {(reengagementQueue.length > 0 || upcomingReengagements.length > 0) && (
+          <section className="rounded-xl border border-violet-500/30 bg-violet-500/10 p-4">
+            <h2 className="text-sm font-semibold text-violet-300 mb-2">
+              🔄 Re-engagement Queue
+            </h2>
+            {reengagementQueue.length > 0 && (
+              <div className="mb-3">
+                <div className="text-xs text-violet-200 mb-1">Ready to contact now ({reengagementQueue.length})</div>
+                <div className="text-xs text-zinc-300">
+                  {reengagementQueue.slice(0, 5).map(l => (
+                    <span key={l.id} className="mr-4">
+                      {l.name} ({l.businessName})
+                    </span>
+                  ))}
+                  {reengagementQueue.length > 5 && <span>...and {reengagementQueue.length - 5} more</span>}
+                </div>
+                <a 
+                  href="/api/admin/nurture-lost?key=demo" 
+                  className="inline-block mt-2 rounded bg-violet-600 px-3 py-1 text-xs hover:bg-violet-500"
+                >
+                  Send Nurture Emails
+                </a>
+              </div>
+            )}
+            {upcomingReengagements.length > 0 && (
+              <div>
+                <div className="text-xs text-zinc-400 mb-1">Upcoming (next 30 days): {upcomingReengagements.length}</div>
+                <div className="text-xs text-zinc-500">
+                  {upcomingReengagements.slice(0, 3).map(l => (
+                    <span key={l.id} className="mr-4">
+                      {l.name} - {l.reengage_at ? new Date(l.reengage_at).toLocaleDateString() : ""}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+          </section>
+        )}
+
         {/* Leads Table */}
         <section className="overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-900/70">
           <div className="border-b border-zinc-800 bg-zinc-900/90 px-4 py-3 text-sm font-medium text-zinc-200">
@@ -278,13 +350,50 @@ export default async function AdminPage() {
                       )}
                     </td>
                     <td className="p-3">
-                      <div className="flex gap-2">
-                        <a href={buildMailtoLink(lead)} className="rounded border border-zinc-700 px-2 py-1 text-xs hover:bg-zinc-800">Email</a>
-                        {lead.phone && (
-                          <a href={buildWhatsAppLink(lead)} target="_blank" rel="noopener noreferrer" className="rounded bg-emerald-700/70 px-2 py-1 text-xs hover:bg-emerald-600">
-                            WhatsApp
+                      <div className="flex flex-col gap-2">
+                        <div className="flex gap-2 flex-wrap">
+                          <a href={buildCalBookingLink(lead)} target="_blank" rel="noopener noreferrer" className="rounded bg-amber-500/80 px-2 py-1 text-xs hover:bg-amber-400 text-black font-medium">
+                            📅 Book
                           </a>
-                        )}
+                          <a href={buildMailtoLink(lead)} className="rounded border border-zinc-700 px-2 py-1 text-xs hover:bg-zinc-800">Email</a>
+                          {lead.phone && (
+                            <a href={buildWhatsAppLink(lead)} target="_blank" rel="noopener noreferrer" className="rounded bg-emerald-700/70 px-2 py-1 text-xs hover:bg-emerald-600">
+                              WhatsApp
+                            </a>
+                          )}
+                        </div>
+                        <div className="flex gap-1 flex-wrap">
+                          <form action="/api/admin/send-audit" method="post">
+                            <input type="hidden" name="leadId" value={lead.id} />
+                            <button 
+                              type="submit" 
+                              className={`rounded px-2 py-1 text-xs ${
+                                ["New", "Contacted"].includes(lead.status || "New")
+                                  ? "bg-sky-600/70 hover:bg-sky-500 text-white"
+                                  : "bg-zinc-800 text-zinc-500 cursor-not-allowed"
+                              }`}
+                              disabled={!["New", "Contacted"].includes(lead.status || "New")}
+                            >
+                              📋 Send Audit
+                            </button>
+                          </form>
+                          <form action="/api/admin/send-proposal" method="post">
+                            <input type="hidden" name="leadId" value={lead.id} />
+                            <input type="hidden" name="projectName" value={`Website for ${lead.businessName}`} />
+                            <input type="hidden" name="amount" value="50000" />
+                            <button 
+                              type="submit" 
+                              className={`rounded px-2 py-1 text-xs ${
+                                ["Contacted", "Audit Sent"].includes(lead.status || "New")
+                                  ? "bg-violet-600/70 hover:bg-violet-500 text-white"
+                                  : "bg-zinc-800 text-zinc-500 cursor-not-allowed"
+                              }`}
+                              disabled={!["Contacted", "Audit Sent"].includes(lead.status || "New")}
+                            >
+                              💼 Proposal
+                            </button>
+                          </form>
+                        </div>
                       </div>
                     </td>
                   </tr>

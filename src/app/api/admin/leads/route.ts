@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
-import { listLeads, updateLeadStatus, updateLead, appendAuditLog } from "@/lib/store";
+import { listLeads, updateLeadStatus, updateLead } from "@/lib/store";
 import { validateLeadUpdate, errorResponse, sanitizeString, isValidUUID } from "@/lib/validation";
+import { sendAuditSentEmail, sendProposalEmail, sendWonOnboardingEmail, sendLostNurtureEmail } from "@/lib/pipelineEmails";
 
 export async function GET() {
   try {
@@ -10,6 +11,16 @@ export async function GET() {
     console.error("Error fetching leads:", error);
     return NextResponse.json({ error: "Failed to fetch leads" }, { status: 500 });
   }
+}
+
+async function handleStatusEmail(status: string, lead: any) {
+  // Only send stage emails when explicitly entering a stage
+  if (!lead.email) return;
+
+  if (status === "Audit Sent") await sendAuditSentEmail(lead);
+  if (status === "Proposal") await sendProposalEmail(lead);
+  if (status === "Won") await sendWonOnboardingEmail(lead);
+  // Note: Lost nurture email is sent after 90 days, not immediately
 }
 
 export async function POST(request: Request) {
@@ -26,10 +37,30 @@ export async function POST(request: Request) {
       }
 
       if (status) {
-        const result = await updateLeadStatus(id, status, additionalFields);
+        const leads = await listLeads();
+        const prev = leads.find((l) => l.id === id);
+
+        const patchedFields = { ...additionalFields } as Record<string, unknown>;
+        
+        // Handle Lost status
+        if (status === "Lost") {
+          patchedFields.lost_at = new Date().toISOString();
+          // Set re-engagement date to 90 days from now
+          const reengageDate = new Date();
+          reengageDate.setDate(reengageDate.getDate() + 90);
+          patchedFields.reengage_at = reengageDate.toISOString();
+          patchedFields.nurture_email_sent = false;
+        }
+
+        const result = await updateLeadStatus(id, status, patchedFields);
         if (!result) {
           return NextResponse.json({ error: "Lead not found" }, { status: 404 });
         }
+
+        if (!prev || prev.status !== status) {
+          await handleStatusEmail(status, result as any);
+        }
+
         return NextResponse.json({ lead: result });
       }
 
@@ -61,10 +92,29 @@ export async function POST(request: Request) {
     if (won_value) additionalFields.won_value = won_value;
     if (source_confidence) additionalFields.source_confidence = source_confidence;
 
-    const result = await updateLeadStatus(id, status as any, additionalFields);
+    const leads = await listLeads();
+    const prev = leads.find((l) => l.id === id);
+
+    const patchedFields: Record<string, unknown> = { ...additionalFields };
     
+    // Handle Lost status
+    if (status === "Lost") {
+      patchedFields.lost_at = new Date().toISOString();
+      // Set re-engagement date to 90 days from now
+      const reengageDate = new Date();
+      reengageDate.setDate(reengageDate.getDate() + 90);
+      patchedFields.reengage_at = reengageDate.toISOString();
+      patchedFields.nurture_email_sent = false;
+    }
+
+    const result = await updateLeadStatus(id, status as any, patchedFields);
+
     if (!result) {
       return NextResponse.json({ error: "Lead not found" }, { status: 404 });
+    }
+
+    if (!prev || prev.status !== status) {
+      await handleStatusEmail(status, result as any);
     }
 
     // Redirect back to admin for form submissions

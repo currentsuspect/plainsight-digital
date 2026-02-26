@@ -33,6 +33,10 @@ export type Lead = {
   // Win/Loss tracking
   loss_reason?: string;
   won_value?: number;
+  lost_at?: string;
+  // Re-engagement for lost leads
+  reengage_at?: string;
+  nurture_email_sent?: boolean;
 };
 
 export type SiteEvent = {
@@ -206,12 +210,13 @@ export function scheduleNextAction(lead: Lead): { next_action_at: string | null;
     "Audit Sent": { hours: 96, action: "followup" },
     "Proposal": { hours: 168, action: "proposal_review" },
     "Won": { hours: 0, action: "none" },
-    "Lost": { hours: 0, action: "none" },
+    // Lost leads enter a long-term nurture sequence (90 days)
+    "Lost": { hours: 2160, action: "followup" },
   };
 
   const config = followUpDelays[status];
 
-  // Won/Lost leads don't need follow-up
+  // Won leads don't need follow-up
   if (config.action === "none") {
     return { next_action_at: null, next_action_type: "none" };
   }

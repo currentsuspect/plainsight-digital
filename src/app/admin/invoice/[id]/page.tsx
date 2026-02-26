@@ -1,4 +1,5 @@
 import { getInvoice } from "@/lib/opsStore";
+import { PAYMENT_FULL_TEXT } from "@/lib/paymentConfig";
 import { notFound } from "next/navigation";
 import InvoicePrintButton from "./InvoicePrintButton";
 
@@ -56,7 +57,7 @@ export default async function InvoicePage({ params }: { params: Promise<{ id: st
         </section>
 
         <section className="text-sm text-slate-700 space-y-2">
-          <p><strong>Payment instructions:</strong> {invoice.paymentInstruction || "Pochi la biashara: 0716177897"}</p>
+          <p><strong>Payment instructions:</strong> {invoice.paymentInstruction || PAYMENT_FULL_TEXT}</p>
           {invoice.note && <p><strong>Note:</strong> {invoice.note}</p>}
           <p>Thank you for trusting PlainSight Digital.</p>
         </section>

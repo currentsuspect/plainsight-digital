@@ -1,6 +1,7 @@
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { hasRemoteStore, readRemoteJson, writeRemoteJson } from "@/lib/remoteStore";
+import { PAYMENT_FULL_TEXT } from "@/lib/paymentConfig";
 
 export type FinanceEntry = {
   id: string;
@@ -18,6 +19,18 @@ export type MeetingEntry = {
   when: string;
   owner: string;
   note?: string;
+  // Cal.com integration fields
+  calUid?: string;
+  calBookingId?: string;
+  calEventTypeId?: number;
+  status?: "scheduled" | "completed" | "cancelled" | "no_show";
+  attendeeName?: string;
+  attendeeEmail?: string;
+  attendeePhone?: string;
+  leadId?: string;
+  meetingUrl?: string;
+  confirmationSent?: boolean;
+  reminderSent?: boolean;
 };
 
 export type InvoiceEntry = {
@@ -104,6 +117,25 @@ export async function addMeeting(entry: Omit<MeetingEntry, "id" | "createdAt">) 
   return row;
 }
 
+export async function getMeetingByCalUid(calUid: string) {
+  const rows = await listMeetings();
+  return rows.find((r) => r.calUid === calUid) || null;
+}
+
+export async function getMeetingsByLeadId(leadId: string) {
+  const rows = await listMeetings();
+  return rows.filter((r) => r.leadId === leadId);
+}
+
+export async function updateMeeting(id: string, patch: Partial<MeetingEntry>) {
+  const rows = await listMeetings();
+  const index = rows.findIndex((r) => r.id === id);
+  if (index < 0) return null;
+  rows[index] = { ...rows[index], ...patch };
+  await writeJson(MEETINGS_FILE, rows);
+  return rows[index];
+}
+
 export async function listInvoices() {
   const rows = await readJson<InvoiceEntry>(INVOICES_FILE);
   return rows.map((r) => ({ ...r, invoiceNumber: r.invoiceNumber || `PSD-${new Date(r.createdAt).toISOString().slice(0, 10).replace(/-/g, "")}-001` }));
@@ -123,6 +155,7 @@ export async function addInvoice(entry: Omit<InvoiceEntry, "id" | "createdAt" | 
     id: crypto.randomUUID(),
     createdAt: new Date().toISOString(),
     invoiceNumber: entry.invoiceNumber || generateInvoiceNumber(new Date(), seq),
+    paymentInstruction: entry.paymentInstruction || PAYMENT_FULL_TEXT,
     ...entry,
   };
   rows.unshift(row);
@@ -144,6 +177,7 @@ export async function updateInvoice(id: string, patch: Partial<Pick<InvoiceEntry
   const next: InvoiceEntry = {
     ...prev,
     ...patch,
+    paymentInstruction: (patch.paymentInstruction || prev.paymentInstruction || PAYMENT_FULL_TEXT),
     updatedAt: new Date().toISOString(),
   };
 
