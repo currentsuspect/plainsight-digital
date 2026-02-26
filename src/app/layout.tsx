@@ -70,9 +70,6 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <head>
-        {/* Google Search Console Verification - Replace with your verification code */}
-        <meta name="google-site-verification" content="YOUR_VERIFICATION_CODE_HERE" />
-        
         {/* Google Analytics */}
         {gaId && gaId !== "G-XXXXXXXXXX" && (
           <>
