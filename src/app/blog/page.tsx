@@ -18,7 +18,22 @@ const posts = [
     category: "Pricing",
     readTime: "8 min",
   },
-  // Future posts can be added here
+  {
+    slug: "mpesa-cart-abandonment",
+    title: "Why M-Pesa Integration Reduces Cart Abandonment by 40%",
+    excerpt: "How M-Pesa payment integration dramatically reduces cart abandonment for Kenyan e-commerce businesses.",
+    date: "February 27, 2026",
+    category: "E-commerce",
+    readTime: "7 min",
+  },
+  {
+    slug: "patient-journey-kenya",
+    title: "The Kenyan Patient's Journey: From Google Search to Clinic Visit",
+    excerpt: "Understanding how Kenyan patients find and choose healthcare providers online. Optimize every stage.",
+    date: "February 27, 2026",
+    category: "Healthcare",
+    readTime: "9 min",
+  },
 ];
 
 export default function BlogIndex() {
