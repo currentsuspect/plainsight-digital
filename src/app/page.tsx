@@ -100,6 +100,12 @@ export default function Home() {
           >
             Request Premium Audit
           </a>
+          <a
+            href="/audit"
+            className="rounded-md border border-amber-300/50 px-7 py-3.5 text-center text-sm font-semibold tracking-wide text-amber-300 transition hover:bg-amber-300/10"
+          >
+            🔍 Free Website Grader (30s)
+          </a>
           <a href="#work" className="rounded-md border border-zinc-700 px-7 py-3.5 text-center text-sm text-zinc-200 transition hover:border-zinc-500 hover:bg-zinc-900">
             See Our Work
           </a>
