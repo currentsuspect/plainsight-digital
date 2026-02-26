@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import LeadForm from "@/components/LeadForm";
 
 export const metadata: Metadata = {
-  title: "Plainsight Digital | High-Ticket Websites & Conversion Systems for Kenya",
+  title: "Plainsight Digital | High-Ticket Websites for Kenya",
   description: "Luxury-grade, conversion-focused websites for clinics, law firms, schools, hotels, and logistics companies in Kenya. We build digital systems that generate leads, not just pageviews.",
   keywords: ["website design Kenya", "high-ticket website Nairobi", "conversion optimization Kenya", "law firm website", "clinic website", "school website design"],
   openGraph: {
