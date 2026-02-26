@@ -95,11 +95,6 @@
       "permanent": true
     },
     {
-      "source": "/http://plainsight.digital",
-      "destination": "https://www.plainsightdigital.dev",
-      "permanent": true
-    },
-    {
       "source": "/www.plainsight.digital",
       "destination": "https://www.plainsightdigital.dev",
       "permanent": true
