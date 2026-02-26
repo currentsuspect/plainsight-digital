@@ -1,0 +1,17 @@
+/* TEAM */
+Founder & Lead Developer: Dylan Makori
+Site: https://plainsight.digital
+Location: Nairobi, Kenya
+
+/* THANKS */
+Resonance Platform: https://aestra.studio
+
+/* SITE */
+Last update: 2026-02-26
+Standards: HTML5, CSS3, ES6+
+Components: Next.js, React, Tailwind CSS, TypeScript
+Software: VS Code, Figma, Vercel
+
+/* CONTACT */
+Email: hello@plainsight.digital
+WhatsApp: +254 750 192512

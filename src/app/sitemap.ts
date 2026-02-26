@@ -11,6 +11,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/schools", priority: 0.9, changeFreq: "weekly" as const },
     { path: "/hotels", priority: 0.9, changeFreq: "weekly" as const },
     { path: "/logistics", priority: 0.9, changeFreq: "weekly" as const },
+    { path: "/audit", priority: 0.8, changeFreq: "weekly" as const },
+    { path: "/promise", priority: 0.7, changeFreq: "monthly" as const },
   ];
 
   return routes.map((route) => ({
