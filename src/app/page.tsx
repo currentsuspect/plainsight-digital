@@ -6,15 +6,15 @@ export const metadata: Metadata = {
   description: "Luxury-grade, conversion-focused websites for clinics, law firms, schools, hotels, and logistics companies in Kenya. We build digital systems that generate leads, not just pageviews.",
   keywords: ["website design Kenya", "high-ticket website Nairobi", "conversion optimization Kenya", "law firm website", "clinic website", "school website design"],
   openGraph: {
-    title: "Plainsight Digital | High-Ticket Websites & Conversion Systems",
+    title: "Plainsight Digital | High-Ticket Websites for Kenya",
     description: "Luxury-grade, conversion-focused websites for clinics, law firms, schools, hotels, and logistics companies in Kenya.",
-    url: "https://plainsight.digital",
+    url: "https://www.plainsightdigital.dev",
     siteName: "Plainsight Digital",
     locale: "en_KE",
     type: "website",
   },
   alternates: {
-    canonical: "https://plainsight.digital",
+    canonical: "https://www.plainsightdigital.dev",
   },
 };
 

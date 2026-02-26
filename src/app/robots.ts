@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = "https://plainsight.digital";
+  const baseUrl = "https://www.plainsightdigital.dev";
   
   return {
     rules: {

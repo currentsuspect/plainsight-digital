@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://plainsight.digital";
+  const baseUrl = "https://www.plainsightdigital.dev";
   const currentDate = new Date();
 
   const routes = [

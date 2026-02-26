@@ -15,7 +15,7 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://plainsight.digital"),
+  metadataBase: new URL("https://www.plainsightdigital.dev"),
   title: {
     default: "Plainsight Digital | High-Ticket Websites for Kenya",
     template: "%s | Plainsight Digital",
@@ -33,9 +33,9 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_KE",
-    url: "https://plainsight.digital",
+    url: "https://www.plainsightdigital.dev",
     siteName: "Plainsight Digital",
-    title: "Plainsight Digital | High-Ticket Websites & Conversion Systems",
+    title: "Plainsight Digital | High-Ticket Websites for Kenya",
     description: "Luxury-grade, conversion-focused websites for clinics, law firms, schools, hotels, and logistics companies in Kenya.",
   },
   twitter: {
@@ -98,7 +98,7 @@ export default function RootLayout({
               "@type": "LocalBusiness",
               "name": "Plainsight Digital",
               "description": "Luxury-grade, conversion-focused websites for clinics, law firms, schools, hotels, and logistics companies in Kenya.",
-              "url": "https://plainsight.digital",
+              "url": "https://www.plainsightdigital.dev",
               "telephone": "+254-750-192-512",
               "email": "hello@plainsight.digital",
               "address": {
