@@ -11,6 +11,9 @@ type AuditEmailParams = {
   name: string;
   businessName: string;
   auditPoints: string[];
+  recommendations?: string[];
+  score?: number;
+  grade?: string;
   nextStep?: string;
   calLink?: string;
 };
@@ -19,27 +22,36 @@ type AuditEmailParams = {
  * Send audit email to lead
  */
 export async function sendAuditEmail(params: AuditEmailParams) {
-  const { to, name, businessName, auditPoints, nextStep, calLink } = params;
+  const { to, name, businessName, auditPoints, recommendations, score, grade, nextStep, calLink } = params;
 
   if (!resend) {
     return { sent: false as const, reason: "missing_resend_api_key" };
   }
 
-  const subject = `📋 Your Plainsight Audit for ${businessName}`;
+  const subject = grade && score 
+    ? `📋 Your Website Score: ${score}/100 (Grade ${grade}) - ${businessName}` 
+    : `📋 Your Plainsight Audit for ${businessName}`;
 
   const auditList = auditPoints.map((point, i) => `${i + 1}. ${point}`).join("\n");
   const auditListHtml = auditPoints.map((point, i) => `<li style="margin: 8px 0;">${point}</li>`).join("");
+  
+  const recListHtml = recommendations?.slice(0, 4).map((rec) => `<li style="margin: 6px 0;">${rec}</li>`).join("") || "";
 
   const text = [
     `Hi ${name},`,
     "",
-    `Thanks for your interest in Plainsight Digital.`,
+    `Thanks for using the Plainsight Website Grader.`,
     "",
-    `I reviewed ${businessName}'s online presence and here's what I found:`,
+    score && grade ? `Your Score: ${score}/100 (Grade ${grade})` : "",
+    "",
+    `Here's what we found for ${businessName}:`,
     "",
     auditList,
     "",
-    nextStep || "These are quick wins that could start bringing in more inquiries within weeks.",
+    recommendations && recommendations.length > 0 ? "Priority Recommendations:" : "",
+    recommendations && recommendations.length > 0 ? recommendations.slice(0, 4).join("\n") : "",
+    "",
+    nextStep || "These issues are costing you customers every day. Let's fix them.",
     "",
     calLink
       ? `Want to discuss how to implement these? Book a quick call:\n${calLink}`
@@ -48,15 +60,23 @@ export async function sendAuditEmail(params: AuditEmailParams) {
     "Best,",
     "Dylan Makori",
     "Plainsight Digital",
-  ].join("\n");
+  ].filter(Boolean).join("\n");
 
   const html = `
     <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #111; max-width: 600px;">
       <p>Hi ${name},</p>
       
-      <p>Thanks for your interest in <strong>Plainsight Digital</strong>.</p>
+      <p>Thanks for using the <strong>Plainsight Website Grader</strong>.</p>
       
-      <p>I reviewed <strong>${businessName}</strong>'s online presence and here's what I found:</p>
+      ${score && grade ? `
+        <div style="background: ${score >= 70 ? '#22c55e' : score >= 50 ? '#f59e0b' : '#ef4444'}; color: #fff; padding: 24px; border-radius: 8px; margin: 20px 0; text-align: center;">
+          <div style="font-size: 14px; opacity: 0.9;">Your Website Score</div>
+          <div style="font-size: 48px; font-weight: bold;">${score}/100</div>
+          <div style="font-size: 24px; font-weight: bold;">Grade ${grade}</div>
+        </div>
+      ` : ""}
+      
+      <p>Here's what we found for <strong>${businessName}</strong>:</p>
       
       <div style="background: #f5f5f5; padding: 20px; border-radius: 8px; margin: 20px 0;">
         <ol style="margin: 0; padding-left: 20px;">
@@ -64,7 +84,16 @@ export async function sendAuditEmail(params: AuditEmailParams) {
         </ol>
       </div>
       
-      <p style="color: #666;">${nextStep || "These are quick wins that could start bringing in more inquiries within weeks."}</p>
+      ${recListHtml ? `
+        <div style="background: #fffbeb; border: 1px solid #f59e0b; padding: 20px; border-radius: 8px; margin: 20px 0;">
+          <div style="font-weight: bold; margin-bottom: 12px; color: #92400e;">💡 Priority Recommendations:</div>
+          <ul style="margin: 0; padding-left: 20px; color: #78350f;">
+            ${recListHtml}
+          </ul>
+        </div>
+      ` : ""}
+      
+      <p style="color: #666;">${nextStep || "These issues are costing you customers every day. Let's fix them."}</p>
       
       ${calLink ? `
         <p style="text-align: center; margin: 24px 0;">
