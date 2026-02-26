@@ -215,6 +215,34 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Featured Blog Post */}
+      <section className="mx-auto max-w-6xl px-5 py-8 sm:px-7 md:py-12">
+        <p className="text-xs uppercase tracking-[0.18em] text-amber-300 mb-4">Latest from our blog</p>
+        <a
+          href="/blog/website-cost-kenya"
+          className="group block rounded-2xl border border-zinc-800 bg-zinc-900/60 p-6 md:p-8 transition hover:border-amber-300/40 hover:bg-zinc-900/80"
+        >
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <div>
+              <h3 className="font-display text-xl text-zinc-100 group-hover:text-amber-200 transition">
+                How Much Does a Website Cost in Kenya? (2026 Pricing Guide)
+              </h3>
+              <p className="mt-2 text-zinc-400 text-sm">
+                Complete breakdown from KES 15,000 DIY builders to KES 500,000+ enterprise sites.
+              </p>
+              <div className="mt-3 flex items-center gap-3 text-xs text-zinc-500">
+                <span>Pricing</span>
+                <span>•</span>
+                <span>8 min read</span>
+              </div>
+            </div>
+            <span className="text-amber-300 text-sm font-medium group-hover:translate-x-1 transition">
+              Read article →
+            </span>
+          </div>
+        </a>
+      </section>
+
       {/* Audit Form Section */}
       <section id="audit" className="mx-auto max-w-4xl px-5 py-12 sm:px-7 md:py-16">
         <div className="rounded-2xl border border-zinc-800 bg-zinc-900/70 p-5 sm:p-7 md:p-8">
@@ -232,6 +260,9 @@ export default function Home() {
         <div className="mx-auto max-w-6xl flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-zinc-400">
           <p>© {new Date().getFullYear()} Plainsight Digital. Nairobi, Kenya.</p>
           <div className="flex gap-6">
+            <a href="/blog" className="hover:text-amber-300 transition">
+              Blog
+            </a>
             <a href="/promise" className="hover:text-amber-300 transition">
               Our Promise
             </a>
