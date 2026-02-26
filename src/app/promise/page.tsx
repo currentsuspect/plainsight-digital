@@ -4,6 +4,9 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Our Promise | PlainSight Digital",
   description: "Our core values, satisfaction commitment, and why clients choose PlainSight Digital for web design in Kenya.",
+  alternates: {
+    canonical: "https://www.plainsightdigital.dev/promise",
+  },
 };
 
 const values = [

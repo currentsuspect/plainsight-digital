@@ -8,13 +8,13 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Logistics Company Website Design in Kenya | Plainsight Digital",
     description: "Lead-focused websites for logistics companies targeting higher-value contracts.",
-    url: "https://plainsight.digital/logistics",
+    url: "https://www.plainsightdigital.dev/logistics",
     siteName: "Plainsight Digital",
     locale: "en_KE",
     type: "website",
   },
   alternates: {
-    canonical: "https://plainsight.digital/logistics",
+    canonical: "https://www.plainsightdigital.dev/logistics",
   },
 };
 

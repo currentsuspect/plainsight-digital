@@ -8,13 +8,13 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Law Firm Website Design in Kenya | Plainsight Digital",
     description: "Professional, conversion-focused websites for law firms that want better client acquisition.",
-    url: "https://plainsight.digital/law-firms",
+    url: "https://www.plainsightdigital.dev/law-firms",
     siteName: "Plainsight Digital",
     locale: "en_KE",
     type: "website",
   },
   alternates: {
-    canonical: "https://plainsight.digital/law-firms",
+    canonical: "https://www.plainsightdigital.dev/law-firms",
   },
 };
 

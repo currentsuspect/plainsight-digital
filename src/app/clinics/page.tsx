@@ -8,13 +8,13 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Website Design for Private Clinics in Kenya | Plainsight Digital",
     description: "Conversion-focused websites for private clinics and medical centers in Kenya. Get more patient bookings with mobile-first design.",
-    url: "https://plainsight.digital/clinics",
+    url: "https://www.plainsightdigital.dev/clinics",
     siteName: "Plainsight Digital",
     locale: "en_KE",
     type: "website",
   },
   alternates: {
-    canonical: "https://plainsight.digital/clinics",
+    canonical: "https://www.plainsightdigital.dev/clinics",
   },
 };
 

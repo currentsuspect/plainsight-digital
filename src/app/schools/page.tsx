@@ -8,13 +8,13 @@ export const metadata: Metadata = {
   openGraph: {
     title: "School Website Design in Kenya | Plainsight Digital",
     description: "Modern school websites that improve admissions inquiries and parent trust.",
-    url: "https://plainsight.digital/schools",
+    url: "https://www.plainsightdigital.dev/schools",
     siteName: "Plainsight Digital",
     locale: "en_KE",
     type: "website",
   },
   alternates: {
-    canonical: "https://plainsight.digital/schools",
+    canonical: "https://www.plainsightdigital.dev/schools",
   },
 };
 

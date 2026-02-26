@@ -4,6 +4,9 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Blog | Plainsight Digital",
   description: "Insights on web design, conversion optimization, and digital strategy for Kenyan businesses.",
+  alternates: {
+    canonical: "https://www.plainsightdigital.dev/blog",
+  },
 };
 
 const posts = [

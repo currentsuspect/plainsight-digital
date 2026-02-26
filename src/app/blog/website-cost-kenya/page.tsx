@@ -12,6 +12,9 @@ export const metadata: Metadata = {
     publishedTime: "2026-02-26",
     authors: ["Dylan Makori"],
   },
+  alternates: {
+    canonical: "https://www.plainsightdigital.dev/blog/website-cost-kenya",
+  },
 };
 
 export default function BlogPost() {

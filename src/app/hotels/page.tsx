@@ -8,13 +8,13 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Hotel Website Design in Kenya | Plainsight Digital",
     description: "Hospitality websites designed to increase direct bookings and reduce OTA dependency.",
-    url: "https://plainsight.digital/hotels",
+    url: "https://www.plainsightdigital.dev/hotels",
     siteName: "Plainsight Digital",
     locale: "en_KE",
     type: "website",
   },
   alternates: {
-    canonical: "https://plainsight.digital/hotels",
+    canonical: "https://www.plainsightdigital.dev/hotels",
   },
 };
 
