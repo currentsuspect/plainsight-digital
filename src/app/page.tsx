@@ -140,6 +140,12 @@ export default function Home() {
           <p className="mt-4 max-w-3xl text-zinc-300">
             We&apos;re a small team that cares about business outcomes. If your site looks decent but doesn&apos;t close, we fix the conversion path, tighten your offer, and make follow-up easier for your team.
           </p>
+          <a 
+            href="/promise" 
+            className="mt-4 inline-block text-sm text-amber-300 hover:text-amber-200 transition"
+          >
+            Our Promise →
+          </a>
         </div>
       </section>
 
@@ -220,6 +226,9 @@ export default function Home() {
         <div className="mx-auto max-w-6xl flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-zinc-400">
           <p>© {new Date().getFullYear()} Plainsight Digital. Nairobi, Kenya.</p>
           <div className="flex gap-6">
+            <a href="/promise" className="hover:text-amber-300 transition">
+              Our Promise
+            </a>
             <a href="https://wa.me/254750192512" target="_blank" rel="noopener noreferrer" className="hover:text-amber-300 transition">
               WhatsApp
             </a>

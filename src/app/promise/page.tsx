@@ -10,27 +10,22 @@ const values = [
   {
     title: "Transparency First",
     description: "No hidden fees. No surprise charges. Every line item is communicated upfront. You always know what you're paying for and why.",
-    icon: "◆",
   },
   {
     title: "Speed Without Compromise",
     description: "We deliver quickly because we work efficiently — not because we cut corners. Our sites are built for performance from day one.",
-    icon: "◆",
   },
   {
     title: "Accessibility for All",
     description: "The web should work for everyone. We build WCAG-compliant sites that work on any device, any connection, for any user.",
-    icon: "◆",
   },
   {
     title: "Data-Driven Design",
     description: "We don't guess. Every decision — from button color to page structure — is backed by conversion research and user behavior data.",
-    icon: "◆",
   },
   {
     title: "Partnership, Not Transaction",
     description: "We succeed when you succeed. Our relationship doesn't end at launch. We're here for the long haul.",
-    icon: "◆",
   },
 ];
 
@@ -51,27 +46,30 @@ const differences = [
 
 export default function PromisePage() {
   return (
-    <main className="min-h-screen bg-white text-slate-900">
+    <main className="min-h-screen bg-[#09090b] text-[#f5f3ef]">
+      <div className="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_15%_20%,rgba(245,158,11,0.14),transparent_30%),radial-gradient(circle_at_85%_0%,rgba(251,191,36,0.08),transparent_28%),linear-gradient(to_bottom,rgba(10,10,10,0.96),rgba(10,10,10,1))]" />
+
       {/* Hero */}
-      <section className="bg-slate-900 text-white py-20 px-6">
-        <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-6">Our Promise</h1>
-          <p className="text-xl text-slate-300 max-w-2xl mx-auto">
-            How we work, what we believe, and why clients trust us with their digital presence.
-          </p>
-        </div>
+      <section className="mx-auto max-w-6xl px-5 pt-14 pb-10 sm:px-7 md:pt-24 md:pb-16">
+        <p className="text-sm uppercase tracking-[0.24em] text-amber-300">Our Promise</p>
+        <h1 className="mt-4 max-w-4xl font-display text-3xl leading-[1.08] sm:text-5xl md:text-6xl">
+          How we work, what we believe, and why clients trust us.
+        </h1>
+        <p className="mt-6 max-w-2xl text-base text-zinc-300 sm:text-lg">
+          Transparency, speed, and partnership. No surprises, no hidden fees — just results.
+        </p>
       </section>
 
       {/* Values */}
-      <section className="py-16 px-6">
-        <div className="max-w-5xl mx-auto">
-          <h2 className="text-3xl font-bold text-center mb-12">Our Core Values</h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <section className="mx-auto max-w-6xl px-5 py-16 sm:px-7">
+        <div className="border-t border-white/10 pt-12">
+          <h2 className="text-sm uppercase tracking-[0.24em] text-amber-300 mb-8">Core Values</h2>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {values.map((value) => (
-              <div key={value.title} className="p-6 border border-slate-200 rounded-xl">
-                <span className="text-red-600 text-2xl mb-4 block">{value.icon}</span>
-                <h3 className="font-bold text-lg mb-2">{value.title}</h3>
-                <p className="text-slate-600 text-sm">{value.description}</p>
+              <div key={value.title} className="rounded-lg border border-white/10 bg-white/5 p-6">
+                <span className="text-amber-300 text-lg mb-4 block">◆</span>
+                <h3 className="font-display text-lg mb-2">{value.title}</h3>
+                <p className="text-zinc-400 text-sm leading-relaxed">{value.description}</p>
               </div>
             ))}
           </div>
@@ -79,42 +77,41 @@ export default function PromisePage() {
       </section>
 
       {/* Satisfaction Commitment */}
-      <section className="py-16 px-6 bg-slate-50">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl font-bold text-center mb-4">Satisfaction Commitment</h2>
-          <p className="text-center text-slate-600 mb-12">What you can expect when you work with us</p>
+      <section className="mx-auto max-w-6xl px-5 py-16 sm:px-7">
+        <div className="border-t border-white/10 pt-12">
+          <h2 className="text-sm uppercase tracking-[0.24em] text-amber-300 mb-8">Satisfaction Commitment</h2>
           
-          <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
+          <div className="rounded-lg border border-white/10 overflow-hidden">
             {standards.map((standard, index) => (
               <div 
                 key={standard.label} 
-                className={`flex justify-between items-center p-6 ${index !== standards.length - 1 ? 'border-b border-slate-100' : ''}`}
+                className={`flex flex-col sm:flex-row sm:justify-between sm:items-center p-6 ${index !== standards.length - 1 ? 'border-b border-white/10' : ''}`}
               >
-                <span className="font-semibold text-slate-900">{standard.label}</span>
-                <span className="text-slate-600 text-sm max-w-md text-right">{standard.value}</span>
+                <span className="font-display text-white mb-2 sm:mb-0">{standard.label}</span>
+                <span className="text-zinc-400 text-sm">{standard.value}</span>
               </div>
             ))}
           </div>
 
           {/* Guarantee */}
-          <div className="mt-12 bg-red-50 border border-red-100 rounded-xl p-8 text-center">
-            <h3 className="text-2xl font-bold text-red-900 mb-4">Our Guarantee</h3>
-            <p className="text-red-800 text-lg mb-6">If you're not satisfied, we're not done.</p>
-            <ul className="text-left max-w-lg mx-auto space-y-3 text-slate-700">
+          <div className="mt-10 rounded-lg border border-amber-300/30 bg-amber-300/5 p-8">
+            <h3 className="font-display text-xl text-amber-300 mb-4">Our Guarantee</h3>
+            <p className="text-white text-lg mb-6">If you're not satisfied, we're not done.</p>
+            <ul className="space-y-3 text-zinc-300">
               <li className="flex items-start">
-                <span className="text-red-600 mr-2">✓</span>
+                <span className="text-amber-300 mr-3">◆</span>
                 Bugs fixed at no charge (within 30 days of launch)
               </li>
               <li className="flex items-start">
-                <span className="text-red-600 mr-2">✓</span>
+                <span className="text-amber-300 mr-3">◆</span>
                 Minor tweaks included during the revision period
               </li>
               <li className="flex items-start">
-                <span className="text-red-600 mr-2">✓</span>
+                <span className="text-amber-300 mr-3">◆</span>
                 Clear documentation so you're never locked in
               </li>
               <li className="flex items-start">
-                <span className="text-red-600 mr-2">✓</span>
+                <span className="text-amber-300 mr-3">◆</span>
                 Source code ownership transfers to you upon final payment
               </li>
             </ul>
@@ -123,51 +120,42 @@ export default function PromisePage() {
       </section>
 
       {/* Why Choose Us */}
-      <section className="py-16 px-6">
-        <div className="max-w-5xl mx-auto">
-          <h2 className="text-3xl font-bold text-center mb-4">The PlainSight Difference</h2>
-          <p className="text-center text-slate-600 mb-12">Why clients choose us over the competition</p>
+      <section className="mx-auto max-w-6xl px-5 py-16 sm:px-7">
+        <div className="border-t border-white/10 pt-12">
+          <h2 className="text-sm uppercase tracking-[0.24em] text-amber-300 mb-8">The PlainSight Difference</h2>
           
           <div className="grid md:grid-cols-2 gap-6">
             {differences.map((diff) => (
-              <div key={diff.title} className="flex items-start space-x-4 p-6">
-                <span className="text-red-600 text-xl">◆</span>
+              <div key={diff.title} className="flex items-start space-x-4 p-4">
+                <span className="text-amber-300 text-xl">◆</span>
                 <div>
-                  <h3 className="font-bold mb-1">{diff.title}</h3>
-                  <p className="text-slate-600 text-sm">{diff.description}</p>
+                  <h3 className="font-display mb-1">{diff.title}</h3>
+                  <p className="text-zinc-400 text-sm">{diff.description}</p>
                 </div>
               </div>
             ))}
           </div>
-
-          {/* Testimonial */}
-          <blockquote className="mt-16 text-center max-w-2xl mx-auto">
-            <p className="text-xl text-slate-700 italic mb-4">
-              "They delivered a professional site in days, not months. The invoice was exactly what we agreed on — no surprises."
-            </p>
-            <cite className="text-slate-500 not-italic">— Kenya Children's Home</cite>
-          </blockquote>
         </div>
       </section>
 
       {/* Process */}
-      <section className="py-16 px-6 bg-slate-50">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl font-bold text-center mb-12">Our Process</h2>
-          <div className="grid md:grid-cols-5 gap-4">
+      <section className="mx-auto max-w-6xl px-5 py-16 sm:px-7">
+        <div className="border-t border-white/10 pt-12">
+          <h2 className="text-sm uppercase tracking-[0.24em] text-amber-300 mb-8">Our Process</h2>
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
             {[
-              { step: "1", title: "Discovery", desc: "Goals, audience, constraints" },
-              { step: "2", title: "Design", desc: "Clean, conversion-focused" },
-              { step: "3", title: "Build", desc: "Fast, accessible, SEO-ready" },
-              { step: "4", title: "Launch", desc: "Analytics connected" },
-              { step: "5", title: "Support", desc: "30 days post-launch" },
+              { step: "01", title: "Discovery", desc: "Goals, audience, constraints" },
+              { step: "02", title: "Design", desc: "Clean, conversion-focused" },
+              { step: "03", title: "Build", desc: "Fast, accessible, SEO-ready" },
+              { step: "04", title: "Launch", desc: "Analytics connected" },
+              { step: "05", title: "Support", desc: "30 days post-launch" },
             ].map((item) => (
-              <div key={item.step} className="text-center">
-                <div className="w-12 h-12 bg-red-600 text-white rounded-full flex items-center justify-center font-bold mx-auto mb-3">
+              <div key={item.step} className="text-center p-4">
+                <div className="w-12 h-12 border border-amber-300 text-amber-300 rounded-full flex items-center justify-center font-display mx-auto mb-3">
                   {item.step}
                 </div>
-                <h3 className="font-bold mb-1">{item.title}</h3>
-                <p className="text-slate-600 text-xs">{item.desc}</p>
+                <h3 className="font-display mb-1">{item.title}</h3>
+                <p className="text-zinc-400 text-xs">{item.desc}</p>
               </div>
             ))}
           </div>
@@ -175,50 +163,72 @@ export default function PromisePage() {
       </section>
 
       {/* Investment */}
-      <section className="py-16 px-6">
-        <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-3xl font-bold mb-6">Investment & Payment</h2>
-          <div className="bg-slate-50 rounded-xl p-8 mb-8">
-            <div className="flex justify-center items-center space-x-8 mb-6">
-              <div className="text-center">
-                <div className="text-3xl font-bold text-red-600">50%</div>
-                <div className="text-sm text-slate-600">Upfront to begin</div>
+      <section className="mx-auto max-w-6xl px-5 py-16 sm:px-7">
+        <div className="border-t border-white/10 pt-12">
+          <h2 className="text-sm uppercase tracking-[0.24em] text-amber-300 mb-8">Investment & Payment</h2>
+          
+          <div className="max-w-2xl mx-auto text-center">
+            <div className="rounded-lg border border-white/10 bg-white/5 p-8 mb-8">
+              <div className="flex justify-center items-center space-x-8 mb-6">
+                <div className="text-center">
+                  <div className="text-4xl font-display text-amber-300">50%</div>
+                  <div className="text-sm text-zinc-400 mt-1">Upfront to begin</div>
+                </div>
+                <div className="text-zinc-600">+</div>
+                <div className="text-center">
+                  <div className="text-4xl font-display text-amber-300">50%</div>
+                  <div className="text-sm text-zinc-400 mt-1">Upon delivery</div>
+                </div>
               </div>
-              <div className="text-slate-300">+</div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-red-600">50%</div>
-                <div className="text-sm text-slate-600">Upon delivery</div>
-              </div>
+              <p className="text-zinc-400 text-sm">Payment methods: M-Pesa, Bank Transfer, PayPal</p>
             </div>
-            <p className="text-slate-600 text-sm">
-              Payment methods: M-Pesa, Bank Transfer, PayPal
+            
+            <p className="text-zinc-400 mb-8">
+              Detailed invoices with clear line items. No vague "project fees." You see exactly what you're paying for.
             </p>
+            
+            <Link 
+              href="/#audit"
+              className="inline-block rounded-md bg-amber-300 px-8 py-4 text-center text-sm font-semibold tracking-wide text-zinc-950 transition hover:bg-amber-200"
+            >
+              Start Your Project →
+            </Link>
           </div>
-          <p className="text-slate-600 mb-8">
-            Detailed invoices with clear line items. No vague "project fees." You see exactly what you're paying for.
-          </p>
-          <Link 
-            href="/"
-            className="inline-block px-8 py-4 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 transition-colors"
-          >
-            Start Your Project →
-          </Link>
         </div>
       </section>
 
-      {/* Footer Info */}
-      <section className="py-12 px-6 bg-slate-900 text-white text-center">
-        <div className="max-w-2xl mx-auto">
-          <h3 className="text-xl font-bold mb-4">PlainSight Digital</h3>
-          <p className="text-slate-400 mb-2">Web Design & Digital Solutions</p>
-          <p className="text-slate-400">Nairobi, Kenya</p>
-          <div className="mt-6 space-x-4">
-            <Link href="/" className="text-red-400 hover:text-red-300">plainsightdigital.dev</Link>
-            <span className="text-slate-600">|</span>
-            <a href="mailto:hello@plainsightdigital.dev" className="text-red-400 hover:text-red-300">hello@plainsightdigital.dev</a>
+      {/* CTA */}
+      <section className="mx-auto max-w-6xl px-5 py-16 sm:px-7">
+        <div className="rounded-lg border border-white/10 bg-white/5 p-8 md:p-12 text-center">
+          <h2 className="font-display text-2xl md:text-3xl mb-4">Ready to work with us?</h2>
+          <p className="text-zinc-400 mb-6 max-w-xl mx-auto">
+            Let's build a digital presence that converts visitors into customers.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link
+              href="/#audit"
+              className="rounded-md bg-amber-300 px-7 py-3.5 text-center text-sm font-semibold tracking-wide text-zinc-950 transition hover:bg-amber-200"
+            >
+              Get Your Free Audit
+            </Link>
+            <Link
+              href="/"
+              className="rounded-md border border-white/20 px-7 py-3.5 text-center text-sm font-semibold tracking-wide text-white transition hover:bg-white/10"
+            >
+              Back to Home
+            </Link>
           </div>
         </div>
       </section>
+
+      {/* Footer */}
+      <footer className="border-t border-white/10 py-8">
+        <div className="mx-auto max-w-6xl px-5 sm:px-7 text-center">
+          <p className="text-zinc-500 text-sm">
+            © {new Date().getFullYear()} PlainSight Digital. Nairobi, Kenya.
+          </p>
+        </div>
+      </footer>
     </main>
   );
 }
