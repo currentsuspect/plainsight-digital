@@ -5,17 +5,17 @@ import { SignJWT, jwtVerify } from "jose";
 import { cookies } from "next/headers";
 import { NextRequest } from "next/server";
 
-// Secret key for signing JWTs — must be set in env
-const JWT_SECRET = process.env.JWT_SECRET;
 const JWT_ALGORITHM = "HS256";
 const COOKIE_NAME = "admin_session";
 const TOKEN_EXPIRY = "8h"; // 8 hours
 
-if (!JWT_SECRET) {
-  throw new Error("JWT_SECRET environment variable is required");
+function getJwtSecret(): Uint8Array {
+  const secret = process.env.JWT_SECRET?.trim();
+  if (!secret) {
+    throw new Error("JWT_SECRET environment variable is required");
+  }
+  return new TextEncoder().encode(secret);
 }
-
-const secret = new TextEncoder().encode(JWT_SECRET);
 
 export interface JWTPayload {
   sub: string; // user ID
@@ -32,6 +32,7 @@ export async function createSession(
   userId: string,
   email: string
 ): Promise<string> {
+  const secret = getJwtSecret();
   const token = await new SignJWT({
     sub: userId,
     email,
@@ -50,6 +51,7 @@ export async function createSession(
  */
 export async function verifySession(token: string): Promise<JWTPayload | null> {
   try {
+    const secret = getJwtSecret();
     const { payload } = await jwtVerify(token, secret, {
       algorithms: [JWT_ALGORITHM],
     });
