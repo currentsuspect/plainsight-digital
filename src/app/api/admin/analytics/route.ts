@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { listLeads, listEvents, LeadStatus } from "@/lib/store";
+import { reportError } from "@/lib/errorHandler";
 
 export async function GET() {
   try {
@@ -34,7 +35,10 @@ export async function GET() {
       },
     });
   } catch (error) {
-    console.error("Error calculating analytics:", error);
+    reportError(error instanceof Error ? error : new Error(String(error)), "error", {
+      path: "/api/admin/analytics",
+      method: "GET",
+    });
     return NextResponse.json({ error: "Failed to calculate analytics" }, { status: 500 });
   }
 }

@@ -1,36 +1,83 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Plainsight Digital
 
-## Getting Started
+High-ticket website design agency for Kenya. Built with Next.js, TypeScript, and Tailwind CSS.
 
-First, run the development server:
+## 🚀 Quick Start
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🧪 Testing
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm test              # Run tests
+npm run test:coverage # With coverage report
+```
 
-## Learn More
+## 🔐 Required Environment Variables
 
-To learn more about Next.js, take a look at the following resources:
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `JWT_SECRET` | ✅ | Secret key for JWT signing |
+| `ADMIN_BASIC_USER` | ✅ | Admin login username |
+| `ADMIN_BASIC_PASS` | ✅ | Admin login password |
+| `RESEND_API_KEY` | ✅ | Resend API key for emails |
+| `FOLLOWUP_FROM_EMAIL` | ✅ | From address for emails |
+| `REPLY_TO_EMAIL` | ❌ | Reply-to address |
+| `TELEGRAM_BOT_TOKEN` | ❌ | For notifications |
+| `TELEGRAM_LEADS_CHAT_ID` | ❌ | For notifications |
+| `SUPABASE_URL` | ❌ | For Postgres database |
+| `SUPABASE_SERVICE_ROLE_KEY` | ❌ | For Postgres database |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🗄️ Database Setup (Optional)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+By default, the app uses JSON files for storage. To use Supabase Postgres:
 
-## Deploy on Vercel
+1. Set `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY`
+2. Run migrations:
+   ```bash
+   npx tsx tools/migrate-db.ts
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📁 Project Structure
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```
+src/
+  app/           # Next.js app router
+    admin/       # Admin dashboard
+    api/         # API routes
+    [industry]/  # Dynamic industry pages
+  lib/           # Utilities and business logic
+    schemas.ts   # Zod validation schemas
+    db.ts        # Database queries
+    emailService.ts  # Unified email sending
+    errorHandler.ts  # Error tracking
+  test/          # Test setup
+tools/           # Migration scripts
+docs/            # Documentation
+  operations/    # System docs
+  marketing/     # Marketing docs
+  archive/       # Old docs
+```
+
+## 🏗️ Architecture
+
+- **Auth:** JWT-based sessions (8h expiry)
+- **Database:** JSON files (default) or Supabase Postgres
+- **Email:** Resend API with queue system
+- **Testing:** Vitest with React Testing Library
+- **Validation:** Zod schemas for runtime safety
+
+## 📧 Email System
+
+- **Transactional:** Immediate send via `emailService.ts`
+- **Cold emails:** Queue-based with retries
+- **Queue processor:** `/api/admin/email-queue/process`
+
+## 📝 License
+
+Private - Plainsight Digital

@@ -381,13 +381,15 @@ export async function POST(request: NextRequest) {
 
     // Detect niche
     const nameLower = businessName.toLowerCase();
-    let niche: "dental" | "law" | "real-estate" | "other" = "other";
+    let niche: "clinic" | "law" | "school" | "hotel" | "logistics" = "logistics";
     if (nameLower.includes("advocate") || nameLower.includes("law") || nameLower.includes("legal") || nameLower.includes("attorney")) {
       niche = "law";
     } else if (nameLower.includes("dental") || nameLower.includes("clinic") || nameLower.includes("hospital") || nameLower.includes("medical") || nameLower.includes("health")) {
-      niche = "dental";
-    } else if (nameLower.includes("realty") || nameLower.includes("properties") || nameLower.includes("real estate")) {
-      niche = "real-estate";
+      niche = "clinic";
+    } else if (nameLower.includes("school") || nameLower.includes("academy") || nameLower.includes("education") || nameLower.includes("college")) {
+      niche = "school";
+    } else if (nameLower.includes("hotel") || nameLower.includes("resort") || nameLower.includes("lodging") || nameLower.includes("bnb")) {
+      niche = "hotel";
     }
 
     // Run enhanced analysis

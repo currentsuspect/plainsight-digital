@@ -16,7 +16,7 @@ export type Lead = {
   email: string;
   phone?: string;
   website?: string;
-  niche: "dental" | "law" | "real-estate" | "other";
+  niche: "clinic" | "law" | "school" | "hotel" | "logistics";
   budget: "<50k" | "50k-100k" | "100k-250k" | "250k+";
   painPoint: string;
   source?: string;
@@ -158,12 +158,13 @@ export function calculateLeadScore(lead: Lead): {
   // Calculate fit score (0-100) based on business alignment
   let fit_score = 30; // baseline
   const nicheScores: Record<string, number> = {
-    "dental": 25,
+    "clinic": 25,
     "law": 25,
-    "real-estate": 20,
-    "other": 10,
+    "school": 20,
+    "hotel": 20,
+    "logistics": 15,
   };
-  fit_score += nicheScores[lead.niche] || 10;
+  fit_score += nicheScores[lead.niche] || 15;
 
   const budgetScores: Record<string, number> = {
     "<50k": 5,

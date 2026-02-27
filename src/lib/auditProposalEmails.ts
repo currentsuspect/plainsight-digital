@@ -266,7 +266,7 @@ export function generateDefaultAudit(lead: Lead): string[] {
   audits.push("No clear call-to-action flow for mobile visitors");
   audits.push("Missing WhatsApp/quick contact option prominently displayed");
 
-  if (lead.niche === "law" || lead.niche === "dental") {
+  if (lead.niche === "law" || lead.niche === "clinic") {
     audits.push(`${lead.niche === "law" ? "Legal" : "Medical"} services need strong trust signals (testimonials, credentials)`);
   }
 

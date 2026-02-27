@@ -7,7 +7,7 @@ export type ValidationResult =
 
 // Allowed values for enum fields
 export const ALLOWED_STATUSES: LeadStatus[] = ["New", "Contacted", "Audit Sent", "Proposal", "Won", "Lost"];
-export const ALLOWED_NICHES = ["dental", "law", "real-estate", "other"] as const;
+export const ALLOWED_NICHES = ["clinic", "law", "school", "hotel", "logistics"] as const;
 export const ALLOWED_BUDGETS = ["<50k", "50k-100k", "100k-250k", "250k+"] as const;
 export const ALLOWED_SOURCE_CONFIDENCE: SourceConfidence[] = ["high", "medium", "low", "unknown"];
 export const ALLOWED_NEXT_ACTION_TYPES: NextActionType[] = ["call", "email", "whatsapp", "followup", "proposal_review", "none"];

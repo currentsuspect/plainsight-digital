@@ -3,13 +3,17 @@ import { addFinance, addInvoice, listInvoices, updateInvoice } from "@/lib/opsSt
 import { notifyTelegramInvoiceStatus } from "@/lib/notify";
 import { validateInvoiceEntry, validateInvoiceUpdate, errorResponse } from "@/lib/validation";
 import { appendAuditLog } from "@/lib/store";
+import { reportError } from "@/lib/errorHandler";
 
 export async function GET() {
   try {
     const rows = await listInvoices();
     return NextResponse.json({ rows });
   } catch (error) {
-    console.error("Error fetching invoices:", error);
+    reportError(error instanceof Error ? error : new Error(String(error)), "error", {
+      path: "/api/admin/invoices",
+      method: "GET",
+    });
     return NextResponse.json({ error: "Failed to fetch invoices" }, { status: 500 });
   }
 }
@@ -111,7 +115,10 @@ export async function POST(request: Request) {
 
     return NextResponse.redirect(new URL("/admin/ops", request.url), 303);
   } catch (error) {
-    console.error("Error processing invoice:", error);
+    reportError(error instanceof Error ? error : new Error(String(error)), "error", {
+      path: "/api/admin/invoices",
+      method: "POST",
+    });
     return NextResponse.json({ error: "Failed to process invoice" }, { status: 500 });
   }
 }
