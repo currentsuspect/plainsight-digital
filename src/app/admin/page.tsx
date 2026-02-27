@@ -1,4 +1,6 @@
 import { listEvents, listLeads, Lead, LeadStatus } from "@/lib/store";
+import { getColdEmailStats } from "@/lib/coldEmailStore";
+import Link from "next/link";
 
 function pct(v: number) {
   return `${(v * 100).toFixed(1)}%`;
@@ -53,7 +55,11 @@ function formatNextAction(lead: Lead): string {
 }
 
 export default async function AdminPage() {
-  const [leads, events] = await Promise.all([listLeads(), listEvents()]);
+  const [leads, events, coldEmailStats] = await Promise.all([
+    listLeads(),
+    listEvents(),
+    getColdEmailStats().catch(() => null),
+  ]);
 
   const pageViews = events.filter((e) => e.type === "page_view").length;
   const ctaClicks = events.filter((e) => e.type === "cta_click").length;
@@ -165,6 +171,43 @@ export default async function AdminPage() {
           <Stat label="🟠 Warm Leads" value={String(warm)} subtext="Score 45-69" />
           <Stat label="🔵 Cold Leads" value={String(cold)} subtext="Score &lt; 45" />
         </section>
+
+        {/* Cold Email Campaign */}
+        {coldEmailStats && (
+          <section className="rounded-xl border border-amber-500/20 bg-amber-500/5 p-4">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-sm font-semibold text-amber-300">📧 Cold Email Campaign</h2>
+              <Link href="/admin/cold-email" className="text-xs text-amber-300 hover:text-amber-200">
+                Open Dashboard →
+              </Link>
+            </div>
+            <div className="grid grid-cols-5 gap-4 text-center">
+              <div>
+                <div className="text-2xl font-bold">{coldEmailStats.totalTargets}</div>
+                <div className="text-xs text-zinc-400">Targets</div>
+              </div>
+              <div>
+                <div className="text-2xl font-bold text-zinc-500">{coldEmailStats.byStatus.pending}</div>
+                <div className="text-xs text-zinc-400">Pending</div>
+              </div>
+              <div>
+                <div className="text-2xl font-bold text-blue-400">{coldEmailStats.byStatus.sent}</div>
+                <div className="text-xs text-zinc-400">Sent</div>
+              </div>
+              <div>
+                <div className="text-2xl font-bold text-emerald-400">{coldEmailStats.byStatus.replied}</div>
+                <div className="text-xs text-zinc-400">Replied</div>
+              </div>
+              <div>
+                <div className="text-2xl font-bold text-purple-400">{coldEmailStats.byStatus.meeting}</div>
+                <div className="text-xs text-zinc-400">Meeting</div>
+              </div>
+            </div>
+            <div className="mt-3 text-xs text-zinc-500">
+              Sent today: {coldEmailStats.sentToday} | Total sent: {coldEmailStats.totalSent}
+            </div>
+          </section>
+        )}
 
         {/* Pipeline & Analytics */}
         <section className="grid gap-4 lg:grid-cols-2">
