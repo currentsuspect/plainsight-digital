@@ -1,7 +1,6 @@
 "use client";
 
-export const dynamic = "force-dynamic";
-
+import { Suspense } from "react";
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
@@ -79,7 +78,7 @@ www.plainsightdigital.dev`,
   },
 };
 
-export default function SendEmailPage() {
+function SendEmailForm() {
   const searchParams = useSearchParams();
   const targetId = searchParams.get("id");
 
@@ -216,5 +215,17 @@ export default function SendEmailPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function SendEmailPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-[#09090b] text-[#f5f3ef] flex items-center justify-center">
+        <p className="text-zinc-500">Loading...</p>
+      </div>
+    }>
+      <SendEmailForm />
+    </Suspense>
   );
 }
