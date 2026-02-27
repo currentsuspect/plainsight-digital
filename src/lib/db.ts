@@ -180,22 +180,19 @@ export async function runMigrations() {
   const db = getDb();
 
   // Create migrations tracking table
-  await db.rpc("exec", {
-    sql: `
-      CREATE TABLE IF NOT EXISTS _migrations (
-        id TEXT PRIMARY KEY,
-        applied_at TIMESTAMPTZ DEFAULT NOW()
-      );
-    `,
-  }).catch(async () => {
-    // RPC might not exist, try direct SQL
-    await db.query(`
-      CREATE TABLE IF NOT EXISTS _migrations (
-        id TEXT PRIMARY KEY,
-        applied_at TIMESTAMPTZ DEFAULT NOW()
-      );
-    `);
-  });
+  try {
+    await db.rpc("exec", {
+      sql: `
+        CREATE TABLE IF NOT EXISTS _migrations (
+          id TEXT PRIMARY KEY,
+          applied_at TIMESTAMPTZ DEFAULT NOW()
+        );
+      `,
+    });
+  } catch {
+    // RPC might not exist, table will be created by first migration
+    console.log("[DB] RPC exec not available, using fallback");
+  }
 
   // Check which migrations have been applied
   const { data: applied } = await db
