@@ -10,7 +10,7 @@ export interface IndustryConfig {
   intro: string;
   title: string;
   points: string[];
-  niche: "dental" | "law" | "real-estate" | "other";
+  niche: "clinic" | "law" | "school" | "hotel" | "logistics";
   meta: {
     title: string;
     description: string;
@@ -22,7 +22,7 @@ export const industries: Record<IndustrySlug, IndustryConfig> = {
   clinics: {
     slug: "clinics",
     badge: "Clinics",
-    niche: "dental",
+    niche: "clinic",
     h1: "Websites for clinics that need trust and booked appointments.",
     intro: "For private clinics, your site is often the first consultation. We make it clear, fast, and confidence-building so more visitors become real patients.",
     title: "What we build for clinics",
@@ -60,7 +60,7 @@ export const industries: Record<IndustrySlug, IndustryConfig> = {
   schools: {
     slug: "schools",
     badge: "Schools",
-    niche: "other",
+    niche: "school",
     h1: "Websites for schools that need more enrollment inquiries.",
     intro: "Your website is often the first impression for prospective parents. We make it easy for them to understand your value, request information, and take the next step.",
     title: "What we build for schools",
@@ -79,7 +79,7 @@ export const industries: Record<IndustrySlug, IndustryConfig> = {
   hotels: {
     slug: "hotels",
     badge: "Hotels",
-    niche: "other",
+    niche: "hotel",
     h1: "Websites for hotels that drive more direct bookings.",
     intro: "Stop paying high commissions to booking platforms. We build hotel websites that convert browsers into direct reservations.",
     title: "What we build for hotels",
@@ -98,7 +98,7 @@ export const industries: Record<IndustrySlug, IndustryConfig> = {
   logistics: {
     slug: "logistics",
     badge: "Logistics",
-    niche: "other",
+    niche: "logistics",
     h1: "Websites for logistics companies that build credibility.",
     intro: "In logistics, trust is everything. We build websites that communicate reliability, capability, and professionalism to potential clients.",
     title: "What we build for logistics",

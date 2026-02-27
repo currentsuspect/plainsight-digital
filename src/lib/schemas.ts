@@ -33,10 +33,11 @@ export const NextActionTypeSchema = z.enum([
 ]);
 
 export const NicheSchema = z.enum([
-  "dental",
+  "clinic",
   "law",
-  "real-estate",
-  "other",
+  "school",
+  "hotel",
+  "logistics",
 ]);
 
 export const BudgetSchema = z.enum([
