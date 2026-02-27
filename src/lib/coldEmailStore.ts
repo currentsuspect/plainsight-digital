@@ -1,8 +1,10 @@
 // Cold Email Store — Manage targets and send history
+// Now uses remoteStore abstraction for Supabase compatibility
+import { hasRemoteStore, readRemoteJson, writeRemoteJson } from "./remoteStore";
 import { promises as fs } from "fs";
 import path from "path";
+import { DATA_DIR } from "./config";
 
-const DATA_DIR = path.join(process.cwd(), "data");
 const TARGETS_FILE = path.join(DATA_DIR, "cold-email-targets.json");
 const HISTORY_FILE = path.join(DATA_DIR, "cold-email-history.json");
 
@@ -29,7 +31,6 @@ export interface SendHistory {
   error?: string;
 }
 
-// Ensure data directory exists
 async function ensureDataDir() {
   try {
     await fs.mkdir(DATA_DIR, { recursive: true });
@@ -38,15 +39,36 @@ async function ensureDataDir() {
   }
 }
 
-// Load targets
-export async function listTargets(): Promise<ColdEmailTarget[]> {
+async function readJson<T>(file: string): Promise<T[]> {
+  const key = path.basename(file);
+  if (hasRemoteStore()) {
+    return readRemoteJson<T>(key);
+  }
+
   await ensureDataDir();
   try {
-    const data = await fs.readFile(TARGETS_FILE, "utf-8");
-    return JSON.parse(data);
+    const data = await fs.readFile(file, "utf-8");
+    const parsed = JSON.parse(data);
+    return Array.isArray(parsed) ? parsed : [];
   } catch {
     return [];
   }
+}
+
+async function writeJson<T>(file: string, data: T[]) {
+  const key = path.basename(file);
+  if (hasRemoteStore()) {
+    await writeRemoteJson(key, data);
+    return;
+  }
+
+  await ensureDataDir();
+  await fs.writeFile(file, JSON.stringify(data, null, 2), "utf-8");
+}
+
+// Load targets
+export async function listTargets(): Promise<ColdEmailTarget[]> {
+  return readJson<ColdEmailTarget>(TARGETS_FILE);
 }
 
 // Add target
@@ -58,7 +80,7 @@ export async function addTarget(target: Omit<ColdEmailTarget, "id" | "createdAt"
     createdAt: new Date().toISOString(),
   };
   targets.push(newTarget);
-  await fs.writeFile(TARGETS_FILE, JSON.stringify(targets, null, 2));
+  await writeJson(TARGETS_FILE, targets);
   return newTarget;
 }
 
@@ -68,7 +90,7 @@ export async function updateTarget(id: string, updates: Partial<ColdEmailTarget>
   const index = targets.findIndex((t) => t.id === id);
   if (index === -1) return null;
   targets[index] = { ...targets[index], ...updates };
-  await fs.writeFile(TARGETS_FILE, JSON.stringify(targets, null, 2));
+  await writeJson(TARGETS_FILE, targets);
   return targets[index];
 }
 
@@ -77,19 +99,13 @@ export async function deleteTarget(id: string): Promise<boolean> {
   const targets = await listTargets();
   const filtered = targets.filter((t) => t.id !== id);
   if (filtered.length === targets.length) return false;
-  await fs.writeFile(TARGETS_FILE, JSON.stringify(filtered, null, 2));
+  await writeJson(TARGETS_FILE, filtered);
   return true;
 }
 
 // Get send history
 export async function listHistory(): Promise<SendHistory[]> {
-  await ensureDataDir();
-  try {
-    const data = await fs.readFile(HISTORY_FILE, "utf-8");
-    return JSON.parse(data);
-  } catch {
-    return [];
-  }
+  return readJson<SendHistory>(HISTORY_FILE);
 }
 
 // Add to history
@@ -100,7 +116,7 @@ export async function addHistory(entry: Omit<SendHistory, "id">): Promise<SendHi
     id: crypto.randomUUID(),
   };
   history.push(newEntry);
-  await fs.writeFile(HISTORY_FILE, JSON.stringify(history, null, 2));
+  await writeJson(HISTORY_FILE, history);
   return newEntry;
 }
 
@@ -108,10 +124,10 @@ export async function addHistory(entry: Omit<SendHistory, "id">): Promise<SendHi
 export async function getColdEmailStats() {
   const targets = await listTargets();
   const history = await listHistory();
-  
+
   const today = new Date().toISOString().split("T")[0];
   const todaySends = history.filter(h => h.sentAt.startsWith(today));
-  
+
   return {
     totalTargets: targets.length,
     byStatus: {

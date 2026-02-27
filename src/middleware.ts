@@ -9,7 +9,12 @@ export function middleware(req: NextRequest) {
   if (!guarded) return NextResponse.next();
 
   const token = (req.cookies.get("admin_session")?.value || "").trim();
-  const expected = (process.env.ADMIN_SESSION_TOKEN || "plainsight-admin-session-v1").trim();
+  const expected = process.env.ADMIN_SESSION_TOKEN?.trim();
+
+  if (!expected) {
+    console.error("[Auth] ADMIN_SESSION_TOKEN not set");
+    return NextResponse.redirect(new URL("/error?reason=auth_not_configured", req.url));
+  }
 
   if (token === expected) return NextResponse.next();
 
