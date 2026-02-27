@@ -144,7 +144,7 @@ export default function BlogPost() {
             </div>
 
             <div className="p-5 rounded-lg border border-zinc-800 bg-zinc-900/50">
-              <h4 className="font-semibold text-zinc-100 mb-3">✓ Instant Confirmation</text-z4>
+              <h4 className="font-semibold text-zinc-100 mb-3">✓ Instant Confirmation</h4>
               <p className="text-zinc-400 text-sm">
                 M-Pesa STK push gives immediate confirmation. Card transactions can take 
                 24-48 hours to reflect — anxiety-inducing for buyers.
