@@ -88,7 +88,7 @@ export const SiteEventSchema = z.object({
   type: z.enum(["page_view", "cta_click", "form_start", "form_submit"]),
   page: z.string(),
   createdAt: z.string().datetime(),
-  meta: z.record(z.string()).optional(),
+  meta: z.record(z.string(), z.string()).optional(),
 });
 
 export type SiteEvent = z.infer<typeof SiteEventSchema>;
