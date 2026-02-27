@@ -15,8 +15,10 @@ function optionalEnv(key: string): string | undefined {
 
 // Required for app to function
 export const config = {
-  // Auth
-  adminSessionToken: requireEnv("ADMIN_SESSION_TOKEN"),
+  // Auth (JWT)
+  jwtSecret: requireEnv("JWT_SECRET"),
+  adminUser: requireEnv("ADMIN_BASIC_USER"),
+  adminPass: requireEnv("ADMIN_BASIC_PASS"),
   
   // Email (Resend)
   resendApiKey: requireEnv("RESEND_API_KEY"),

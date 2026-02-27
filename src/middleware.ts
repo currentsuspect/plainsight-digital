@@ -1,27 +1,41 @@
 import { NextRequest, NextResponse } from "next/server";
+import { getSessionFromRequest } from "@/lib/auth";
 
-export function middleware(req: NextRequest) {
-  // Public admin endpoints protected by their own shared-secret verification
-  if (req.nextUrl.pathname.startsWith("/api/admin/login")) return NextResponse.next();
-  if (req.nextUrl.pathname.startsWith("/api/admin/cal-webhook")) return NextResponse.next();
-
-  const guarded = req.nextUrl.pathname.startsWith("/admin") || req.nextUrl.pathname.startsWith("/api/admin");
-  if (!guarded) return NextResponse.next();
-
-  const token = (req.cookies.get("admin_session")?.value || "").trim();
-  const expected = process.env.ADMIN_SESSION_TOKEN?.trim();
-
-  if (!expected) {
-    console.error("[Auth] ADMIN_SESSION_TOKEN not set");
-    return NextResponse.redirect(new URL("/error?reason=auth_not_configured", req.url));
+export async function middleware(req: NextRequest) {
+  // Public endpoints
+  if (req.nextUrl.pathname.startsWith("/api/admin/login")) {
+    return NextResponse.next();
+  }
+  if (req.nextUrl.pathname.startsWith("/api/admin/cal-webhook")) {
+    return NextResponse.next();
   }
 
-  if (token === expected) return NextResponse.next();
+  const guarded =
+    req.nextUrl.pathname.startsWith("/admin") ||
+    req.nextUrl.pathname.startsWith("/api/admin");
+  
+  if (!guarded) return NextResponse.next();
 
-  const loginUrl = req.nextUrl.clone();
-  loginUrl.pathname = "/admin-login";
-  loginUrl.searchParams.set("next", req.nextUrl.pathname);
-  return NextResponse.redirect(loginUrl);
+  // Verify JWT session
+  const session = await getSessionFromRequest(req);
+
+  if (!session) {
+    const loginUrl = req.nextUrl.clone();
+    loginUrl.pathname = "/admin-login";
+    loginUrl.searchParams.set("next", req.nextUrl.pathname);
+    return NextResponse.redirect(loginUrl);
+  }
+
+  // Add user info to headers for downstream use
+  const requestHeaders = new Headers(req.headers);
+  requestHeaders.set("x-user-id", session.sub);
+  requestHeaders.set("x-user-email", session.email);
+
+  return NextResponse.next({
+    request: {
+      headers: requestHeaders,
+    },
+  });
 }
 
 export const config = {

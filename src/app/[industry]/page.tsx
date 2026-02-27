@@ -1,38 +1,54 @@
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import { getIndustry, getRelatedIndustries, IndustrySlug } from "@/lib/industries";
 import LeadForm from "@/components/LeadForm";
 
-type SectorKey = "clinics" | "law-firms" | "schools" | "hotels" | "logistics";
-type NicheKey = "clinic" | "law" | "school" | "hotel" | "logistics";
-
-function sectorToNiche(sector: SectorKey): NicheKey {
-  const mapping: Record<SectorKey, NicheKey> = {
-    clinics: "clinic",
-    "law-firms": "law",
-    schools: "school",
-    hotels: "hotel",
-    logistics: "logistics",
-  };
-  return mapping[sector];
+interface Props {
+  params: Promise<{ industry: string }>;
 }
 
-type SegmentPageProps = {
-  badge: string;
-  title: string;
-  intro: string;
-  h1: string;
-  points: string[];
-  sector: "clinics" | "law-firms" | "schools" | "hotels" | "logistics";
-};
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { industry } = await params;
+  const config = getIndustry(industry);
+  
+  if (!config) {
+    return {
+      title: "Industry Not Found | Plainsight Digital",
+    };
+  }
 
-const sectorLinks: Record<string, { label: string; href: string }> = {
-  clinics: { label: "Clinics", href: "/clinics" },
-  "law-firms": { label: "Law Firms", href: "/law-firms" },
-  schools: { label: "Schools", href: "/schools" },
-  hotels: { label: "Hotels", href: "/hotels" },
-  logistics: { label: "Logistics", href: "/logistics" },
-};
+  return {
+    title: config.meta.title,
+    description: config.meta.description,
+    keywords: config.meta.keywords,
+    openGraph: {
+      title: config.meta.title,
+      description: config.meta.description,
+      url: `https://www.plainsightdigital.dev/${config.slug}`,
+      siteName: "Plainsight Digital",
+      locale: "en_KE",
+      type: "website",
+    },
+    alternates: {
+      canonical: `https://www.plainsightdigital.dev/${config.slug}`,
+    },
+  };
+}
 
-export function SegmentPage({ badge, title, intro, h1, points, sector }: SegmentPageProps) {
-  const relatedSectors = Object.entries(sectorLinks).filter(([key]) => key !== sector);
+export async function generateStaticParams() {
+  const slugs: IndustrySlug[] = ["clinics", "law-firms", "schools", "hotels", "logistics"];
+  return slugs.map((industry) => ({ industry }));
+}
+
+export default async function IndustryPage({ params }: Props) {
+  const { industry } = await params;
+  const config = getIndustry(industry);
+
+  if (!config) {
+    notFound();
+  }
+
+  const related = getRelatedIndustries(config.slug);
 
   return (
     <main className="min-h-screen bg-zinc-950 text-zinc-100">
@@ -44,19 +60,25 @@ export function SegmentPage({ badge, title, intro, h1, points, sector }: Segment
           <nav className="mb-6 flex items-center gap-2 text-sm text-zinc-400">
             <a href="/" className="transition hover:text-amber-300">Home</a>
             <span>/</span>
-            <span className="text-zinc-500">{badge}</span>
+            <span className="text-zinc-500">{config.badge}</span>
           </nav>
           
-          <p className="text-xs uppercase tracking-[0.2em] text-amber-300">{badge}</p>
-          <h1 className="mt-3 font-display text-4xl leading-tight sm:text-5xl">{h1}</h1>
-          <p className="mt-5 max-w-3xl text-zinc-300">{intro}</p>
+          <p className="text-xs uppercase tracking-[0.2em] text-amber-300">{config.badge}</p>
+          <h1 className="mt-3 font-display text-4xl leading-tight sm:text-5xl">{config.h1}</h1>
+          <p className="mt-5 max-w-3xl text-zinc-300">{config.intro}</p>
 
           {/* Primary CTA */}
           <div className="mt-8 flex flex-wrap gap-3">
-            <a href="#audit" className="rounded-md bg-amber-300 px-6 py-3 text-sm font-semibold text-zinc-950 transition hover:bg-amber-200">
+            <a
+              href="#audit"
+              className="rounded-md bg-amber-300 px-6 py-3 text-sm font-semibold text-zinc-950 transition hover:bg-amber-200"
+            >
               Request Premium Audit
             </a>
-            <a href="/" className="rounded-md border border-zinc-700 px-6 py-3 text-sm text-zinc-200 transition hover:border-zinc-500 hover:bg-zinc-900">
+            <a
+              href="/"
+              className="rounded-md border border-zinc-700 px-6 py-3 text-sm text-zinc-200 transition hover:border-zinc-500 hover:bg-zinc-900"
+            >
               Back to homepage
             </a>
           </div>
@@ -67,9 +89,9 @@ export function SegmentPage({ badge, title, intro, h1, points, sector }: Segment
       <section className="px-5 pb-12 sm:px-7 md:pb-16">
         <div className="mx-auto max-w-4xl">
           <div className="rounded-2xl border border-zinc-800 bg-zinc-900/60 p-6 md:p-8">
-            <h2 className="font-display text-2xl text-zinc-100">{title}</h2>
+            <h2 className="font-display text-2xl text-zinc-100">{config.title}</h2>
             <ul className="mt-4 space-y-3 text-zinc-300">
-              {points.map((point) => (
+              {config.points.map((point) => (
                 <li key={point} className="flex gap-3">
                   <span className="mt-1 flex-shrink-0 text-amber-400">✓</span>
                   <span>{point}</span>
@@ -85,9 +107,9 @@ export function SegmentPage({ badge, title, intro, h1, points, sector }: Segment
         <div className="mx-auto max-w-4xl">
           <p className="text-xs uppercase tracking-[0.18em] text-amber-300">Other sectors we serve</p>
           <div className="mt-4 grid gap-3 sm:grid-cols-2 md:grid-cols-4">
-            {relatedSectors.map(([key, { label, href }]) => (
+            {related.map(({ label, href }) => (
               <a
-                key={key}
+                key={href}
                 href={href}
                 className="rounded-lg border border-zinc-800 bg-zinc-900/60 px-4 py-3 text-sm text-zinc-200 transition hover:border-amber-300/40 hover:text-amber-200"
               >
@@ -106,7 +128,7 @@ export function SegmentPage({ badge, title, intro, h1, points, sector }: Segment
             <p className="mt-3 text-zinc-300">
               You&apos;ll receive actionable insights on conversion gaps, trust signals, and practical fixes your team can execute immediately.
             </p>
-            <LeadForm defaultSector={sectorToNiche(sector)} />
+            <LeadForm defaultSector={config.niche} />
           </div>
         </div>
       </section>

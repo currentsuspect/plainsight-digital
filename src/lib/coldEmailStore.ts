@@ -1,35 +1,14 @@
 // Cold Email Store — Manage targets and send history
-// Now uses remoteStore abstraction for Supabase compatibility
+// Now uses remoteStore abstraction for Supabase compatibility + Zod validation
 import { hasRemoteStore, readRemoteJson, writeRemoteJson } from "./remoteStore";
 import { promises as fs } from "fs";
 import path from "path";
 import { DATA_DIR } from "./config";
+import { ColdEmailTarget, SendHistory, safe } from "./schemas";
+export type { ColdEmailTarget, SendHistory };
 
 const TARGETS_FILE = path.join(DATA_DIR, "cold-email-targets.json");
 const HISTORY_FILE = path.join(DATA_DIR, "cold-email-history.json");
-
-export interface ColdEmailTarget {
-  id: string;
-  company: string;
-  name: string;
-  email: string;
-  industry: "clinic" | "law" | "school" | "other";
-  website?: string;
-  status: "pending" | "sent" | "replied" | "meeting" | "closed";
-  notes?: string;
-  createdAt: string;
-  lastContactedAt?: string;
-}
-
-export interface SendHistory {
-  id: string;
-  targetId: string;
-  to: string;
-  subject: string;
-  sentAt: string;
-  status: "sent" | "failed";
-  error?: string;
-}
 
 async function ensureDataDir() {
   try {
@@ -39,36 +18,79 @@ async function ensureDataDir() {
   }
 }
 
-async function readJson<T>(file: string): Promise<T[]> {
-  const key = path.basename(file);
+async function readTargets(): Promise<ColdEmailTarget[]> {
+  const key = path.basename(TARGETS_FILE);
   if (hasRemoteStore()) {
-    return readRemoteJson<T>(key);
+    return readRemoteJson<ColdEmailTarget>(key);
   }
 
   await ensureDataDir();
   try {
-    const data = await fs.readFile(file, "utf-8");
+    const data = await fs.readFile(TARGETS_FILE, "utf-8");
     const parsed = JSON.parse(data);
-    return Array.isArray(parsed) ? parsed : [];
+    if (!Array.isArray(parsed)) return [];
+    // Validate each item, filter out invalid
+    return parsed.filter((item: unknown) => {
+      const result = safe.coldEmailTarget(item);
+      if (!result.success) {
+        console.warn(`[coldEmailStore] Invalid target:`, result.error);
+        return false;
+      }
+      return true;
+    }) as ColdEmailTarget[];
   } catch {
     return [];
   }
 }
 
-async function writeJson<T>(file: string, data: T[]) {
-  const key = path.basename(file);
+async function readHistory(): Promise<SendHistory[]> {
+  const key = path.basename(HISTORY_FILE);
+  if (hasRemoteStore()) {
+    return readRemoteJson<SendHistory>(key);
+  }
+
+  await ensureDataDir();
+  try {
+    const data = await fs.readFile(HISTORY_FILE, "utf-8");
+    const parsed = JSON.parse(data);
+    if (!Array.isArray(parsed)) return [];
+    // Validate each item, filter out invalid
+    return parsed.filter((item: unknown) => {
+      const result = safe.sendHistory(item);
+      if (!result.success) {
+        console.warn(`[coldEmailStore] Invalid history:`, result.error);
+        return false;
+      }
+      return true;
+    }) as SendHistory[];
+  } catch {
+    return [];
+  }
+}
+
+async function writeTargets(data: ColdEmailTarget[]) {
+  const key = path.basename(TARGETS_FILE);
   if (hasRemoteStore()) {
     await writeRemoteJson(key, data);
     return;
   }
-
   await ensureDataDir();
-  await fs.writeFile(file, JSON.stringify(data, null, 2), "utf-8");
+  await fs.writeFile(TARGETS_FILE, JSON.stringify(data, null, 2), "utf-8");
+}
+
+async function writeHistory(data: SendHistory[]) {
+  const key = path.basename(HISTORY_FILE);
+  if (hasRemoteStore()) {
+    await writeRemoteJson(key, data);
+    return;
+  }
+  await ensureDataDir();
+  await fs.writeFile(HISTORY_FILE, JSON.stringify(data, null, 2), "utf-8");
 }
 
 // Load targets
 export async function listTargets(): Promise<ColdEmailTarget[]> {
-  return readJson<ColdEmailTarget>(TARGETS_FILE);
+  return readTargets();
 }
 
 // Add target
@@ -79,8 +101,13 @@ export async function addTarget(target: Omit<ColdEmailTarget, "id" | "createdAt"
     id: crypto.randomUUID(),
     createdAt: new Date().toISOString(),
   };
+  // Validate before saving
+  const validated = safe.coldEmailTarget(newTarget);
+  if (!validated.success) {
+    throw new Error(`Invalid target data: ${validated.error}`);
+  }
   targets.push(newTarget);
-  await writeJson(TARGETS_FILE, targets);
+  await writeTargets(targets);
   return newTarget;
 }
 
@@ -89,8 +116,14 @@ export async function updateTarget(id: string, updates: Partial<ColdEmailTarget>
   const targets = await listTargets();
   const index = targets.findIndex((t) => t.id === id);
   if (index === -1) return null;
-  targets[index] = { ...targets[index], ...updates };
-  await writeJson(TARGETS_FILE, targets);
+  const updated = { ...targets[index], ...updates };
+  // Validate
+  const validated = safe.coldEmailTarget(updated);
+  if (!validated.success) {
+    throw new Error(`Invalid update data: ${validated.error}`);
+  }
+  targets[index] = updated;
+  await writeTargets(targets);
   return targets[index];
 }
 
@@ -99,13 +132,13 @@ export async function deleteTarget(id: string): Promise<boolean> {
   const targets = await listTargets();
   const filtered = targets.filter((t) => t.id !== id);
   if (filtered.length === targets.length) return false;
-  await writeJson(TARGETS_FILE, filtered);
+  await writeTargets(filtered);
   return true;
 }
 
 // Get send history
 export async function listHistory(): Promise<SendHistory[]> {
-  return readJson<SendHistory>(HISTORY_FILE);
+  return readHistory();
 }
 
 // Add to history
@@ -115,8 +148,13 @@ export async function addHistory(entry: Omit<SendHistory, "id">): Promise<SendHi
     ...entry,
     id: crypto.randomUUID(),
   };
+  // Validate
+  const validated = safe.sendHistory(newEntry);
+  if (!validated.success) {
+    throw new Error(`Invalid history data: ${validated.error}`);
+  }
   history.push(newEntry);
-  await writeJson(HISTORY_FILE, history);
+  await writeHistory(history);
   return newEntry;
 }
 
