@@ -86,7 +86,7 @@ class ColdEmailCLI:
             print("Create a Gmail OAuth app at https://console.cloud.google.com/")
             return
         
-        redirect_uri = "urn:ietf:wg:oauth:2.0:oob"
+        redirect_uri = "http://localhost:8085"
         scope = "https://www.googleapis.com/auth/gmail.send"
         
         auth_url = (
@@ -101,17 +101,32 @@ class ColdEmailCLI:
         
         print("🔗 Open this URL in your browser:")
         print(auth_url)
-        print("\n📋 After authorization, you'll get a code.")
-        print("Run: cold-email auth-code <CODE>")
+        print("\n⚠️  IMPORTANT: The redirect will fail — that's expected!")
+        print("After clicking 'Allow', copy the FULL URL from your browser's address bar")
+        print("(it will be http://localhost:8085/?code=...)")
+        print("\n📋 Paste that full URL here and I'll extract the code")
     
-    def auth_code(self, code):
+    def auth_code(self, code_or_url):
         """Exchange auth code for tokens"""
+        import re
+        
+        # Extract code from full URL if provided
+        if 'code=' in code_or_url:
+            match = re.search(r'code=([^&]+)', code_or_url)
+            if match:
+                code = urllib.parse.unquote(match.group(1))
+            else:
+                print("❌ Could not extract code from URL")
+                return
+        else:
+            code = code_or_url
+        
         url = 'https://oauth2.googleapis.com/token'
         data = urllib.parse.urlencode({
             'code': code,
             'client_id': self.client_id,
             'client_secret': self.client_secret,
-            'redirect_uri': 'urn:ietf:wg:oauth:2.0:oob',
+            'redirect_uri': 'http://localhost:8085',
             'grant_type': 'authorization_code'
         }).encode()
         
@@ -345,3 +360,28 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+# Alternative auth method
+def auth_manual():
+    """Manual auth flow"""
+    client_id = "841747777029-33onajbjn9tdn333ouvjvq11l3mq3la5.apps.googleusercontent.com"
+    redirect_uri = "http://localhost:51121/oauth-callback"
+    scope = "https://www.googleapis.com/auth/gmail.send"
+    
+    auth_url = (
+        f"https://accounts.google.com/o/oauth2/v2/auth?"
+        f"client_id={client_id}&"
+        f"redirect_uri={redirect_uri}&"
+        f"scope={scope}&"
+        f"response_type=code&"
+        f"access_type=offline&"
+        f"prompt=consent"
+    )
+    
+    print("🔗 Open this URL:")
+    print(auth_url)
+    print("\n⚠️  After authorization, you'll see an error page.")
+    print("Copy the FULL URL from the address bar and paste it here.")
+
+if __name__ == "__main__" and len(sys.argv) > 1 and sys.argv[1] == "auth2":
+    auth_manual()
