@@ -1,0 +1,5 @@
+company,domain,recommended_email,verification_status,score,backup_email,notes
+Karen Hospital,karenhospital.org,info@karenhospital.org,valid,100,alex.mugo@karenhospital.org,Contact email visible on site and verified
+MP Shah Hospital,mpshahhosp.org,wellness@mpshahhosp.org,unverified,,telemedicine@mpshahhosp.org,telemedicine invalid; wellness returned inconclusive
+Peponi School,peponischool.org,dkimani@peponischool.org,valid,100,,admissions@ invalid; named contact verified
+Greensteds School,greenstedsschool.com,admissions@greenstedsschool.com,valid,100,office@greenstedsschool.com,Both admissions and office verified

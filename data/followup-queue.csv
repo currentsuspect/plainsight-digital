@@ -1,0 +1,4 @@
+company,email,last_sent_utc,next_followup_utc,followup_stage,status,notes
+Nairobi ENT Clinic,reception@nairobientclinic.com,2026-03-02T14:00:00Z,2026-03-06T14:00:00Z,day4,pending,Resent after bounce from info@ alias
+Dentons Kenya,info.kenya@dentons.com,2026-03-02T14:00:00Z,2026-03-06T14:00:00Z,day4,pending,Resent after invalid info@dentonshhm.com
+Brookhouse School,admissions@brookhouse.ac.ke,2026-03-03T06:33:00Z,2026-03-07T06:33:00Z,day8,pending,Day4 follow-up sent
