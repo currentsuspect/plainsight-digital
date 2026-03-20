@@ -100,7 +100,7 @@ export default function Home() {
                   {/* Header */}
                   <div className="h-10 border-b border-zinc-800/60 flex items-center px-4 justify-between relative z-10 bg-[#0B0F14] shadow-md">
                     <div className="flex items-center gap-2">
-                       <div className="w-4 h-4 bg-gradient-to-br from-indigo-500 to-blue-600 rounded flex items-center justify-center shadow-lg shadow-indigo-500/20">
+                       <div className="w-4 h-4 bg-gradient-to-br from-orange-500 to-amber-600 rounded flex items-center justify-center shadow-lg shadow-orange-500/20">
                          <div className="w-1.5 h-1.5 bg-white rounded-sm rotate-45" />
                        </div>
                        <div className="text-[10px] font-bold tracking-widest text-zinc-100">TILISTHER <span className="text-zinc-500 font-medium tracking-normal">CRM</span></div>
@@ -114,7 +114,7 @@ export default function Home() {
                   <div className="p-4 flex gap-4 h-full relative z-10 bg-[#06080A]">
                     {/* Sidebar */}
                     <div className="w-12 border-r border-zinc-800/50 hidden sm:flex flex-col gap-3 pt-2">
-                       <div className="w-6 h-6 rounded bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 flex items-center justify-center"><svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" /></svg></div>
+                       <div className="w-6 h-6 rounded bg-orange-500/10 border border-orange-500/20 text-orange-400 flex items-center justify-center"><svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" /></svg></div>
                        <div className="w-6 h-6 rounded bg-zinc-800/50 flex items-center justify-center opacity-50"><svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" /></svg></div>
                        <div className="w-6 h-6 rounded bg-zinc-800/50 flex items-center justify-center opacity-50"><svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg></div>
                     </div>
@@ -136,9 +136,9 @@ export default function Home() {
                              <div className="text-[6px] text-zinc-500 uppercase tracking-wide mb-1">Pipeline Value</div>
                              <div className="text-lg font-display text-emerald-400">kes 4.2M</div>
                           </div>
-                          <div className="bg-indigo-500/10 border border-indigo-500/20 rounded-lg p-3">
-                             <div className="text-[6px] text-indigo-300 uppercase tracking-wide mb-1">Conversion</div>
-                             <div className="text-lg font-display text-indigo-400">14.5%</div>
+                          <div className="bg-orange-500/10 border border-orange-500/20 rounded-lg p-3">
+                             <div className="text-[6px] text-orange-300 uppercase tracking-wide mb-1">Conversion</div>
+                             <div className="text-lg font-display text-orange-400">14.5%</div>
                           </div>
                        </div>
                        
@@ -221,25 +221,25 @@ export default function Home() {
                    {/* Nav */}
                    <div className="h-12 flex items-center justify-between px-6 shrink-0 bg-white border-b border-[#E8E2D9]">
                       <div className="flex items-center gap-2">
-                        <div className="w-5 h-5 rounded flex items-center justify-center overflow-hidden bg-[#2D4A32]">
+                        <div className="w-5 h-5 rounded flex items-center justify-center overflow-hidden bg-[#DC2626]">
                            <div className="w-3 h-3 border border-white/60 rounded-full" />
                         </div>
                         <div className="flex flex-col">
-                           <div className="text-[8px] font-bold text-[#2D4A32] leading-none uppercase tracking-wide">Kenya Children's</div>
-                           <div className="text-[8px] font-bold text-[#2D4A32] leading-none uppercase tracking-wide">Homes</div>
+                           <div className="text-[8px] font-bold text-[#DC2626] leading-none uppercase tracking-wide">Kenya Children's</div>
+                           <div className="text-[8px] font-bold text-[#DC2626] leading-none uppercase tracking-wide">Homes</div>
                         </div>
                       </div>
                       <div className="flex gap-4 items-center">
                         <div className="text-[7px] text-[#5C5547] font-medium tracking-wide">WHO WE ARE</div>
                         <div className="text-[7px] text-[#5C5547] font-medium tracking-wide">WHAT WE DO</div>
                         <div className="text-[7px] text-[#5C5547] font-medium tracking-wide">GET INVOLVED</div>
-                        <div className="bg-[#2D4A32] text-white text-[7px] px-3 py-1.5 rounded-sm font-bold tracking-wider ml-2">DONATE</div>
+                        <div className="bg-[#DC2626] text-white text-[7px] px-3 py-1.5 rounded-sm font-bold tracking-wider ml-2">DONATE</div>
                       </div>
                    </div>
                    
                    {/* Hero */}
-                   <div className="bg-[#1A2E1F] p-6 sm:p-8 shrink-0 relative overflow-hidden flex flex-col justify-center flex-1">
-                     <div className="absolute inset-0 bg-[#2D4A32] mix-blend-overlay opacity-50" />
+                   <div className="bg-[#991B1B] p-6 sm:p-8 shrink-0 relative overflow-hidden flex flex-col justify-center flex-1">
+                     <div className="absolute inset-0 bg-[#DC2626] mix-blend-overlay opacity-50" />
                      {/* Decorative subtle leaves pattern representation */}
                      <div className="absolute -right-10 -bottom-10 w-40 h-40 border border-white/5 rounded-full" />
                      <div className="absolute -left-10 top-10 w-20 h-20 border border-white/5 rounded-full" />
@@ -248,7 +248,7 @@ export default function Home() {
                        <div className="inline-block border-b border-[#C1A875] pb-0.5 text-[6px] text-[#C1A875] uppercase tracking-widest mb-3 font-semibold">Transforming Lives</div>
                        <div className="text-xl sm:text-3xl font-display text-white mb-3 leading-[1.1]">Give a child<br/>a family and<br/>a future.</div>
                        <div className="flex gap-3 mt-5">
-                         <div className="bg-[#C1A875] text-[#1A2E1F] text-[8px] px-4 py-2 rounded-sm font-bold uppercase tracking-wider">Sponsor A Child</div>
+                         <div className="bg-[#C1A875] text-[#991B1B] text-[8px] px-4 py-2 rounded-sm font-bold uppercase tracking-wider">Sponsor A Child</div>
                          <div className="border border-white/30 text-white text-[8px] px-4 py-2 rounded-sm font-bold uppercase tracking-wider">Our Impact</div>
                        </div>
                      </div>
