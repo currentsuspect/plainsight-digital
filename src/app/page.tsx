@@ -97,7 +97,7 @@ export default function Home() {
                 <span className="px-3 py-1 rounded-full bg-zinc-800 text-xs text-zinc-300 font-medium tracking-wide uppercase">B2B Lead Gen</span>
                 <span className="text-amber-400 text-sm">2026</span>
               </div>
-              <h3 className="text-3xl font-display text-white mb-4">Plainsight Construction</h3>
+              <h3 className="text-3xl font-display text-white mb-4">Tilisther Construction</h3>
               <p className="text-zinc-400 mb-6 text-sm leading-relaxed">A specialized lead-capture funnel and opportunity calculator built for the construction sector. It actively qualifies commercial prospects and captures exact project scopes before a call is even booked.</p>
               <ul className="space-y-3 mb-8">
                 <li className="flex items-start text-sm text-zinc-300"><span className="text-amber-400 mr-3 mt-0.5">◆</span> Dynamic project opportunity calculator</li>
