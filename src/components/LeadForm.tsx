@@ -177,9 +177,18 @@ function LeadForm({ defaultSector = "clinic" }: LeadFormProps) {
       </div>
 
       {status === "sent" && (
-        <p className="md:col-span-2 text-emerald-400 font-medium">
-          ✓ Submitted — we&apos;ll contact you within 24 hours.
-        </p>
+        <div className="md:col-span-2 p-5 border border-emerald-500/30 bg-emerald-500/10 rounded-lg text-center space-y-3">
+          <p className="text-emerald-400 font-medium text-lg">
+            ✓ Request Received.
+          </p>
+          <p className="text-zinc-300 text-sm">
+            We are analyzing your current infrastructure right now. <br className="hidden sm:block"/>
+            To skip the line, book your audit review call immediately below:
+          </p>
+          <a href="https://cal.com/dylan-makori-ez5y2j" target="_blank" rel="noopener noreferrer" className="mt-2 inline-block bg-white text-zinc-950 font-bold px-6 py-3 rounded-md hover:scale-105 transition-transform">
+             Schedule Review Call 📅
+          </a>
+        </div>
       )}
       {status === "error" && (
         <p className="md:col-span-2 text-rose-400">Something went wrong. Please try again or WhatsApp us directly.</p>
