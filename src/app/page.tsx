@@ -98,10 +98,10 @@ export default function Home() {
                 <span className="text-amber-400 text-sm">2026</span>
               </div>
               <h3 className="text-3xl font-display text-white mb-4">Plainsight Construction</h3>
-              <p className="text-zinc-400 mb-6 text-sm leading-relaxed">A specialized lead-capture funnel designed for high-ticket commercial contractors. Integrated with an automated booking system and SMS follow-ups to close gaps in the sales process.</p>
+              <p className="text-zinc-400 mb-6 text-sm leading-relaxed">A specialized lead-capture funnel and opportunity calculator built for the construction sector. It actively qualifies commercial prospects and captures exact project scopes before a call is even booked.</p>
               <ul className="space-y-3 mb-8">
-                <li className="flex items-start text-sm text-zinc-300"><span className="text-amber-400 mr-3 mt-0.5">◆</span> High-intent quote calculator</li>
-                <li className="flex items-start text-sm text-zinc-300"><span className="text-amber-400 mr-3 mt-0.5">◆</span> Automated CRM routing</li>
+                <li className="flex items-start text-sm text-zinc-300"><span className="text-amber-400 mr-3 mt-0.5">◆</span> Dynamic project opportunity calculator</li>
+                <li className="flex items-start text-sm text-zinc-300"><span className="text-amber-400 mr-3 mt-0.5">◆</span> Automated lead qualification</li>
                 <li className="flex items-start text-sm text-zinc-300"><span className="text-amber-400 mr-3 mt-0.5">◆</span> Conversion-optimized UI</li>
               </ul>
             </div>
@@ -111,14 +111,14 @@ export default function Home() {
           <div className="group relative grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-center">
             <div className="md:col-span-5 flex flex-col justify-center md:order-1 order-2">
               <div className="flex items-center gap-3 mb-4">
-                <span className="px-3 py-1 rounded-full bg-zinc-800 text-xs text-zinc-300 font-medium tracking-wide uppercase">Corporate / Medical</span>
+                <span className="px-3 py-1 rounded-full bg-zinc-800 text-xs text-zinc-300 font-medium tracking-wide uppercase">Non-Profit / NGO</span>
                 <span className="text-amber-400 text-sm">2026</span>
               </div>
               <h3 className="text-3xl font-display text-white mb-4">KCH Website</h3>
-              <p className="text-zinc-400 mb-6 text-sm leading-relaxed">A massive overhaul of digital infrastructure for Kenyatta Children's Hospital. Streamlined patient onboarding, improved accessibility, and created a trustworthy digital footprint.</p>
+              <p className="text-zinc-400 mb-6 text-sm leading-relaxed">A complete digital overhaul for Kenya Children's Home (KCH). We focused on building international trust, streamlining the donation pipeline, and creating a highly reliable digital footprint for global sponsors.</p>
               <ul className="space-y-3 mb-8">
-                <li className="flex items-start text-sm text-zinc-300"><span className="text-amber-400 mr-3 mt-0.5">◆</span> Authority-first design system</li>
-                <li className="flex items-start text-sm text-zinc-300"><span className="text-amber-400 mr-3 mt-0.5">◆</span> Patient donation & booking flows</li>
+                <li className="flex items-start text-sm text-zinc-300"><span className="text-amber-400 mr-3 mt-0.5">◆</span> Trust & authority-first design</li>
+                <li className="flex items-start text-sm text-zinc-300"><span className="text-amber-400 mr-3 mt-0.5">◆</span> Frictionless global donation flows</li>
                 <li className="flex items-start text-sm text-zinc-300"><span className="text-amber-400 mr-3 mt-0.5">◆</span> Enterprise-grade performance</li>
               </ul>
             </div>
