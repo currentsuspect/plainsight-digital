@@ -185,7 +185,7 @@ function LeadForm({ defaultSector = "clinic" }: LeadFormProps) {
             We are analyzing your current infrastructure right now. <br className="hidden sm:block"/>
             To skip the line, book your audit review call immediately below:
           </p>
-          <a href="https://cal.com/dylan-makori-ez5y2j" target="_blank" rel="noopener noreferrer" className="mt-2 inline-block bg-white text-zinc-950 font-bold px-6 py-3 rounded-md hover:scale-105 transition-transform">
+          <a href="https://cal.com/plainsightdigital/30min" target="_blank" rel="noopener noreferrer" className="mt-2 inline-block bg-white text-zinc-950 font-bold px-6 py-3 rounded-md hover:scale-105 transition-transform">
              Schedule Review Call 📅
           </a>
         </div>
