@@ -4,12 +4,12 @@ import LeadDiagnostic from "@/components/LeadDiagnostic";
 import ROICalculator from "@/components/ROICalculator";
 
 export const metadata: Metadata = {
-  title: "Plainsight Digital | High-Ticket Websites for Kenya",
-  description: "Luxury-grade, conversion-focused websites for clinics, law firms, schools, hotels, and logistics companies in Kenya. We build digital systems that generate leads, not just pageviews.",
-  keywords: ["website design Kenya", "high-ticket website Nairobi", "conversion optimization Kenya", "law firm website", "clinic website", "school website design"],
+  title: "Plainsight Digital | Web Dev & Lead Generation Agency",
+  description: "High-end web development, conversion-focused websites, and commission-based lead generation systems for service-based businesses in Kenya.",
+  keywords: ["web development Kenya", "lead generation agency", "website design Nairobi", "commission based marketing", "conversion optimization Kenya", "B2B lead generation"],
   openGraph: {
-    title: "Plainsight Digital | High-Ticket Websites for Kenya",
-    description: "Luxury-grade, conversion-focused websites for clinics, law firms, schools, hotels, and logistics companies in Kenya.",
+    title: "Plainsight Digital | Web Dev & Lead Generation Agency",
+    description: "High-end web development, conversion-focused websites, and commission-based lead generation systems for service-based businesses in Kenya.",
     url: "https://www.plainsightdigital.dev",
     siteName: "Plainsight Digital",
     locale: "en_KE",
@@ -21,11 +21,11 @@ export const metadata: Metadata = {
 };
 
 const sectors = [
-  { label: "Private Clinics & Medical Centers", href: "/clinics", description: "Patient booking systems" },
-  { label: "Law Firms", href: "/law-firms", description: "Consultation funnels" },
+  { label: "Construction & Trade", href: "/construction", description: "B2B/B2C lead generation" },
+  { label: "Private Clinics", href: "/clinics", description: "Patient booking systems" },
+  { label: "Law Firms", href: "/law-firms", description: "High-value consultation funnels" },
   { label: "Private Schools", href: "/schools", description: "Admissions optimization" },
-  { label: "Hotels & Resorts", href: "/hotels", description: "Direct booking engines" },
-  { label: "Logistics Companies", href: "/logistics", description: "B2B lead generation" },
+  { label: "Logistics", href: "/logistics", description: "B2B client acquisition" },
 ];
 
 const pillars = [
@@ -89,10 +89,10 @@ export default function Home() {
       <section className="mx-auto max-w-6xl px-5 pt-14 pb-10 sm:px-7 md:pt-24 md:pb-16">
         <p className="reveal text-sm uppercase tracking-[0.24em] text-amber-300">Plainsight Digital</p>
         <h1 className="reveal reveal-delay-1 mt-4 max-w-5xl font-display text-3xl leading-[1.08] sm:text-5xl md:text-7xl">
-          Luxury-grade websites for businesses that can&apos;t afford to look average.
+          We build digital assets that actively generate leads and revenue.
         </h1>
         <p className="reveal reveal-delay-2 mt-6 max-w-3xl text-base text-zinc-300 sm:text-lg">
-          We build high-conversion digital systems for clinics, law firms, schools, hotels, and logistics brands — engineered as a lifetime investment, not a disposable design expense.
+          Web development and commission-based lead generation for service businesses. Stop paying for traffic that doesn't convert. We build the system, drive the leads, and grow with you.
         </p>
 
         <div className="reveal reveal-delay-3 mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
@@ -143,16 +143,16 @@ export default function Home() {
       {/* About Section */}
       <section className="mx-auto max-w-6xl px-5 py-8 sm:px-7 md:py-12">
         <div className="rounded-2xl border border-zinc-800 bg-zinc-900/60 p-6 md:p-8">
-          <p className="text-xs uppercase tracking-[0.18em] text-amber-300">About Plainsight</p>
-          <h2 className="mt-3 font-display text-3xl text-zinc-100">We build for operators, not vanity metrics.</h2>
+          <p className="text-xs uppercase tracking-[0.18em] text-amber-300">The PlainSight Model</p>
+          <h2 className="mt-3 font-display text-3xl text-zinc-100">We don't charge for the site. We charge for the leads.</h2>
           <p className="mt-4 max-w-3xl text-zinc-300">
-            We&apos;re a small team that cares about business outcomes. If your site looks decent but doesn&apos;t close, we fix the conversion path, tighten your offer, and make follow-up easier for your team.
+            We operate on a pure performance model. We build you a $5,000+ luxury-grade digital ecosystem entirely for free. We pay for the hosting, the development, the SEO, and the maintenance. You only pay a commission when we deliver a qualified, paying client directly to your business. If we don't perform, you don't pay. It's that simple.
           </p>
           <a 
             href="/promise" 
             className="mt-4 inline-block text-sm text-amber-300 hover:text-amber-200 transition"
           >
-            Our Promise →
+            How our commission model works →
           </a>
         </div>
       </section>

@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Our Promise | PlainSight Digital",
-  description: "Our core values, satisfaction commitment, and why clients choose PlainSight Digital for web design in Kenya.",
+  title: "The PlainSight Model | PlainSight Digital",
+  description: "How our commission-based web development and lead generation model works. Zero upfront costs, pay only for results.",
   alternates: {
     canonical: "https://www.plainsightdigital.dev/promise",
   },
@@ -11,16 +11,16 @@ export const metadata: Metadata = {
 
 const values = [
   {
-    title: "Transparency First",
-    description: "No hidden fees. No surprise charges. Every line item is communicated upfront. You always know what you're paying for and why.",
+    title: "Skin In The Game",
+    description: "We don't charge you $5,000 for a website and disappear. We build it for free and only make money when you make money.",
   },
   {
-    title: "Speed Without Compromise",
-    description: "We deliver quickly because we work efficiently — not because we cut corners. Our sites are built for performance from day one.",
+    title: "Zero Upfront Risk",
+    description: "No retainers. No design fees. No hosting costs. We take on 100% of the financial risk to build your digital infrastructure.",
   },
   {
-    title: "Accessibility for All",
-    description: "The web should work for everyone. We build WCAG-compliant sites that work on any device, any connection, for any user.",
+    title: "Performance Only",
+    description: "We are financially incentivized to make your phone ring. If our website doesn't generate qualified leads, we don't get paid.",
   },
   {
     title: "Data-Driven Design",
@@ -28,21 +28,21 @@ const values = [
   },
   {
     title: "Partnership, Not Transaction",
-    description: "We succeed when you succeed. Our relationship doesn't end at launch. We're here for the long haul.",
+    description: "We succeed when you succeed. We are your fractional Chief Marketing Officer and development team rolled into one.",
   },
 ];
 
 const standards = [
-  { label: "Response Time", value: "Same-day acknowledgment, 24-hour detailed response" },
-  { label: "Revisions", value: "2 rounds included per project phase" },
-  { label: "Timeline", value: "We hit our deadlines. If we slip, we communicate." },
-  { label: "Quality", value: "Clean code, semantic HTML, accessibility-first" },
-  { label: "Handoff", value: "Full documentation, training, and 30-day support" },
+  { label: "Website Build Cost", value: "$0.00" },
+  { label: "Hosting & Maintenance", value: "$0.00 / month" },
+  { label: "SEO & Content Updates", value: "$0.00 / month" },
+  { label: "Lead Generation Commission", value: "Agreed percentage per closed deal" },
+  { label: "Contract Type", value: "Performance-based Partnership" },
 ];
 
 const differences = [
   { title: "No Bloat", description: "We don't sell you features you don't need" },
-  { title: "Realistic Timelines", description: "We under-promise and over-deliver" },
+  { title: "Aligned Incentives", description: "Agencies want to sell you a website. We want to sell your services." },
   { title: "Kenyan Context", description: "M-Pesa integration, local hosting, Kenyan user behavior" },
   { title: "Future-Proof", description: "Your site is built to grow with you" },
 ];
@@ -54,12 +54,12 @@ export default function PromisePage() {
 
       {/* Hero */}
       <section className="mx-auto max-w-6xl px-5 pt-14 pb-10 sm:px-7 md:pt-24 md:pb-16">
-        <p className="text-sm uppercase tracking-[0.24em] text-amber-300">Our Promise</p>
+        <p className="text-sm uppercase tracking-[0.24em] text-amber-300">The PlainSight Model</p>
         <h1 className="mt-4 max-w-4xl font-display text-3xl leading-[1.08] sm:text-5xl md:text-6xl">
-          How we work, what we believe, and why clients trust us.
+          We don't charge for websites. We charge for revenue.
         </h1>
         <p className="mt-6 max-w-2xl text-base text-zinc-300 sm:text-lg">
-          Transparency, speed, and partnership. No surprises, no hidden fees — just results.
+          The traditional agency model is broken. They get paid whether their website makes you money or not. We changed the rules.
         </p>
       </section>
 
@@ -82,7 +82,7 @@ export default function PromisePage() {
       {/* Satisfaction Commitment */}
       <section className="mx-auto max-w-6xl px-5 py-16 sm:px-7">
         <div className="border-t border-white/10 pt-12">
-          <h2 className="text-sm uppercase tracking-[0.24em] text-amber-300 mb-8">Satisfaction Commitment</h2>
+          <h2 className="text-sm uppercase tracking-[0.24em] text-amber-300 mb-8">The Deal Structure</h2>
           
           <div className="rounded-lg border border-white/10 overflow-hidden">
             {standards.map((standard, index) => (
@@ -91,31 +91,31 @@ export default function PromisePage() {
                 className={`flex flex-col sm:flex-row sm:justify-between sm:items-center p-6 ${index !== standards.length - 1 ? 'border-b border-white/10' : ''}`}
               >
                 <span className="font-display text-white mb-2 sm:mb-0">{standard.label}</span>
-                <span className="text-zinc-400 text-sm">{standard.value}</span>
+                <span className="text-zinc-400 text-sm font-semibold">{standard.value}</span>
               </div>
             ))}
           </div>
 
           {/* Guarantee */}
           <div className="mt-10 rounded-lg border border-amber-300/30 bg-amber-300/5 p-8">
-            <h3 className="font-display text-xl text-amber-300 mb-4">Our Guarantee</h3>
-            <p className="text-white text-lg mb-6">If you're not satisfied, we're not done.</p>
+            <h3 className="font-display text-xl text-amber-300 mb-4">Our Commitment</h3>
+            <p className="text-white text-lg mb-6">We only make money when you close a deal.</p>
             <ul className="space-y-3 text-zinc-300">
               <li className="flex items-start">
                 <span className="text-amber-300 mr-3">◆</span>
-                Bugs fixed at no charge (within 30 days of launch)
+                We build and host the website at zero cost to you.
               </li>
               <li className="flex items-start">
                 <span className="text-amber-300 mr-3">◆</span>
-                Minor tweaks included during the revision period
+                We manage the SEO, speed optimization, and lead funnels.
               </li>
               <li className="flex items-start">
                 <span className="text-amber-300 mr-3">◆</span>
-                Clear documentation so you're never locked in
+                We qualify the leads and send them directly to your phone/email.
               </li>
               <li className="flex items-start">
                 <span className="text-amber-300 mr-3">◆</span>
-                Source code ownership transfers to you upon final payment
+                You only pay us a pre-agreed commission when that lead turns into paying revenue.
               </li>
             </ul>
           </div>
@@ -168,33 +168,26 @@ export default function PromisePage() {
       {/* Investment */}
       <section className="mx-auto max-w-6xl px-5 py-16 sm:px-7">
         <div className="border-t border-white/10 pt-12">
-          <h2 className="text-sm uppercase tracking-[0.24em] text-amber-300 mb-8">Investment & Payment</h2>
+          <h2 className="text-sm uppercase tracking-[0.24em] text-amber-300 mb-8">The PlainSight Promise</h2>
           
           <div className="max-w-2xl mx-auto text-center">
-            <div className="rounded-lg border border-white/10 bg-white/5 p-8 mb-8">
-              <div className="flex justify-center items-center space-x-8 mb-6">
-                <div className="text-center">
-                  <div className="text-4xl font-display text-amber-300">50%</div>
-                  <div className="text-sm text-zinc-400 mt-1">Upfront to begin</div>
-                </div>
-                <div className="text-zinc-600">+</div>
-                <div className="text-center">
-                  <div className="text-4xl font-display text-amber-300">50%</div>
-                  <div className="text-sm text-zinc-400 mt-1">Upon delivery</div>
-                </div>
+            <div className="rounded-lg border border-amber-500/20 bg-amber-500/5 p-8 mb-8">
+              <div className="text-center mb-6">
+                <div className="text-5xl font-display text-amber-300">$0</div>
+                <div className="text-base text-zinc-300 mt-2 font-medium">Upfront Costs. Zero Retainers.</div>
               </div>
-              <p className="text-zinc-400 text-sm">Payment methods: M-Pesa, Bank Transfer, PayPal</p>
+              <p className="text-zinc-400 text-sm">You only pay us when our leads turn into closed deals.</p>
             </div>
             
             <p className="text-zinc-400 mb-8">
-              Detailed invoices with clear line items. No vague "project fees." You see exactly what you're paying for.
+              We vet our partners strictly because we invest our own capital and time to build the infrastructure. If you provide a high-ticket service and can handle more volume, we want to talk.
             </p>
             
             <Link 
               href="/#audit"
               className="inline-block rounded-md bg-amber-300 px-8 py-4 text-center text-sm font-semibold tracking-wide text-zinc-950 transition hover:bg-amber-200"
             >
-              Start Your Project →
+              Apply for Partnership →
             </Link>
           </div>
         </div>
